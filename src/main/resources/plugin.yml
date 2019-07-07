@@ -1,0 +1,7 @@
+name: ${name}
+version: ${version}
+author: jummes
+main: com.github.jummes.morecompost.core.MoreCompost
+api-version: 1.14
+commands:
+  mc:
