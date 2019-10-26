@@ -1,0 +1,33 @@
+name: MoreCompost
+version: 0.9.6
+author: jummes
+main: com.github.jummes.morecompost.core.MoreCompost
+api-version: 1.14
+commands:
+  mc:
+    description: Base MoreCompost command
+permissions:
+  morecompost.commands.compostables:
+    description: Opening compostables menu permission
+    default: op
+  morecompost.commands.drops:
+    description: Opening drops menu permission
+    default: op
+  morecompost.commands.help:
+    description: Print help message permission
+    default: op
+  morecompost.commands.inspect:
+    description: Inspect blocks permission
+    default: op
+  morecompost.commands.reload:
+    description: Reload configuration files permission
+    default: op
+  morecompost.commands.*:
+    description: Wildcard MoreCompost editing permission
+    default: op
+    children:
+      morecompost.commands.compostables: true
+      morecompost.commands.drops: true
+      morecompost.commands.help: true
+      morecompost.commands.inspect: true
+      morecompost.commands.reload: true

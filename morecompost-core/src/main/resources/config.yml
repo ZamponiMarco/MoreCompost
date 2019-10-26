@@ -1,0 +1,9 @@
+#If it is true, the plugin will send data to bstats, for statistical purposes
+metrics: true
+
+#If it is true, the plugin will check for updates
+updateChecker: true
+
+#config.yml file version
+# DO NOT MODIFY
+version: 1.0
