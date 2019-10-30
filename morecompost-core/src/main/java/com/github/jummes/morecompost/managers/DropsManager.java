@@ -97,16 +97,16 @@ public class DropsManager implements DataManager {
 		}
 	}
 
-	public DropTable get(String dropTableId) {
-		return percentages.values().stream().filter(dropTable -> dropTable.getId().equals(dropTableId))
-				.findFirst().get();
+	public DropTable getDropTableById(String dropTableId) {
+		return percentages.values().stream().filter(dropTable -> dropTable.getId().equals(dropTableId)).findFirst()
+				.orElseGet(() -> DropTableFactory.defaultDropTable(DEFAULT_PERM));
 	}
-	
-	public void getDefaultDropTable(String name) {
+
+	public void createDefaultDropTable(String name) {
 		ConfigurationSection section = getDataYaml().createSection(name);
 		section.set("drops", section.createSection("drops"));
 	}
-	
+
 	public void getDefaultDrop(String dropTableId, String name) {
 		getDataYaml().getConfigurationSection(dropTableId).getConfigurationSection("drops").createSection(name);
 	}

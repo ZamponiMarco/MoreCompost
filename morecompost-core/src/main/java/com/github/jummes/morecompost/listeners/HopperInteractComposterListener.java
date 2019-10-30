@@ -22,12 +22,14 @@ import com.github.jummes.morecompost.managers.DropsManager;
 
 public class HopperInteractComposterListener implements Listener {
 
+	private static final String METADATA_KEY = "forcedDropTableId";
+
 	@EventHandler
 	public void onHopperInteractComposter(InventoryMoveItemEvent e) {
-		
+
 		// Source is hopper block (hopper minecarts doesn't work with composters)
 		if (e.getSource().getType().equals(InventoryType.HOPPER) && e.getSource().getHolder() instanceof Hopper) {
-			
+
 			Block hopperBlock = e.getSource().getLocation().getBlock();
 			Directional hopper = (Directional) hopperBlock.getBlockData();
 			Block destination = hopperBlock.getLocation().clone()
@@ -55,8 +57,15 @@ public class HopperInteractComposterListener implements Listener {
 			if (source.getType().equals(Material.COMPOSTER)) {
 
 				DropsManager dropsManager = MoreCompost.getInstance().getDropsManager();
-				dropsManager.getPercentages().get(dropsManager.getHighestPermission(getOwner(source)))
-						.fillContainer(hopperBlock);
+
+				if (source.hasMetadata(METADATA_KEY)) {
+					dropsManager.getDropTableById(source.getMetadata(METADATA_KEY).get(0).asString())
+							.fillContainer(hopperBlock);
+					source.removeMetadata(METADATA_KEY, MoreCompost.getInstance());
+				} else {
+					dropsManager.getPercentages().get(dropsManager.getHighestPermission(getOwner(source)))
+							.fillContainer(hopperBlock);
+				}
 
 				e.setItem(new ItemStack(Material.AIR));
 

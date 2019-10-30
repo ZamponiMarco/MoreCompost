@@ -39,7 +39,7 @@ public class DropsListInventoryHolder extends MoreCompostInventoryHolder {
 	protected void initializeInventory() {
 		DropsManager manager = MoreCompost.getInstance().getDropsManager();
 
-		DropTable dropTable = manager.get(dropTableId);
+		DropTable dropTable = manager.getDropTableById(dropTableId);
 		
 		ConfigurationSection section = manager.getDataYaml().getConfigurationSection(dropTable.getId())
 				.getConfigurationSection("drops");

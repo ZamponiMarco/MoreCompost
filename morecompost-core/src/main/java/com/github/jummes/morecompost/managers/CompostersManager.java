@@ -62,11 +62,15 @@ public class CompostersManager implements DataManager {
 			// Block validation
 			Iterator<String> iterator = list.iterator();
 			while (iterator.hasNext()) {
-				Block block = getLocationFromString(iterator.next()).getBlock();
-				if (!block.getType().equals(Material.COMPOSTER)) {
+				try {
+					Block block = getLocationFromString(iterator.next()).getBlock();
+					if (!block.getType().equals(Material.COMPOSTER)) {
+						iterator.remove();
+					} else {
+						block.setMetadata("owner", new FixedMetadataValue(plugin, uuid));
+					}
+				} catch (Exception e) {
 					iterator.remove();
-				} else {
-					block.setMetadata("owner", new FixedMetadataValue(plugin, uuid));
 				}
 			}
 

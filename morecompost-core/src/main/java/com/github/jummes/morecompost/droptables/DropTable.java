@@ -79,7 +79,7 @@ public class DropTable {
 		return weightMap;
 	}
 
-	public CompostDrop get(String dropId) {
+	public CompostDrop getDropById(String dropId) {
 		return weightMap.values().stream().filter(drop -> drop.getId().equals(dropId)).findFirst().get();
 	}
 

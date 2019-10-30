@@ -54,12 +54,12 @@ public interface DataManager {
 		}
 	}
 
-	/**
-	 * Reloads data
-	 * 
-	 */
-	public default void reloadData() {
+	public default void saveAndReloadData() {
 		saveConfig();
+		reloadData();
+	}
+	
+	public default void reloadData() {
 		loadDataFile();
 		loadDataYaml();
 		loadData();

@@ -36,7 +36,7 @@ public class BooleanSettingInventoryHolder extends SettingInventoryHolder {
 	private Consumer<InventoryClickEvent> getBooleanConsumer(boolean value) {
 		return e -> {
 			section.set(key, value);
-			dataManager.reloadData();
+			dataManager.saveAndReloadData();
 			player.sendMessage(MessageUtils.color("&aObject modified: &6" + key + ": &e" + String.valueOf(value)));
 			player.openInventory(holder.getInventory());
 		};

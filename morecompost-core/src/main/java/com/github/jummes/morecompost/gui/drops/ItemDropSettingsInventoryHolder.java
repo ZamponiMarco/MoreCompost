@@ -10,7 +10,9 @@ import com.github.jummes.morecompost.drops.ItemCompostDrop;
 import com.github.jummes.morecompost.droptables.DropTable;
 import com.github.jummes.morecompost.gui.settings.IntegerSettingInventoryHolder;
 import com.github.jummes.morecompost.gui.settings.StringSettingInventoryHolder;
+import com.github.jummes.morecompost.locale.LocaleString;
 import com.github.jummes.morecompost.managers.DropsManager;
+import com.github.jummes.morecompost.managers.LocalesManager;
 import com.github.jummes.morecompost.utils.MessageUtils;
 import com.github.jummes.morecompost.wrapper.VersionWrapper;
 
@@ -30,41 +32,39 @@ public class ItemDropSettingsInventoryHolder extends DropSettingsInventoryHolder
 	@Override
 	protected void initializeInventory() {
 		VersionWrapper wrapper = MoreCompost.getInstance().getWrapper();
-		
+
 		DropsManager manager = MoreCompost.getInstance().getDropsManager();
 
-		DropTable dropTable = manager.get(dropTableId);
-		ItemCompostDrop drop = (ItemCompostDrop) dropTable.get(dropId);
+		LocalesManager localesManager = MoreCompost.getInstance().getLocalesManager();
+
+		DropTable dropTable = manager.getDropTableById(dropTableId);
+		ItemCompostDrop drop = (ItemCompostDrop) dropTable.getDropById(dropId);
 
 		ConfigurationSection section = manager.getDataYaml().getConfigurationSection(dropTable.getId())
 				.getConfigurationSection("drops").getConfigurationSection(drop.getId());
 
 		this.inventory = Bukkit.createInventory(this, 27,
 				MessageUtils.color(String.format("&6&lDrop: &1&l%s", drop.getId())));
-		registerClickConsumer(3, getSettingItem(wrapper.skullFromValue(TYPE_HEAD), "type", drop.getType()),
-				getSettingConsumer(manager, section, "type", drop.getType(), StringSettingInventoryHolder.class));
-		registerClickConsumer(5, getSettingItem(wrapper.skullFromValue(WEIGHT_HEAD), "weight", drop.getWeight()),
-				getSettingConsumer(manager, section, "weight", drop.getWeight(), IntegerSettingInventoryHolder.class));
-		registerClickConsumer(11,
-				getSettingItem(wrapper.skullFromValue(MINIMUM_HEAD), "minCount", drop.getMinCount()),
-				getSettingConsumer(manager, section, "minCount", drop.getMinCount(),
-						IntegerSettingInventoryHolder.class));
-		registerClickConsumer(12,
-				getSettingItem(wrapper.skullFromValue(MAXIMUM_HEAD), "maxCount", drop.getMaxCount()),
-				getSettingConsumer(manager, section, "maxCount", drop.getMaxCount(),
-						IntegerSettingInventoryHolder.class));
-		registerClickConsumer(14,
-				getSettingItem(wrapper.skullFromValue(MATERIAL_HEAD), "material", drop.getItem().getType()),
-				getSettingConsumer(manager, section, "material", drop.getMaxCount(),
-						StringSettingInventoryHolder.class));
-		registerClickConsumer(15,
-				getSettingItem(wrapper.skullFromValue(NAME_HEAD), "displayName",
-						drop.getItem().getItemMeta().getDisplayName()),
-				getSettingConsumer(manager, section, "displayName", drop.getItem().getItemMeta().getDisplayName(),
-						StringSettingInventoryHolder.class));
+		registerSettingConsumer(3, manager, section, wrapper.skullFromValue(TYPE_HEAD), "type", drop.getType(),
+				localesManager.getLocaleString(LocaleString.TYPE_DESCRIPTION), StringSettingInventoryHolder.class);
+		registerSettingConsumer(5, manager, section, wrapper.skullFromValue(WEIGHT_HEAD), "weight", drop.getWeight(),
+				localesManager.getLocaleString(LocaleString.WEIGHT_DESCRIPTION), IntegerSettingInventoryHolder.class);
+		registerSettingConsumer(11, manager, section, wrapper.skullFromValue(MINIMUM_HEAD), "minCount",
+				drop.getMinCount(), localesManager.getLocaleString(LocaleString.MIN_COUNT_DESCRIPTION),
+				IntegerSettingInventoryHolder.class);
+		registerSettingConsumer(12, manager, section, wrapper.skullFromValue(MAXIMUM_HEAD), "maxCount",
+				drop.getMaxCount(), localesManager.getLocaleString(LocaleString.MAX_COUNT_DESCRIPTION),
+				IntegerSettingInventoryHolder.class);
+		registerSettingConsumer(14, manager, section, wrapper.skullFromValue(MATERIAL_HEAD), "material",
+				drop.getItem().getType(), localesManager.getLocaleString(LocaleString.MATERIAL_DESCRIPTION),
+				StringSettingInventoryHolder.class);
+		registerSettingConsumer(15, manager, section, wrapper.skullFromValue(NAME_HEAD), "displayName",
+				drop.getItem().getItemMeta().getDisplayName(),
+				localesManager.getLocaleString(LocaleString.DISPLAY_NAME_DESCRIPTION),
+				StringSettingInventoryHolder.class);
 		registerClickConsumer(18, getRemoveItem(), e -> {
 			section.getParent().set(dropId, null);
-			manager.reloadData();
+			manager.saveAndReloadData();
 			e.getWhoClicked().openInventory(holder.getInventory());
 		});
 		registerClickConsumer(26, getBackItem(), e -> e.getWhoClicked().openInventory(holder.getInventory()));

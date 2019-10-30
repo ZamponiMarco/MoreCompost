@@ -1,5 +1,7 @@
 package com.github.jummes.morecompost.compostables;
 
+import java.util.Optional;
+
 import org.bukkit.Material;
 
 public enum DefaultCompostable {
@@ -25,7 +27,7 @@ public enum DefaultCompostable {
 	}
 
 	public Compostable getCompostable() {
-		return new Compostable("default", material, 1, 1, percentage);
+		return new Compostable("default", material, 1, 1, percentage, Optional.empty());
 	}
 
 }

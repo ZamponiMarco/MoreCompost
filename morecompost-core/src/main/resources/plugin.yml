@@ -2,6 +2,7 @@ name: MoreCompost
 version: ${version}
 author: jummes
 main: com.github.jummes.morecompost.core.MoreCompost
+load: POSTWORLD
 api-version: 1.14
 commands:
   mc:

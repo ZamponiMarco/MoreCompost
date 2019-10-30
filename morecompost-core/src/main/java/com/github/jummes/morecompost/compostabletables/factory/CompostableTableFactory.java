@@ -2,6 +2,7 @@ package com.github.jummes.morecompost.compostabletables.factory;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.bukkit.Material;
@@ -33,8 +34,9 @@ public class CompostableTableFactory {
 			int minRolls = compostableSection.getInt("minRolls", 1);
 			int maxRolls = compostableSection.getInt("maxRolls", 1);
 			double chance = compostableSection.getDouble("chance", 0.5);
+			Optional<String> forcedDropTableId = Optional.ofNullable(compostableSection.getString("forcedDropTableId"));
 			Compostable compostable = new Compostable(compostableSection.getName(), material, minRolls, maxRolls,
-					chance);
+					chance, forcedDropTableId);
 			set.add(compostable);
 		});
 

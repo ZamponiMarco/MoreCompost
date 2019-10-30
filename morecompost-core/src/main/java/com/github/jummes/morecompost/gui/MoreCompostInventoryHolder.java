@@ -19,7 +19,6 @@ import com.github.jummes.morecompost.core.MoreCompost;
 import com.github.jummes.morecompost.gui.settings.SettingInventoryHolder;
 import com.github.jummes.morecompost.managers.DataManager;
 import com.github.jummes.morecompost.utils.MessageUtils;
-import com.google.common.collect.Lists;
 
 public abstract class MoreCompostInventoryHolder implements InventoryHolder {
 
@@ -29,12 +28,11 @@ public abstract class MoreCompostInventoryHolder implements InventoryHolder {
 	private static final String ARROW_LEFT_HEAD = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzY5N2MyNDg5MmNmYzAzYzcyOGZmYWVhYmYzNGJkZmI5MmQ0NTExNDdiMjZkMjAzZGNhZmE5M2U0MWZmOSJ9fX0=";
 	private static final String ARROW_RIGHT_HEAD = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODZlMTQ1ZTcxMjk1YmNjMDQ4OGU5YmI3ZTZkNjg5NWI3Zjk2OWEzYjViYjdlYjM0YTUyZTkzMmJjODRkZjViIn19fQ===";
 
-	
 	private static final String BACK_ITEM_NAME = MessageUtils.color("&6&lGo back");
 	private static final String ADD_ITEM_NAME = MessageUtils.color("&6&lLeft click &ato add a new object in this list");
 	private static final String REMOVE_ITEM_NAME = MessageUtils
 			.color("&6&lLeft click &ato remove this new object from the list");
-	
+
 	protected Inventory inventory;
 	protected Map<Integer, Consumer<InventoryClickEvent>> clickMap;
 
@@ -42,24 +40,43 @@ public abstract class MoreCompostInventoryHolder implements InventoryHolder {
 		this.clickMap = new HashMap<>();
 	}
 
-	@Override
-	public Inventory getInventory() {
-		initializeInventory();
-		return inventory;
-	}
-
 	protected abstract void initializeInventory();
 
+	/**
+	 * Handles the InventoryClickEvent depending on the slot that has been clicked
+	 * and the content of the clickMap
+	 * 
+	 * @param e the event that has been fired
+	 */
 	public void handleClickEvent(InventoryClickEvent e) {
 		clickMap.get(e.getSlot()).accept(e);
 		e.setCancelled(true);
 	}
 
+	/**
+	 * Register an event consumer on a determined slot and puts an item in such slot
+	 * 
+	 * @param slot          slot that the event will be linked to
+	 * @param item          item that will be put in the inventory in the slot
+	 * @param clickConsumer event consumer that will be called when the event is
+	 *                      fired
+	 */
 	public void registerClickConsumer(int slot, ItemStack item, Consumer<InventoryClickEvent> clickConsumer) {
 		inventory.setItem(slot, item);
 		clickMap.put(slot, clickConsumer);
 	}
 
+	public void registerSettingConsumer(int slot, DataManager dataManager, ConfigurationSection section, ItemStack item,
+			String key, Object value, List<String> description, Class<? extends SettingInventoryHolder> clazz) {
+		registerClickConsumer(slot, getSettingItem(item, key, value, description),
+				getSettingConsumer(dataManager, section, key, value, clazz));
+	}
+
+	/**
+	 * Fills the inventory with a material with an empty name
+	 * 
+	 * @param material
+	 */
 	public void fillInventoryWith(Material material) {
 		for (int i = 0; i < inventory.getSize(); i++) {
 			if (inventory.getItem(i) == null) {
@@ -69,7 +86,14 @@ public abstract class MoreCompostInventoryHolder implements InventoryHolder {
 		}
 	}
 
-	protected Consumer<InventoryClickEvent> getSettingConsumer(DataManager dataManager, ConfigurationSection section,
+	protected ItemStack getNamedItem(ItemStack item, String name) {
+		ItemMeta meta = item.getItemMeta();
+		meta.setDisplayName(name);
+		item.setItemMeta(meta);
+		return item;
+	}
+
+	private Consumer<InventoryClickEvent> getSettingConsumer(DataManager dataManager, ConfigurationSection section,
 			String key, Object value, Class<? extends SettingInventoryHolder> clazz) {
 		return e -> {
 			if (e.getClick().equals(ClickType.LEFT)) {
@@ -86,15 +110,21 @@ public abstract class MoreCompostInventoryHolder implements InventoryHolder {
 		};
 	}
 
-	protected ItemStack getNamedItem(ItemStack item, String name) {
+	protected ItemStack getSettingItem(ItemStack item, String key, Object value, List<String> description) {
+		item = getNamedItem(item, MessageUtils.color(String.format("&6&l%s = &e&l%s", key, value.toString())));
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(name);
+		meta.setLore(getSettingLore(description));
 		item.setItemMeta(meta);
 		return item;
 	}
 
 	private ItemStack getPlaceholderItem(Material material) {
 		return getNamedItem(new ItemStack(material), " ");
+	}
+
+	private List<String> getSettingLore(List<String> description) {
+		description.add(0, MessageUtils.color("&6&l- &e&lLeft click &6to modify"));
+		return description;
 	}
 
 	protected ItemStack getBackItem() {
@@ -108,25 +138,20 @@ public abstract class MoreCompostInventoryHolder implements InventoryHolder {
 	protected ItemStack getRemoveItem() {
 		return getNamedItem(MoreCompost.getInstance().getWrapper().skullFromValue(REMOVE_HEAD), REMOVE_ITEM_NAME);
 	}
-	
+
 	protected ItemStack getNextPageItem() {
 		return getNamedItem(MoreCompost.getInstance().getWrapper().skullFromValue(ARROW_RIGHT_HEAD), "&6&lNext page");
 	}
-	
+
 	protected ItemStack getPreviousPageItem() {
-		return getNamedItem(MoreCompost.getInstance().getWrapper().skullFromValue(ARROW_LEFT_HEAD), "&6&lPrevious page");
+		return getNamedItem(MoreCompost.getInstance().getWrapper().skullFromValue(ARROW_LEFT_HEAD),
+				"&6&lPrevious page");
 	}
 
-	protected ItemStack getSettingItem(ItemStack item, String key, Object value) {
-		item = getNamedItem(item, MessageUtils.color(String.format("&6&l%s = &e&l%s", key, value.toString())));
-		ItemMeta meta = item.getItemMeta();
-		meta.setLore(getDefaultLore());
-		item.setItemMeta(meta);
-		return item;
-	}
-
-	private List<String> getDefaultLore() {
-		return Lists.newArrayList(MessageUtils.color("&6&l- &e&lLeft click &6to modify"));
+	@Override
+	public Inventory getInventory() {
+		initializeInventory();
+		return inventory;
 	}
 
 }

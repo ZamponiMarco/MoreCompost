@@ -16,6 +16,7 @@ import com.github.jummes.morecompost.listeners.PlayerChatListener;
 import com.github.jummes.morecompost.managers.CompostablesManager;
 import com.github.jummes.morecompost.managers.CompostersManager;
 import com.github.jummes.morecompost.managers.DropsManager;
+import com.github.jummes.morecompost.managers.LocalesManager;
 import com.github.jummes.morecompost.managers.SettingsManager;
 import com.github.jummes.morecompost.settings.Settings;
 import com.github.jummes.morecompost.wrapper.VersionWrapper;
@@ -29,6 +30,8 @@ public class MoreCompost extends JavaPlugin {
 	private CompostablesManager compostablesManager;
 	private CompostersManager compostersManager;
 	private SettingsManager settingsManager;
+	private LocalesManager localesManager;
+
 
 	public void onEnable() {
 		instance = this;
@@ -70,6 +73,7 @@ public class MoreCompost extends JavaPlugin {
 		compostersManager = new CompostersManager();
 		dropsManager = new DropsManager();
 		compostablesManager = new CompostablesManager();
+		localesManager = new LocalesManager();
 		CommandExecutor commandExecutor = new MoreCompostCommandExecutor();
 		getCommand("mc").setExecutor(commandExecutor);
 		getCommand("mc").setTabCompleter((TabCompleter) commandExecutor);
@@ -104,6 +108,10 @@ public class MoreCompost extends JavaPlugin {
 
 	public VersionWrapper getWrapper() {
 		return wrapper;
+	}
+
+	public LocalesManager getLocalesManager() {
+		return localesManager;
 	}
 
 }

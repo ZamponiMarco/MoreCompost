@@ -56,7 +56,7 @@ public class PlayerChatListener implements Listener {
 						String dropTableId = section.getParent().getName();
 						((DropsManager) manager).getDefaultDrop(dropTableId, value);
 					} else {
-						((DropsManager) manager).getDefaultDropTable(value);
+						((DropsManager) manager).createDefaultDropTable(value);
 					}
 				} else if (manager instanceof CompostablesManager) {
 					if (section.getName().equalsIgnoreCase("compostables")) {
@@ -66,7 +66,7 @@ public class PlayerChatListener implements Listener {
 						((CompostablesManager) manager).getDefaultCompostableTable(value);
 					}
 				}
-				manager.reloadData();
+				manager.saveAndReloadData();
 				p.sendMessage(MessageUtils.color("&a&lObject created."));
 				p.openInventory(settingsMap.get(p).getValue().getValue().getValue().getInventory());
 			} else {
@@ -86,7 +86,7 @@ public class PlayerChatListener implements Listener {
 				ConfigurationSection section = settingsMap.get(p).getValue().getKey();
 				String key = settingsMap.get(p).getValue().getValue().getKey();
 				section.set(key, validatedValue);
-				manager.reloadData();
+				manager.saveAndReloadData();
 				p.sendMessage(MessageUtils.color("&aObject modified, &6" + key + ": &e" + validatedValue));
 
 				InventoryHolder precHolder = settingsMap.get(p).getValue().getValue().getValue();
@@ -96,8 +96,8 @@ public class PlayerChatListener implements Listener {
 					DropsManager dropsManager = (DropsManager) manager;
 					p.openInventory(DropSettingsInventoryHolderFactory
 							.buildDropSettingInventoryHolder(dropHolder.getHolder(),
-									dropsManager.get(dropHolder.getDropTableId()),
-									dropsManager.get(dropHolder.getDropTableId()).get(dropHolder.getDropId()))
+									dropsManager.getDropTableById(dropHolder.getDropTableId()),
+									dropsManager.getDropTableById(dropHolder.getDropTableId()).getDropById(dropHolder.getDropId()))
 							.getInventory());
 				} else {
 					p.openInventory(precHolder.getInventory());

@@ -17,6 +17,8 @@ import com.github.jummes.morecompost.managers.DropsManager;
 
 public class ComposterDropListener implements Listener {
 
+	private static final String METADATA_KEY = "forcedDropTableId";
+
 	@EventHandler
 	public void onComposterInteract(PlayerInteractEvent e) {
 
@@ -30,8 +32,13 @@ public class ComposterDropListener implements Listener {
 
 			if (composter.getLevel() == composter.getMaximumLevel()) {
 				DropsManager dropsManager = MoreCompost.getInstance().getDropsManager();
-				dropsManager.getPercentages().get(dropsManager.getHighestPermission(player)).dropAllLoot(block);
-			} else if(composter.getLevel() < composter.getMaximumLevel() - 1){
+				if (block.hasMetadata(METADATA_KEY)) {
+					dropsManager.getDropTableById(block.getMetadata(METADATA_KEY).get(0).asString()).dropAllLoot(block);
+					block.removeMetadata(METADATA_KEY, MoreCompost.getInstance());
+				} else {
+					dropsManager.getPercentages().get(dropsManager.getHighestPermission(player)).dropAllLoot(block);
+				}
+			} else if (composter.getLevel() < composter.getMaximumLevel() - 1) {
 				CompostablesManager compostablesManager = MoreCompost.getInstance().getCompostablesManager();
 				if (compostablesManager.getCompostables().get(compostablesManager.getHighestPermission(player))
 						.compost(block, player.getInventory().getItemInMainHand().getType())) {

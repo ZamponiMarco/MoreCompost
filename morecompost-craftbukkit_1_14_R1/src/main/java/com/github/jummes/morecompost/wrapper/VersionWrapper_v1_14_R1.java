@@ -15,7 +15,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import com.github.jummes.morecompost.core.MoreCompost;
-import com.github.jummes.morecompost.wrapper.VersionWrapper;
 
 import net.minecraft.server.v1_14_R1.EntityItem;
 import net.minecraft.server.v1_14_R1.EntityTypes;

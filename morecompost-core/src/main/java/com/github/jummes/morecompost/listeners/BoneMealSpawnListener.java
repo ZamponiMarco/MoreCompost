@@ -12,7 +12,7 @@ public class BoneMealSpawnListener implements Listener {
 
 	@EventHandler
 	public void onBoneMealSpawn(ItemSpawnEvent e) {
-		
+
 		Item item = e.getEntity();
 		if (!item.hasMetadata(CUSTOM_KEY) && isSpawnedByComposter(item)) {
 			e.setCancelled(true);

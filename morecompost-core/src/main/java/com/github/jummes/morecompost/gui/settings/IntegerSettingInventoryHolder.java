@@ -48,7 +48,7 @@ public class IntegerSettingInventoryHolder extends SettingInventoryHolder {
 		registerClickConsumer(17, getModifyItem(+100, wrapper.skullFromValue(ARROW3_RIGHT_HEAD)), getConsumer(+100));
 		registerClickConsumer(13, getConfirmItem(), e -> {
 			section.set(key, result);
-			dataManager.reloadData();
+			dataManager.saveAndReloadData();
 			player.sendMessage(MessageUtils.color("&aObject modified: &6" + key + ": &e" + String.valueOf(result)));
 			player.openInventory(holder.getInventory());
 		});
