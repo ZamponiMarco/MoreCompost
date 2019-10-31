@@ -48,20 +48,20 @@ public class CompostableSettingsInventoryHolder extends MoreCompostInventoryHold
 				MessageUtils.color(String.format("&6&lCompostable: &1&l%s", compostable.getId())));
 		registerSettingConsumer(4, manager, section, wrapper.skullFromValue(CHANCE_HEAD), "chance",
 				compostable.getChance(), localesManager.getLocaleString(LocaleString.CHANCE_DESCRIPTION),
-				DoubleSettingInventoryHolder.class);
+				DoubleSettingInventoryHolder.class, true);
 		registerSettingConsumer(3, manager, section, wrapper.skullFromValue(MINIMUM_HEAD), "minRolls",
 				compostable.getMinRolls(), localesManager.getLocaleString(LocaleString.MIN_ROLLS_DESCRIPTION),
-				IntegerSettingInventoryHolder.class);
+				IntegerSettingInventoryHolder.class, true);
 		registerSettingConsumer(5, manager, section, wrapper.skullFromValue(MAXIMUM_HEAD), "maxRolls",
 				compostable.getMaxRolls(), localesManager.getLocaleString(LocaleString.MAX_ROLLS_DESCRIPTION),
-				IntegerSettingInventoryHolder.class);
+				IntegerSettingInventoryHolder.class, true);
 		registerSettingConsumer(13, manager, section, wrapper.skullFromValue(MATERIAL_HEAD), "material",
 				compostable.getMaterial().name(), localesManager.getLocaleString(LocaleString.MATERIAL_DESCRIPTION),
-				StringSettingInventoryHolder.class);
+				StringSettingInventoryHolder.class, true);
 		registerSettingConsumer(17, manager, section, wrapper.skullFromValue(FORCED_DROPTABLE_ID), "forcedDropTableId",
 				compostable.getForcedDropTableId().orElse("null"),
 				localesManager.getLocaleString(LocaleString.FORCED_DROP_TABLE_ID_DESCRIPTION),
-				StringSettingInventoryHolder.class);
+				StringSettingInventoryHolder.class, true);
 		registerClickConsumer(18, getRemoveItem(), e -> {
 			section.getParent().set(compostableId, null);
 			manager.saveAndReloadData();

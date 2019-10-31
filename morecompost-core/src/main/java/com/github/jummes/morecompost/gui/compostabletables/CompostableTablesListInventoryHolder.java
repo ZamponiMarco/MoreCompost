@@ -54,7 +54,7 @@ public class CompostableTablesListInventoryHolder extends MoreCompostInventoryHo
 										.getInventory());
 					else
 						e.getWhoClicked().sendMessage(
-								localesManager.getLocaleString(LocaleString.NOT_IN_CONFIG_MESSAGE).toString());
+								localesManager.getSingleLocaleString(LocaleString.NOT_IN_CONFIG_MESSAGE));
 				}));
 
 		registerClickConsumer(51, getAddItem(),

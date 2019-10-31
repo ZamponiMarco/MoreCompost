@@ -72,7 +72,7 @@ public class MoreCompost extends JavaPlugin {
 		compostersManager = new CompostersManager();
 		dropsManager = new DropsManager();
 		compostablesManager = new CompostablesManager();
-		localesManager = new LocalesManager(settingsManager.getSetting(Settings.LOCALE));
+		localesManager = new LocalesManager();
 	}
 
 	private void setUpCommands() {

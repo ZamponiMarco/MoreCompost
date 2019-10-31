@@ -1,6 +1,8 @@
 package com.github.jummes.morecompost.locales;
 
 public enum LocaleString {
+	MODIFY_ATTRIBUTE,
+	RESET_ATTRIBUTE,
 	BACK_ITEM_NAME,
 	ADD_ITEM_NAME,
 	REMOVE_ITEM_NAME,

@@ -41,17 +41,17 @@ public class DropTableSettingsInventoryHolder extends MoreCompostInventoryHolder
 				MessageUtils.color(String.format("&6&lDropTable: &1&l%s", dropTable.getId())));
 		registerSettingConsumer(3, manager, section, wrapper.skullFromValue(MINIMUM_HEAD), "minRolls",
 				dropTable.getMinRolls(), localesManager.getLocaleString(LocaleString.MIN_ROLLS_DESCRIPTION),
-				IntegerSettingInventoryHolder.class);
+				IntegerSettingInventoryHolder.class, true);
 		registerSettingConsumer(5, manager, section, wrapper.skullFromValue(MAXIMUM_HEAD), "maxRolls",
 				dropTable.getMaxRolls(), localesManager.getLocaleString(LocaleString.MAX_ROLLS_DESCRIPTION),
-				IntegerSettingInventoryHolder.class);
+				IntegerSettingInventoryHolder.class, true);
 
 		if (!dropTableId.equals("default")) {
 			registerSettingConsumer(4, manager, section, wrapper.skullFromValue(PRIORITY_HEAD), "priority",
 					dropTable.getPriority(), localesManager.getLocaleString(LocaleString.PRIORITY_DESCRIPTION),
-					IntegerSettingInventoryHolder.class);
+					IntegerSettingInventoryHolder.class, false);
 		}
-		registerClickConsumer(13, getNamedItem(wrapper.skullFromValue(DROPS_HEAD), "drops",
+		registerClickConsumer(13, getNamedItem(wrapper.skullFromValue(DROPS_HEAD), "&6&lDrops",
 				localesManager.getLocaleString(LocaleString.DROPS_LIST_DESCRIPTION)), e -> {
 					e.getWhoClicked()
 							.openInventory(new DropsListInventoryHolder(this, MessageUtils.color("&6&lDrops"),

@@ -42,14 +42,14 @@ public class CompostableTableSettingsInventoryHolder extends MoreCompostInventor
 		registerSettingConsumer(3, manager, section, wrapper.skullFromValue(REPLACE_HEAD), "replaceDefaultCompostables",
 				compostableTable.getReplaceDefaultCompostables(),
 				localesManager.getLocaleString(LocaleString.REPLACE_DEFAULT_COMPOSTABLES_DESCRIPTION),
-				BooleanSettingInventoryHolder.class);
+				BooleanSettingInventoryHolder.class, true);
 		if (!compostableTableId.equals("default")) {
 			registerSettingConsumer(5, manager, section, wrapper.skullFromValue(PRIORITY_HEAD), "priority",
 					compostableTable.getPriority(), localesManager.getLocaleString(LocaleString.PRIORITY_DESCRIPTION),
-					IntegerSettingInventoryHolder.class);
+					IntegerSettingInventoryHolder.class, false);
 		}
 		registerClickConsumer(13,
-				getNamedItem(wrapper.skullFromValue(COMPOSTABLES_HEAD), "Compostables",
+				getNamedItem(wrapper.skullFromValue(COMPOSTABLES_HEAD), "&6&lCompostables",
 						localesManager.getLocaleString(LocaleString.COMPOSTABLES_LIST_DESCRIPTION)),
 				e -> e.getWhoClicked().openInventory(new CompostablesListInventoryHolder(this,
 						MessageUtils.color("&2&lCompostables"), compostableTable.getId(), 1).getInventory()));

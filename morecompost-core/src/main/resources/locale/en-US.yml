@@ -1,3 +1,7 @@
+modifyAttribute:
+- "&6&l- &e&lLeft click &6to modify"
+resetAttribute:
+- "&6&l- &e&lRight click &6to reset"
 backItemName:
 - "&6&lGo back"
 addItemName:

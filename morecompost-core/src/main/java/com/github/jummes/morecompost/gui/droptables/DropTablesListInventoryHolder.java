@@ -54,7 +54,7 @@ public class DropTablesListInventoryHolder extends MoreCompostInventoryHolder {
 						.openInventory(new DropTableSettingsInventoryHolder(this, dropTable.getId()).getInventory());
 			else
 				e.getWhoClicked()
-						.sendMessage(localesManager.getLocaleString(LocaleString.NOT_IN_CONFIG_MESSAGE).toString());
+						.sendMessage(localesManager.getSingleLocaleString(LocaleString.NOT_IN_CONFIG_MESSAGE));
 		}));
 
 		// Register add item

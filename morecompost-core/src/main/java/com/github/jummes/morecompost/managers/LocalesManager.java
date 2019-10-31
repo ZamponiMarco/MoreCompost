@@ -11,6 +11,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import com.github.jummes.morecompost.core.MoreCompost;
 import com.github.jummes.morecompost.locales.LocaleString;
+import com.github.jummes.morecompost.settings.Settings;
 import com.github.jummes.morecompost.utils.MessageUtils;
 import com.google.common.base.CaseFormat;
 import com.google.common.collect.Lists;
@@ -27,9 +28,9 @@ public class LocalesManager implements DataManager {
 	private YamlConfiguration dataYaml;
 	private Map<LocaleString, List<String>> locale = new EnumMap<LocaleString, List<String>>(LocaleString.class);
 
-	public LocalesManager(String filename) {
-		this.filename = filename += ".yml";
+	public LocalesManager() {
 		this.plugin = MoreCompost.getInstance();
+		this.filename = plugin.getSettingsManager().getSetting(Settings.LOCALE) + ".yml";
 
 		loadDataFile();
 		loadDataYaml();
@@ -81,12 +82,22 @@ public class LocalesManager implements DataManager {
 		return dataFile;
 	}
 
+	@Override
+	public void reloadData() {
+		this.filename = plugin.getSettingsManager().getSetting(Settings.LOCALE) + ".yml";
+		DataManager.super.reloadData();
+	}
+
 	public Map<LocaleString, List<String>> getLocaleMap() {
 		return locale;
 	}
 
 	public List<String> getLocaleString(LocaleString localeString) {
 		return locale.get(localeString);
+	}
+
+	public String getSingleLocaleString(LocaleString localeString) {
+		return String.join(" ", locale.get(localeString));
 	}
 
 }

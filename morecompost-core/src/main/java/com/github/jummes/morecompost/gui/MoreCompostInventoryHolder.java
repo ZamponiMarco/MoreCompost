@@ -83,9 +83,10 @@ public abstract class MoreCompostInventoryHolder implements InventoryHolder {
 	 * @param clazz       class that manages the update of data
 	 */
 	public void registerSettingConsumer(int slot, DataManager dataManager, ConfigurationSection section, ItemStack item,
-			String key, Object value, List<String> description, Class<? extends SettingInventoryHolder> clazz) {
-		registerClickConsumer(slot, getSettingItem(item, key, value, description),
-				getSettingConsumer(dataManager, section, key, value, clazz));
+			String key, Object value, List<String> description, Class<? extends SettingInventoryHolder> clazz,
+			boolean resettable) {
+		registerClickConsumer(slot, getSettingItem(item, key, value, description, resettable),
+				getSettingConsumer(dataManager, section, key, value, clazz, resettable));
 	}
 
 	/**
@@ -96,7 +97,7 @@ public abstract class MoreCompostInventoryHolder implements InventoryHolder {
 	public void fillInventoryWith(Material material) {
 		for (int i = 0; i < inventory.getSize(); i++) {
 			if (inventory.getItem(i) == null) {
-				registerClickConsumer(i, getPlaceholderItem(material), e -> {
+				registerClickConsumer(i, getNotNamedItem(material), e -> {
 				});
 			}
 		}
@@ -111,14 +112,15 @@ public abstract class MoreCompostInventoryHolder implements InventoryHolder {
 	 */
 	protected ItemStack getNamedItem(ItemStack item, String name, List<String> lore) {
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(name);
+		meta.setDisplayName(MessageUtils.color(name));
+		meta.setLore(null);
 		meta.setLore(lore);
 		item.setItemMeta(meta);
 		return item;
 	}
 
-	private Consumer<InventoryClickEvent> getSettingConsumer(DataManager dataManager, ConfigurationSection section,
-			String key, Object value, Class<? extends SettingInventoryHolder> clazz) {
+	private Consumer<InventoryClickEvent> getSettingConsumer(DataManager manager, ConfigurationSection section,
+			String key, Object value, Class<? extends SettingInventoryHolder> clazz, boolean resettable) {
 		return e -> {
 			if (e.getClick().equals(ClickType.LEFT)) {
 				HumanEntity p = e.getWhoClicked();
@@ -126,53 +128,62 @@ public abstract class MoreCompostInventoryHolder implements InventoryHolder {
 					p.openInventory(clazz
 							.getConstructor(DataManager.class, ConfigurationSection.class, String.class, Object.class,
 									HumanEntity.class, InventoryHolder.class)
-							.newInstance(dataManager, section, key, value, p, this).getInventory());
+							.newInstance(manager, section, key, value, p, this).getInventory());
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
+			} else if (e.getClick().equals(ClickType.RIGHT) && resettable) {
+				section.set(key, null);
+				manager.saveAndReloadData();
+				e.getWhoClicked().openInventory(this.getInventory());
 			}
 		};
 	}
 
-	private ItemStack getSettingItem(ItemStack item, String key, Object value, List<String> description) {
+	private ItemStack getSettingItem(ItemStack item, String key, Object value, List<String> description,
+			boolean resettable) {
 		item = getNamedItem(item, MessageUtils.color(String.format("&6&l%s = &e&l%s", key, value.toString())),
-				getSettingLore(description));
+				getSettingLore(description, resettable));
 		return item;
 	}
 
-	private ItemStack getPlaceholderItem(Material material) {
-		return getNamedItem(new ItemStack(material), " ", new ArrayList<String>());
+	private List<String> getSettingLore(List<String> description, boolean resettable) {
+		if (!description.contains(localesManager.getSingleLocaleString(LocaleString.MODIFY_ATTRIBUTE))) {
+			description.add(0, localesManager.getSingleLocaleString(LocaleString.MODIFY_ATTRIBUTE));
+		}
+		if (resettable && !description.contains(localesManager.getSingleLocaleString(LocaleString.RESET_ATTRIBUTE))) {
+			description.add(1, localesManager.getSingleLocaleString(LocaleString.RESET_ATTRIBUTE));
+		}
+		return description;
 	}
 
-	private List<String> getSettingLore(List<String> description) {
-		description.add(0, MessageUtils.color("&6&l- &e&lLeft click &6to modify"));
-		return description;
+	private ItemStack getNotNamedItem(Material material) {
+		return getNamedItem(new ItemStack(material), " ", new ArrayList<String>());
 	}
 
 	protected ItemStack getBackItem() {
 		return getNamedItem(MoreCompost.getInstance().getWrapper().skullFromValue(BACK_HEAD),
-				localesManager.getLocaleString(LocaleString.BACK_ITEM_NAME).toString(), new ArrayList<String>());
+				localesManager.getSingleLocaleString(LocaleString.BACK_ITEM_NAME), new ArrayList<String>());
 	}
 
 	protected ItemStack getAddItem() {
 		return getNamedItem(MoreCompost.getInstance().getWrapper().skullFromValue(ADD_HEAD),
-				localesManager.getLocaleString(LocaleString.ADD_ITEM_NAME).toString(), new ArrayList<String>());
+				localesManager.getSingleLocaleString(LocaleString.ADD_ITEM_NAME), new ArrayList<String>());
 	}
 
 	protected ItemStack getRemoveItem() {
 		return getNamedItem(MoreCompost.getInstance().getWrapper().skullFromValue(REMOVE_HEAD),
-				localesManager.getLocaleString(LocaleString.REMOVE_ITEM_NAME).toString(), new ArrayList<String>());
+				localesManager.getSingleLocaleString(LocaleString.REMOVE_ITEM_NAME), new ArrayList<String>());
 	}
 
 	protected ItemStack getNextPageItem() {
 		return getNamedItem(MoreCompost.getInstance().getWrapper().skullFromValue(ARROW_RIGHT_HEAD),
-				localesManager.getLocaleString(LocaleString.NEXT_PAGE_ITEM_NAME).toString(), new ArrayList<String>());
+				localesManager.getSingleLocaleString(LocaleString.NEXT_PAGE_ITEM_NAME), new ArrayList<String>());
 	}
 
 	protected ItemStack getPreviousPageItem() {
 		return getNamedItem(MoreCompost.getInstance().getWrapper().skullFromValue(ARROW_LEFT_HEAD),
-				localesManager.getLocaleString(LocaleString.PREVIOUS_PAGE_ITEM_NAME).toString(),
-				new ArrayList<String>());
+				localesManager.getSingleLocaleString(LocaleString.PREVIOUS_PAGE_ITEM_NAME), new ArrayList<String>());
 	}
 
 	@Override

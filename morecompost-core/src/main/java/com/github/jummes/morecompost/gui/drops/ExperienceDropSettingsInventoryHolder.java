@@ -38,15 +38,15 @@ public class ExperienceDropSettingsInventoryHolder extends DropSettingsInventory
 		this.inventory = Bukkit.createInventory(this, 27,
 				MessageUtils.color(String.format("&6&lDrop: &1&l%s", drop.getId())));
 		registerSettingConsumer(3, manager, section, wrapper.skullFromValue(TYPE_HEAD), "type", drop.getType(),
-				localesManager.getLocaleString(LocaleString.TYPE_DESCRIPTION), StringSettingInventoryHolder.class);
+				localesManager.getLocaleString(LocaleString.TYPE_DESCRIPTION), StringSettingInventoryHolder.class, true);
 		registerSettingConsumer(5, manager, section, wrapper.skullFromValue(WEIGHT_HEAD), "weight", drop.getWeight(),
-				localesManager.getLocaleString(LocaleString.WEIGHT_DESCRIPTION), IntegerSettingInventoryHolder.class);
+				localesManager.getLocaleString(LocaleString.WEIGHT_DESCRIPTION), IntegerSettingInventoryHolder.class, true);
 		registerSettingConsumer(12, manager, section, wrapper.skullFromValue(MINIMUM_HEAD), "minAmount",
 				drop.getMinAmount(), localesManager.getLocaleString(LocaleString.MIN_AMOUNT_DESCRIPTION),
-				IntegerSettingInventoryHolder.class);
+				IntegerSettingInventoryHolder.class, true);
 		registerSettingConsumer(14, manager, section, wrapper.skullFromValue(MAXIMUM_HEAD), "maxAmount",
 				drop.getMaxAmount(), localesManager.getLocaleString(LocaleString.MAX_AMOUNT_DESCRIPTION),
-				IntegerSettingInventoryHolder.class);
+				IntegerSettingInventoryHolder.class, true);
 		registerClickConsumer(18, getRemoveItem(), e -> {
 			section.getParent().set(dropId, null);
 			manager.saveAndReloadData();

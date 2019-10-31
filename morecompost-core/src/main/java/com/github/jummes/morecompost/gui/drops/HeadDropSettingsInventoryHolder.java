@@ -40,21 +40,21 @@ public class HeadDropSettingsInventoryHolder extends DropSettingsInventoryHolder
 				MessageUtils.color(String.format("&6&lDrop: &1&l%s", drop.getId())));
 
 		registerSettingConsumer(3, manager, section, wrapper.skullFromValue(TYPE_HEAD), "type", drop.getType(),
-				localesManager.getLocaleString(LocaleString.TYPE_DESCRIPTION), StringSettingInventoryHolder.class);
+				localesManager.getLocaleString(LocaleString.TYPE_DESCRIPTION), StringSettingInventoryHolder.class, true);
 		registerSettingConsumer(5, manager, section, wrapper.skullFromValue(WEIGHT_HEAD), "weight", drop.getWeight(),
-				localesManager.getLocaleString(LocaleString.WEIGHT_DESCRIPTION), IntegerSettingInventoryHolder.class);
+				localesManager.getLocaleString(LocaleString.WEIGHT_DESCRIPTION), IntegerSettingInventoryHolder.class, true);
 		registerSettingConsumer(11, manager, section, wrapper.skullFromValue(MINIMUM_HEAD), "minCount",
 				drop.getMinCount(), localesManager.getLocaleString(LocaleString.MIN_COUNT_DESCRIPTION),
-				IntegerSettingInventoryHolder.class);
+				IntegerSettingInventoryHolder.class, true);
 		registerSettingConsumer(12, manager, section, wrapper.skullFromValue(MAXIMUM_HEAD), "maxCount",
 				drop.getMaxCount(), localesManager.getLocaleString(LocaleString.MAX_COUNT_DESCRIPTION),
-				IntegerSettingInventoryHolder.class);
+				IntegerSettingInventoryHolder.class, true);
 		registerSettingConsumer(14, manager, section, drop.getGUIItem(), "texture", drop.getTexture(),
-				localesManager.getLocaleString(LocaleString.TEXTURE_DESCRIPTION), StringSettingInventoryHolder.class);
+				localesManager.getLocaleString(LocaleString.TEXTURE_DESCRIPTION), StringSettingInventoryHolder.class, true);
 		registerSettingConsumer(15, manager, section, wrapper.skullFromValue(NAME_HEAD), "displayName",
 				drop.getItem().getItemMeta().getDisplayName(),
 				localesManager.getLocaleString(LocaleString.DISPLAY_NAME_DESCRIPTION),
-				StringSettingInventoryHolder.class);
+				StringSettingInventoryHolder.class, true);
 		registerClickConsumer(18, getRemoveItem(), e -> {
 			section.getParent().set(dropId, null);
 			manager.saveAndReloadData();
