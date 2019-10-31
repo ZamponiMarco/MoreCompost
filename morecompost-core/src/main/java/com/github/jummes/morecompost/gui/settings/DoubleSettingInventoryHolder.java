@@ -1,5 +1,6 @@
 package com.github.jummes.morecompost.gui.settings;
 
+import java.util.ArrayList;
 import java.util.function.Consumer;
 
 import org.bukkit.Bukkit;
@@ -69,12 +70,12 @@ public class DoubleSettingInventoryHolder extends SettingInventoryHolder {
 	}
 
 	private ItemStack getModifyItem(double addition, ItemStack item) {
-		return getNamedItem(item, MessageUtils.color("&6&lModify -> &e&l" + String.valueOf(addition)));
+		return getNamedItem(item, MessageUtils.color("&6&lModify -> &e&l" + String.valueOf(addition)), new ArrayList<String>());
 	}
 
 	private ItemStack getConfirmItem() {
 		return getNamedItem(MoreCompost.getInstance().getWrapper().skullFromValue(SUBMIT),
-				MessageUtils.color("&6&lResult = &e&l" + String.valueOf(result)));
+				MessageUtils.color("&6&lResult = &e&l" + String.valueOf(result)), new ArrayList<String>());
 	}
 
 }

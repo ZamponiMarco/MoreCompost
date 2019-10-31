@@ -1,6 +1,7 @@
 package com.github.jummes.morecompost.gui.settings;
 
 import java.util.AbstractMap;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -43,7 +44,8 @@ public class StringSettingInventoryHolder extends SettingInventoryHolder {
 	@Override
 	protected void initializeInventory() {
 		this.inventory = Bukkit.createInventory(this, 27, isCreation ? CREATE_TITLE : String.format(MODIFY_TITLE, key));
-		registerClickConsumer(13, getStringItem(MoreCompost.getInstance().getWrapper().skullFromValue(MODIFY_HEAD)), e -> playerCanWrite());
+		registerClickConsumer(13, getStringItem(MoreCompost.getInstance().getWrapper().skullFromValue(MODIFY_HEAD)),
+				e -> playerCanWrite());
 		registerClickConsumer(26, getBackItem(), getBackConsumer());
 		fillInventoryWith(Material.GRAY_STAINED_GLASS_PANE);
 	}
@@ -60,6 +62,6 @@ public class StringSettingInventoryHolder extends SettingInventoryHolder {
 	}
 
 	private ItemStack getStringItem(ItemStack item) {
-		return getNamedItem(item, isCreation ? CREATE_ITEM_NAME : MODIFY_ITEM_NAME);
+		return getNamedItem(item, isCreation ? CREATE_ITEM_NAME : MODIFY_ITEM_NAME, new ArrayList<String>());
 	}
 }

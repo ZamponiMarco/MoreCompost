@@ -1,5 +1,6 @@
 package com.github.jummes.morecompost.gui.compostables;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,7 +36,6 @@ public class CompostablesListInventoryHolder extends MoreCompostInventoryHolder 
 
 	@Override
 	protected void initializeInventory() {
-
 		CompostablesManager manager = MoreCompost.getInstance().getCompostablesManager();
 
 		ConfigurationSection section = manager.getDataYaml().getConfigurationSection(compostableTableId)
@@ -80,7 +80,7 @@ public class CompostablesListInventoryHolder extends MoreCompostInventoryHolder 
 	}
 
 	private ItemStack getCompostableItem(Compostable compostable) {
-		return getNamedItem(new ItemStack(compostable.getMaterial()), MessageUtils.color("&6&l" + compostable.getId()));
+		return getNamedItem(new ItemStack(compostable.getMaterial()), MessageUtils.color("&6&l" + compostable.getId()), new ArrayList<String>());
 	}
 
 }

@@ -31,12 +31,14 @@ public class MoreCompost extends JavaPlugin {
 	private CompostersManager compostersManager;
 	private SettingsManager settingsManager;
 	private LocalesManager localesManager;
-	
+
 	public void onEnable() {
 		instance = this;
 		setUpFolder();
 		setUpWrapper();
-		startUpTasks();
+		setUpData();
+		setUpCommands();
+		registerEvents();
 	}
 
 	private void setUpFolder() {
@@ -56,7 +58,7 @@ public class MoreCompost extends JavaPlugin {
 		}
 	}
 
-	private void startUpTasks() {
+	private void setUpData() {
 		settingsManager = new SettingsManager();
 
 		if (Boolean.valueOf(settingsManager.getSetting(Settings.METRICS))) {
@@ -71,9 +73,15 @@ public class MoreCompost extends JavaPlugin {
 		dropsManager = new DropsManager();
 		compostablesManager = new CompostablesManager();
 		localesManager = new LocalesManager(settingsManager.getSetting(Settings.LOCALE));
+	}
+
+	private void setUpCommands() {
 		CommandExecutor commandExecutor = new MoreCompostCommandExecutor();
 		getCommand("mc").setExecutor(commandExecutor);
 		getCommand("mc").setTabCompleter((TabCompleter) commandExecutor);
+	}
+
+	private void registerEvents() {
 		Bukkit.getPluginManager().registerEvents(new PlayerChatListener(), this);
 		Bukkit.getPluginManager().registerEvents(new InventoryClickListener(), this);
 		Bukkit.getPluginManager().registerEvents(new ComposterBreakListener(), this);
@@ -103,12 +111,12 @@ public class MoreCompost extends JavaPlugin {
 		return settingsManager;
 	}
 
-	public VersionWrapper getWrapper() {
-		return wrapper;
-	}
-
 	public LocalesManager getLocalesManager() {
 		return localesManager;
+	}
+
+	public VersionWrapper getWrapper() {
+		return wrapper;
 	}
 
 }

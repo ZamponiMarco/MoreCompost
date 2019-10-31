@@ -1,3 +1,15 @@
+backItemName:
+- "&6&lGo back"
+addItemName:
+- "&6&lLeft click &ato add a new object in this list"
+removeItemName:
+- "&6&lLeft click &ato remove this new object from the list"
+nextPageItemName:
+- "&6&lNext page"
+previousPageItemName:
+- "&6&lPrevious page"
+notInConfigMessage:
+- "&c&lThis table is not present in config files. &6&lCreate it &l&cfirst."
 typeDescription:
 - "&7&oThe type of the drop,"
 - "&7&ocan be: item, head, or"
@@ -64,4 +76,4 @@ dropsListDescription:
 - "&7&odrop table."
 compostablesListDescription:
 - "&7&oThe list of compostables"
-- "&7&oof thisdrop table."
+- "&7&oof this drop table."

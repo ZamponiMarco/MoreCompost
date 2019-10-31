@@ -1,5 +1,6 @@
 package com.github.jummes.morecompost.gui.compostabletables;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,6 +13,7 @@ import com.github.jummes.morecompost.compostabletables.CompostableTable;
 import com.github.jummes.morecompost.core.MoreCompost;
 import com.github.jummes.morecompost.gui.MoreCompostInventoryHolder;
 import com.github.jummes.morecompost.gui.settings.StringSettingInventoryHolder;
+import com.github.jummes.morecompost.locales.LocaleString;
 import com.github.jummes.morecompost.managers.CompostablesManager;
 import com.github.jummes.morecompost.utils.MessageUtils;
 import com.google.common.collect.Lists;
@@ -20,8 +22,6 @@ public class CompostableTablesListInventoryHolder extends MoreCompostInventoryHo
 
 	private static final int COMPOSTABLES_TABLES_NUMBER = 50;
 	private static final String COMPOSTABLES_TABLES_HEAD = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGI2YTI5ZWE2OGEwYzYxYjFlZGEyZDhhZWMzZTIyMjk3MjczMjNiN2QyZGE2YmMwNGNjMGNkMmRlZjNiNDcxMiJ9fX0=";
-	private static final String ERROR_NOT_IN_CONFIG_MSG = MessageUtils
-			.color("&c&lThis compostable table is not present in config files. &6&lCreate it &l&cfirst.");
 
 	private String title;
 	private int page;
@@ -53,7 +53,8 @@ public class CompostableTablesListInventoryHolder extends MoreCompostInventoryHo
 								new CompostableTableSettingsInventoryHolder(this, compostableTable.getId())
 										.getInventory());
 					else
-						e.getWhoClicked().sendMessage(ERROR_NOT_IN_CONFIG_MSG);
+						e.getWhoClicked().sendMessage(
+								localesManager.getLocaleString(LocaleString.NOT_IN_CONFIG_MESSAGE).toString());
 				}));
 
 		registerClickConsumer(51, getAddItem(),
@@ -74,7 +75,7 @@ public class CompostableTablesListInventoryHolder extends MoreCompostInventoryHo
 
 	private ItemStack getCompostableTableItem(CompostableTable compostableTable) {
 		return getNamedItem(MoreCompost.getInstance().getWrapper().skullFromValue(COMPOSTABLES_TABLES_HEAD),
-				MessageUtils.color("&6&lCompostableTable: &l&2" + compostableTable.getId()));
+				MessageUtils.color("&6&lCompostableTable: &l&2" + compostableTable.getId()), new ArrayList<String>());
 	}
 
 }

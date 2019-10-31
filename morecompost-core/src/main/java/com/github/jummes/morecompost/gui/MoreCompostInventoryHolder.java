@@ -1,5 +1,6 @@
 package com.github.jummes.morecompost.gui;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,8 +18,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import com.github.jummes.morecompost.core.MoreCompost;
 import com.github.jummes.morecompost.gui.settings.SettingInventoryHolder;
+import com.github.jummes.morecompost.locales.LocaleString;
 import com.github.jummes.morecompost.managers.DataManager;
+import com.github.jummes.morecompost.managers.LocalesManager;
 import com.github.jummes.morecompost.utils.MessageUtils;
+import com.github.jummes.morecompost.wrapper.VersionWrapper;
 
 public abstract class MoreCompostInventoryHolder implements InventoryHolder {
 
@@ -28,16 +32,15 @@ public abstract class MoreCompostInventoryHolder implements InventoryHolder {
 	private static final String ARROW_LEFT_HEAD = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzY5N2MyNDg5MmNmYzAzYzcyOGZmYWVhYmYzNGJkZmI5MmQ0NTExNDdiMjZkMjAzZGNhZmE5M2U0MWZmOSJ9fX0=";
 	private static final String ARROW_RIGHT_HEAD = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODZlMTQ1ZTcxMjk1YmNjMDQ4OGU5YmI3ZTZkNjg5NWI3Zjk2OWEzYjViYjdlYjM0YTUyZTkzMmJjODRkZjViIn19fQ===";
 
-	private static final String BACK_ITEM_NAME = MessageUtils.color("&6&lGo back");
-	private static final String ADD_ITEM_NAME = MessageUtils.color("&6&lLeft click &ato add a new object in this list");
-	private static final String REMOVE_ITEM_NAME = MessageUtils
-			.color("&6&lLeft click &ato remove this new object from the list");
-
 	protected Inventory inventory;
 	protected Map<Integer, Consumer<InventoryClickEvent>> clickMap;
+	protected VersionWrapper wrapper;
+	protected LocalesManager localesManager;
 
 	public MoreCompostInventoryHolder() {
 		this.clickMap = new HashMap<>();
+		this.wrapper = MoreCompost.getInstance().getWrapper();
+		this.localesManager = MoreCompost.getInstance().getLocalesManager();
 	}
 
 	protected abstract void initializeInventory();
@@ -66,6 +69,19 @@ public abstract class MoreCompostInventoryHolder implements InventoryHolder {
 		clickMap.put(slot, clickConsumer);
 	}
 
+	/**
+	 * Registers the consumer of a setting that can change the representation of
+	 * object in the data files.
+	 * 
+	 * @param slot        slot that the event will be linked to
+	 * @param dataManager data manager of the represented object
+	 * @param section     section of configuration representing the object
+	 * @param item        item that will be displayed in inventory
+	 * @param key         key of the value
+	 * @param value       value associated to the key
+	 * @param description description of the attribute
+	 * @param clazz       class that manages the update of data
+	 */
 	public void registerSettingConsumer(int slot, DataManager dataManager, ConfigurationSection section, ItemStack item,
 			String key, Object value, List<String> description, Class<? extends SettingInventoryHolder> clazz) {
 		registerClickConsumer(slot, getSettingItem(item, key, value, description),
@@ -86,9 +102,17 @@ public abstract class MoreCompostInventoryHolder implements InventoryHolder {
 		}
 	}
 
-	protected ItemStack getNamedItem(ItemStack item, String name) {
+	/**
+	 * Gets a named item
+	 * 
+	 * @param item item that works as the base
+	 * @param name name that will be displayed
+	 * @return
+	 */
+	protected ItemStack getNamedItem(ItemStack item, String name, List<String> lore) {
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(name);
+		meta.setLore(lore);
 		item.setItemMeta(meta);
 		return item;
 	}
@@ -110,16 +134,14 @@ public abstract class MoreCompostInventoryHolder implements InventoryHolder {
 		};
 	}
 
-	protected ItemStack getSettingItem(ItemStack item, String key, Object value, List<String> description) {
-		item = getNamedItem(item, MessageUtils.color(String.format("&6&l%s = &e&l%s", key, value.toString())));
-		ItemMeta meta = item.getItemMeta();
-		meta.setLore(getSettingLore(description));
-		item.setItemMeta(meta);
+	private ItemStack getSettingItem(ItemStack item, String key, Object value, List<String> description) {
+		item = getNamedItem(item, MessageUtils.color(String.format("&6&l%s = &e&l%s", key, value.toString())),
+				getSettingLore(description));
 		return item;
 	}
 
 	private ItemStack getPlaceholderItem(Material material) {
-		return getNamedItem(new ItemStack(material), " ");
+		return getNamedItem(new ItemStack(material), " ", new ArrayList<String>());
 	}
 
 	private List<String> getSettingLore(List<String> description) {
@@ -128,24 +150,29 @@ public abstract class MoreCompostInventoryHolder implements InventoryHolder {
 	}
 
 	protected ItemStack getBackItem() {
-		return getNamedItem(MoreCompost.getInstance().getWrapper().skullFromValue(BACK_HEAD), BACK_ITEM_NAME);
+		return getNamedItem(MoreCompost.getInstance().getWrapper().skullFromValue(BACK_HEAD),
+				localesManager.getLocaleString(LocaleString.BACK_ITEM_NAME).toString(), new ArrayList<String>());
 	}
 
 	protected ItemStack getAddItem() {
-		return getNamedItem(MoreCompost.getInstance().getWrapper().skullFromValue(ADD_HEAD), ADD_ITEM_NAME);
+		return getNamedItem(MoreCompost.getInstance().getWrapper().skullFromValue(ADD_HEAD),
+				localesManager.getLocaleString(LocaleString.ADD_ITEM_NAME).toString(), new ArrayList<String>());
 	}
 
 	protected ItemStack getRemoveItem() {
-		return getNamedItem(MoreCompost.getInstance().getWrapper().skullFromValue(REMOVE_HEAD), REMOVE_ITEM_NAME);
+		return getNamedItem(MoreCompost.getInstance().getWrapper().skullFromValue(REMOVE_HEAD),
+				localesManager.getLocaleString(LocaleString.REMOVE_ITEM_NAME).toString(), new ArrayList<String>());
 	}
 
 	protected ItemStack getNextPageItem() {
-		return getNamedItem(MoreCompost.getInstance().getWrapper().skullFromValue(ARROW_RIGHT_HEAD), "&6&lNext page");
+		return getNamedItem(MoreCompost.getInstance().getWrapper().skullFromValue(ARROW_RIGHT_HEAD),
+				localesManager.getLocaleString(LocaleString.NEXT_PAGE_ITEM_NAME).toString(), new ArrayList<String>());
 	}
 
 	protected ItemStack getPreviousPageItem() {
 		return getNamedItem(MoreCompost.getInstance().getWrapper().skullFromValue(ARROW_LEFT_HEAD),
-				"&6&lPrevious page");
+				localesManager.getLocaleString(LocaleString.PREVIOUS_PAGE_ITEM_NAME).toString(),
+				new ArrayList<String>());
 	}
 
 	@Override

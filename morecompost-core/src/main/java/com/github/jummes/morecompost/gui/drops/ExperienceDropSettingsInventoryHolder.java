@@ -10,11 +10,9 @@ import com.github.jummes.morecompost.drops.ExperienceCompostDrop;
 import com.github.jummes.morecompost.droptables.DropTable;
 import com.github.jummes.morecompost.gui.settings.IntegerSettingInventoryHolder;
 import com.github.jummes.morecompost.gui.settings.StringSettingInventoryHolder;
-import com.github.jummes.morecompost.locale.LocaleString;
+import com.github.jummes.morecompost.locales.LocaleString;
 import com.github.jummes.morecompost.managers.DropsManager;
-import com.github.jummes.morecompost.managers.LocalesManager;
 import com.github.jummes.morecompost.utils.MessageUtils;
-import com.github.jummes.morecompost.wrapper.VersionWrapper;
 
 public class ExperienceDropSettingsInventoryHolder extends DropSettingsInventoryHolder {
 
@@ -29,11 +27,7 @@ public class ExperienceDropSettingsInventoryHolder extends DropSettingsInventory
 
 	@Override
 	protected void initializeInventory() {
-		VersionWrapper wrapper = MoreCompost.getInstance().getWrapper();
-
 		DropsManager manager = MoreCompost.getInstance().getDropsManager();
-
-		LocalesManager localesManager = MoreCompost.getInstance().getLocalesManager();
 
 		DropTable dropTable = manager.getDropTableById(dropTableId);
 		ExperienceCompostDrop drop = (ExperienceCompostDrop) dropTable.getDropById(dropId);

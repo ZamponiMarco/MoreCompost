@@ -11,11 +11,9 @@ import com.github.jummes.morecompost.gui.MoreCompostInventoryHolder;
 import com.github.jummes.morecompost.gui.compostables.CompostablesListInventoryHolder;
 import com.github.jummes.morecompost.gui.settings.BooleanSettingInventoryHolder;
 import com.github.jummes.morecompost.gui.settings.IntegerSettingInventoryHolder;
-import com.github.jummes.morecompost.locale.LocaleString;
+import com.github.jummes.morecompost.locales.LocaleString;
 import com.github.jummes.morecompost.managers.CompostablesManager;
-import com.github.jummes.morecompost.managers.LocalesManager;
 import com.github.jummes.morecompost.utils.MessageUtils;
-import com.github.jummes.morecompost.wrapper.VersionWrapper;
 
 public class CompostableTableSettingsInventoryHolder extends MoreCompostInventoryHolder {
 
@@ -33,11 +31,7 @@ public class CompostableTableSettingsInventoryHolder extends MoreCompostInventor
 
 	@Override
 	protected void initializeInventory() {
-		VersionWrapper wrapper = MoreCompost.getInstance().getWrapper();
-
 		CompostablesManager manager = MoreCompost.getInstance().getCompostablesManager();
-
-		LocalesManager localesManager = MoreCompost.getInstance().getLocalesManager();
 
 		ConfigurationSection section = manager.getDataYaml().getConfigurationSection(compostableTableId);
 
@@ -55,7 +49,7 @@ public class CompostableTableSettingsInventoryHolder extends MoreCompostInventor
 					IntegerSettingInventoryHolder.class);
 		}
 		registerClickConsumer(13,
-				getSettingItem(wrapper.skullFromValue(COMPOSTABLES_HEAD), "Compostables", "List",
+				getNamedItem(wrapper.skullFromValue(COMPOSTABLES_HEAD), "Compostables",
 						localesManager.getLocaleString(LocaleString.COMPOSTABLES_LIST_DESCRIPTION)),
 				e -> e.getWhoClicked().openInventory(new CompostablesListInventoryHolder(this,
 						MessageUtils.color("&2&lCompostables"), compostableTable.getId(), 1).getInventory()));

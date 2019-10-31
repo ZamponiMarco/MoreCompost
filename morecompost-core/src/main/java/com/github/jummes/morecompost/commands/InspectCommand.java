@@ -21,7 +21,7 @@ public class InspectCommand extends AbstractCommand {
 	protected void execute() {
 		Player p = (Player) sender;
 		
-		String name = getOwner(p.rayTraceBlocks(20).getHitBlock()) != null? getOwner(p.rayTraceBlocks(20).getHitBlock()).getName(): "Nobody :(";
+		String name = getOwner(p.rayTraceBlocks(20).getHitBlock()) != null? getOwner(p.rayTraceBlocks(20).getHitBlock()).getName(): "null";
 
 		p.sendMessage(MessageUtils.color(
 				"&6The owner of this composter is: &c" + name));

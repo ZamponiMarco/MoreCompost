@@ -10,11 +10,9 @@ import com.github.jummes.morecompost.droptables.DropTable;
 import com.github.jummes.morecompost.gui.MoreCompostInventoryHolder;
 import com.github.jummes.morecompost.gui.drops.DropsListInventoryHolder;
 import com.github.jummes.morecompost.gui.settings.IntegerSettingInventoryHolder;
-import com.github.jummes.morecompost.locale.LocaleString;
+import com.github.jummes.morecompost.locales.LocaleString;
 import com.github.jummes.morecompost.managers.DropsManager;
-import com.github.jummes.morecompost.managers.LocalesManager;
 import com.github.jummes.morecompost.utils.MessageUtils;
-import com.github.jummes.morecompost.wrapper.VersionWrapper;
 import com.google.common.collect.Lists;
 
 public class DropTableSettingsInventoryHolder extends MoreCompostInventoryHolder {
@@ -34,11 +32,7 @@ public class DropTableSettingsInventoryHolder extends MoreCompostInventoryHolder
 
 	@Override
 	protected void initializeInventory() {
-		VersionWrapper wrapper = MoreCompost.getInstance().getWrapper();
-
 		DropsManager manager = MoreCompost.getInstance().getDropsManager();
-
-		LocalesManager localesManager = MoreCompost.getInstance().getLocalesManager();
 
 		DropTable dropTable = manager.getDropTableById(dropTableId);
 		ConfigurationSection section = manager.getDataYaml().getConfigurationSection(dropTableId);
@@ -57,7 +51,7 @@ public class DropTableSettingsInventoryHolder extends MoreCompostInventoryHolder
 					dropTable.getPriority(), localesManager.getLocaleString(LocaleString.PRIORITY_DESCRIPTION),
 					IntegerSettingInventoryHolder.class);
 		}
-		registerClickConsumer(13, getSettingItem(wrapper.skullFromValue(DROPS_HEAD), "drops", "List",
+		registerClickConsumer(13, getNamedItem(wrapper.skullFromValue(DROPS_HEAD), "drops",
 				localesManager.getLocaleString(LocaleString.DROPS_LIST_DESCRIPTION)), e -> {
 					e.getWhoClicked()
 							.openInventory(new DropsListInventoryHolder(this, MessageUtils.color("&6&lDrops"),

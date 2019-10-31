@@ -1,6 +1,12 @@
-package com.github.jummes.morecompost.locale;
+package com.github.jummes.morecompost.locales;
 
 public enum LocaleString {
+	BACK_ITEM_NAME,
+	ADD_ITEM_NAME,
+	REMOVE_ITEM_NAME,
+	NEXT_PAGE_ITEM_NAME,
+	PREVIOUS_PAGE_ITEM_NAME,
+	NOT_IN_CONFIG_MESSAGE,
 	TYPE_DESCRIPTION,
 	WEIGHT_DESCRIPTION,
 	MIN_AMOUNT_DESCRIPTION,

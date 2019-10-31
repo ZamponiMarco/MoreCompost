@@ -1,5 +1,6 @@
 package com.github.jummes.morecompost.gui.settings;
 
+import java.util.ArrayList;
 import java.util.function.Consumer;
 
 import org.bukkit.Bukkit;
@@ -44,7 +45,7 @@ public class BooleanSettingInventoryHolder extends SettingInventoryHolder {
 
 	private ItemStack getBooleanItem(boolean value) {
 		return getNamedItem(MoreCompost.getInstance().getWrapper().skullFromValue(value ? TRUE_HEAD : FALSE_HEAD),
-				MessageUtils.color("&6&lModify -> &e&l" + String.valueOf(value)));
+				MessageUtils.color("&6&lModify -> &e&l" + String.valueOf(value)), new ArrayList<String>());
 	}
 
 }
