@@ -1,7 +1,8 @@
 package com.github.jummes.morecompost.settings;
 
 public enum Settings {
-	METRICS,
+	METRICS, 
 	UPDATECHECKER,
-	VERSION;
+	VERSION, 
+	LOCALE;
 }

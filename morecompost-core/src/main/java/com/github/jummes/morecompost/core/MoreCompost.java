@@ -24,38 +24,35 @@ import com.github.jummes.morecompost.wrapper.VersionWrapper;
 public class MoreCompost extends JavaPlugin {
 
 	private static MoreCompost instance;
-	
+
 	private VersionWrapper wrapper;
 	private DropsManager dropsManager;
 	private CompostablesManager compostablesManager;
 	private CompostersManager compostersManager;
 	private SettingsManager settingsManager;
 	private LocalesManager localesManager;
-
-
+	
 	public void onEnable() {
 		instance = this;
 		setUpFolder();
 		setUpWrapper();
 		startUpTasks();
 	}
-	
+
 	private void setUpFolder() {
 		if (!getDataFolder().exists()) {
 			getDataFolder().mkdir();
 		}
 	}
-	
+
 	private void setUpWrapper() {
 		String serverVersion = getServer().getClass().getPackage().getName();
 		String version = serverVersion.substring(serverVersion.lastIndexOf('.') + 1);
 
 		try {
-			wrapper = (VersionWrapper) Class
-					.forName("com.github.jummes.morecompost.wrapper.VersionWrapper_" + version).getConstructor()
-					.newInstance();
+			wrapper = (VersionWrapper) Class.forName("com.github.jummes.morecompost.wrapper.VersionWrapper_" + version)
+					.getConstructor().newInstance();
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 
@@ -69,11 +66,11 @@ public class MoreCompost extends JavaPlugin {
 		if (Boolean.valueOf(settingsManager.getSetting(Settings.UPDATECHECKER))) {
 			new UpdateChecker().checkForUpdate();
 		}
-		
+
 		compostersManager = new CompostersManager();
 		dropsManager = new DropsManager();
 		compostablesManager = new CompostablesManager();
-		localesManager = new LocalesManager();
+		localesManager = new LocalesManager(settingsManager.getSetting(Settings.LOCALE));
 		CommandExecutor commandExecutor = new MoreCompostCommandExecutor();
 		getCommand("mc").setExecutor(commandExecutor);
 		getCommand("mc").setTabCompleter((TabCompleter) commandExecutor);

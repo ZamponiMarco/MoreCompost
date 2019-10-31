@@ -13,7 +13,7 @@ import com.github.jummes.morecompost.settings.Settings;
 public class SettingsManager implements DataManager {
 
 	private final static String FILENAME = "config.yml";
-	private final static String CONFIG_VERSION = "1.0";
+	private final static String CONFIG_VERSION = "1.0.1";
 
 	private MoreCompost plugin;
 
@@ -49,6 +49,7 @@ public class SettingsManager implements DataManager {
 		settings.put(Settings.METRICS, dataYaml.getString("metrics", "true"));
 		settings.put(Settings.UPDATECHECKER, dataYaml.getString("updateChecker", "true"));
 		settings.put(Settings.VERSION, dataYaml.getString("version", ""));
+		settings.put(Settings.LOCALE, dataYaml.getString("locale", "en-US"));
 	}
 
 	@Override
@@ -75,7 +76,7 @@ public class SettingsManager implements DataManager {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public Map<Settings, String> getSettings() {
 		return settings;
 	}

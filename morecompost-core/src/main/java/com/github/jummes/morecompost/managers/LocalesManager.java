@@ -11,19 +11,22 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import com.github.jummes.morecompost.core.MoreCompost;
 import com.github.jummes.morecompost.locale.LocaleString;
 import com.github.jummes.morecompost.utils.MessageUtils;
+import com.google.common.collect.Lists;
 
 public class LocalesManager implements DataManager {
 
 	private final static String FOLDERNAME = "locale";
-	private final static String FILENAME = "locale.yml";
+	private final static List<String> DEFAULT_LOCALES = Lists.newArrayList("en-US.yml", "it-IT.yml");
 
 	private MoreCompost plugin;
 
+	private String filename;
 	private File dataFile;
 	private YamlConfiguration dataYaml;
 	private Map<LocaleString, List<String>> locale = new EnumMap<LocaleString, List<String>>(LocaleString.class);
 
-	public LocalesManager() {
+	public LocalesManager(String filename) {
+		this.filename = filename += ".yml";
 		this.plugin = MoreCompost.getInstance();
 
 		loadDataFile();
@@ -39,9 +42,16 @@ public class LocalesManager implements DataManager {
 			folder.mkdir();
 		}
 
-		dataFile = new File(folder, FILENAME);
+		DEFAULT_LOCALES.forEach(localeString -> {
+			File localeFile = new File(folder, localeString);
+			if (!localeFile.exists()) {
+				plugin.saveResource(FOLDERNAME + File.separatorChar + localeString, false);
+			}
+		});
+
+		dataFile = new File(folder, filename);
 		if (!dataFile.exists()) {
-			plugin.saveResource(FOLDERNAME + File.separatorChar + FILENAME, false);
+			dataFile = new File(folder, "en-US.yml");
 		}
 	}
 
@@ -62,10 +72,12 @@ public class LocalesManager implements DataManager {
 		locale.put(LocaleString.TEXTURE_DESCRIPTION, dataYaml.getStringList("textureDescription"));
 		locale.put(LocaleString.CHANCE_DESCRIPTION, dataYaml.getStringList("chanceDescription"));
 		locale.put(LocaleString.MATERIAL_DESCRIPTION, dataYaml.getStringList("materialDescription"));
-		locale.put(LocaleString.FORCED_DROP_TABLE_ID_DESCRIPTION, dataYaml.getStringList("forcedDropTableIdDescription"));
+		locale.put(LocaleString.FORCED_DROP_TABLE_ID_DESCRIPTION,
+				dataYaml.getStringList("forcedDropTableIdDescription"));
 		locale.put(LocaleString.MIN_ROLLS_DESCRIPTION, dataYaml.getStringList("minRollsDescription"));
 		locale.put(LocaleString.MAX_ROLLS_DESCRIPTION, dataYaml.getStringList("maxRollsDescription"));
-		locale.put(LocaleString.REPLACE_DEFAULT_COMPOSTABLES_DESCRIPTION, dataYaml.getStringList("replaceDefaultCompostablesDescription"));
+		locale.put(LocaleString.REPLACE_DEFAULT_COMPOSTABLES_DESCRIPTION,
+				dataYaml.getStringList("replaceDefaultCompostablesDescription"));
 		locale.put(LocaleString.PRIORITY_DESCRIPTION, dataYaml.getStringList("priorityDescription"));
 		locale.put(LocaleString.DROPS_LIST_DESCRIPTION, dataYaml.getStringList("dropsListDescription"));
 		locale.put(LocaleString.COMPOSTABLES_LIST_DESCRIPTION, dataYaml.getStringList("compostablesListDescription"));

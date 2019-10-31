@@ -4,6 +4,9 @@ metrics: true
 #If it is true, the plugin will check for updates
 updateChecker: true
 
+#Sets the locale file for translations
+locale: en-US
+
 #config.yml file version
 # DO NOT MODIFY
-version: 1.0
+version: 1.0.1

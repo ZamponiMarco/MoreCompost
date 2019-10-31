@@ -1,0 +1,67 @@
+typeDescription:
+- "&7&oIl tipo di drop, può"
+- "&7&oessere: item, head, or"
+- "&7&oexperience."
+weightDescription:
+- "&7&oIl peso di questo drop"
+- "&7&oall'interno della pool,"
+- "&7&ola percentuale di"
+- "&7&ottenere questo drop è"
+- "&7&oil suo peso fratto la"
+- "&7&osomma dei pesi del table."
+minAmountDescription:
+- "&7&oLa quantità minima di xp"
+- "&7&oche può essere droppata."
+maxAmountDescription:
+- "&7&oLa quantità massima di xp"
+- "&7&oche può essere droppata."
+minCountDescription:
+- "&7&oThe minimum count of"
+- "&7&oitems that can be given"
+- "&7&oin a single drop."
+maxCountDescription:
+- "&7&oThe maximum count of"
+- "&7&oitems that can be given"
+- "&7&oin a single drop."
+displayNameDescription:
+- "&7&oThe display name of the"
+- "&7&ospawned item."
+textureDescription:
+- "&7&oThe texture value of the"
+- "&7&ohead that will be spawned"
+- "&7&oin base64 encoding."
+chanceDescription:
+- "&7&oThe chance of success"
+- "&7&owhen using this material"
+- "&7&oas a compostable."
+materialDescription:
+- "&7&oThe material of the item"
+forcedDropTableIdDescription:
+- "&7&oThe id of the droptable"
+- "&7&othat will be used if the"
+- "&7&ocomposter is filled"
+- "&7&oentirely only by this"
+- "&7&ocompostable."
+minRollsDescription:
+- "&7&oThe minimum amount of"
+- "&7&orolls that will be ran."
+maxRollsDescription:
+- "&7&oThe maximum amount of"
+- "&7&orolls that will be ran."
+replaceDefaultCompostablesDescription:
+- "&7&oWhether or not this table"
+- "&7&owill use the default"
+- "&7&ocompostable used in"
+- "&7&ovanilla."
+priorityDescription:
+- "&7&oThe importance of this"
+- "&7&otable, if a player has"
+- "&7&omultiple permissions"
+- "&7&oonly the one with lowest"
+- "&7&opriority will be used."
+dropsListDescription:
+- "&7&oThe list of drops of this"
+- "&7&odrop table."
+compostablesListDescription:
+- "&7&oThe list of compostables"
+- "&7&oof thisdrop table."
