@@ -40,7 +40,7 @@ public class CompostableTableSettingsInventoryHolder extends MoreCompostInventor
 		this.inventory = Bukkit.createInventory(this, 27,
 				MessageUtils.color(String.format("&6&lCompostableTable: &1&l%s", compostableTable.getId())));
 		registerSettingConsumer(3, manager, section, wrapper.skullFromValue(REPLACE_HEAD), "replaceDefaultCompostables",
-				compostableTable.getReplaceDefaultCompostables(),
+				compostableTable.isReplaceDefaultCompostables(),
 				localesManager.getLocaleString(LocaleString.REPLACE_DEFAULT_COMPOSTABLES_DESCRIPTION),
 				BooleanSettingInventoryHolder.class, true);
 		if (!compostableTableId.equals("default")) {

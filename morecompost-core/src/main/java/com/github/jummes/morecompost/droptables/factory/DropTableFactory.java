@@ -8,7 +8,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.permissions.Permission;
 
-import com.github.jummes.morecompost.drops.CompostDrop;
+import com.github.jummes.morecompost.drops.AbstractCompostDrop;
 import com.github.jummes.morecompost.drops.ItemCompostDrop;
 import com.github.jummes.morecompost.drops.factory.CompostDropFactory;
 import com.github.jummes.morecompost.droptables.DropTable;
@@ -28,13 +28,13 @@ public class DropTableFactory {
 			priority = lastUsedPriority++;
 		}
 
-		Map<Integer, CompostDrop> weightMap = new HashMap<>();
+		Map<Integer, AbstractCompostDrop> weightMap = new HashMap<>();
 
 		int lastWeight = 0;
 		for (String key : section.getConfigurationSection("drops").getKeys(false)) {
 			ConfigurationSection dropSection = section.getConfigurationSection("drops." + key);
 			lastWeight += dropSection.getInt("weight", 1);
-			CompostDrop drop = CompostDropFactory.getCompostDropFactory(dropSection.getString("type", "item"))
+			AbstractCompostDrop drop = CompostDropFactory.getCompostDropFactory(dropSection.getString("type", "item"))
 					.buildCompostDrop(dropSection);
 			weightMap.put(lastWeight, drop);
 		}
@@ -43,7 +43,7 @@ public class DropTableFactory {
 	}
 
 	public static DropTable defaultDropTable(Permission permission) {
-		Map<Integer, CompostDrop> weightMap = new HashMap<>();
+		Map<Integer, AbstractCompostDrop> weightMap = new HashMap<>();
 		weightMap.put(1, new ItemCompostDrop("1", 1, new ItemStack(Material.BONE_MEAL), 1, 1));
 		return new DropTable(permission, 1, 1, Integer.MAX_VALUE, weightMap, false);
 	}

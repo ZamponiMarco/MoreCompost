@@ -7,14 +7,14 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.github.jummes.morecompost.drops.CompostDrop;
+import com.github.jummes.morecompost.drops.AbstractCompostDrop;
 import com.github.jummes.morecompost.drops.ItemCompostDrop;
 import com.github.jummes.morecompost.utils.MessageUtils;
 
 public class ItemCompostDropFactory implements CompostDropFactory {
 
 	@Override
-	public CompostDrop buildCompostDrop(ConfigurationSection drop) {
+	public AbstractCompostDrop buildCompostDrop(ConfigurationSection drop) {
 
 		int weight = drop.getInt("weight", 1);
 

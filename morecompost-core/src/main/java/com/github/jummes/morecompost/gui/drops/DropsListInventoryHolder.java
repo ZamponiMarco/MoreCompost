@@ -10,7 +10,7 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 import com.github.jummes.morecompost.core.MoreCompost;
-import com.github.jummes.morecompost.drops.CompostDrop;
+import com.github.jummes.morecompost.drops.AbstractCompostDrop;
 import com.github.jummes.morecompost.droptables.DropTable;
 import com.github.jummes.morecompost.gui.MoreCompostInventoryHolder;
 import com.github.jummes.morecompost.gui.drops.factory.DropSettingsInventoryHolderFactory;
@@ -27,7 +27,7 @@ public class DropsListInventoryHolder extends MoreCompostInventoryHolder {
 	private String dropTableId;
 	private int page;
 
-	public DropsListInventoryHolder(InventoryHolder holder, String title, String dropTableId, List<CompostDrop> drops,
+	public DropsListInventoryHolder(InventoryHolder holder, String title, String dropTableId, List<AbstractCompostDrop> drops,
 			int page) {
 		this.holder = holder;
 		this.title = title;
@@ -45,8 +45,8 @@ public class DropsListInventoryHolder extends MoreCompostInventoryHolder {
 				.getConfigurationSection("drops");
 		
 
-		List<CompostDrop> drops = Lists.newArrayList(dropTable.getWeightMap().values());
-		List<CompostDrop> toList = drops.stream().filter(drop -> drops.indexOf(drop) >= (page - 1) * DROP_TABLES_NUMBER
+		List<AbstractCompostDrop> drops = Lists.newArrayList(dropTable.getWeightMap().values());
+		List<AbstractCompostDrop> toList = drops.stream().filter(drop -> drops.indexOf(drop) >= (page - 1) * DROP_TABLES_NUMBER
 				&& drops.indexOf(drop) <= page * DROP_TABLES_NUMBER - 1).collect(Collectors.toList());
 
 		int maxPage = (int) Math.ceil((drops.size() > 0 ? drops.size() : 1) / (double) DROP_TABLES_NUMBER);
@@ -72,7 +72,7 @@ public class DropsListInventoryHolder extends MoreCompostInventoryHolder {
 		fillInventoryWith(Material.GRAY_STAINED_GLASS_PANE);
 	}
 
-	private ItemStack getDropItem(CompostDrop drop) {
+	private ItemStack getDropItem(AbstractCompostDrop drop) {
 		return drop.getGUIItem();
 	}
 

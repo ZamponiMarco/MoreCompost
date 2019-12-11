@@ -9,6 +9,11 @@ import org.bukkit.permissions.Permission;
 
 import com.github.jummes.morecompost.compostables.Compostable;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter @Setter @AllArgsConstructor
 public class CompostableTable {
 
 	private static final String PERM_PREFIX = "morecompost.compostables.";
@@ -18,15 +23,6 @@ public class CompostableTable {
 	private Set<Compostable> compostables;
 	private boolean replaceDefaultCompostables;
 	private boolean presentInConfig;
-
-	public CompostableTable(Permission permission, int priority, Set<Compostable> compostables,
-			boolean replaceDefaultCompostables, boolean presentInConfig) {
-		this.permission = permission;
-		this.priority = priority;
-		this.compostables = compostables;
-		this.replaceDefaultCompostables = replaceDefaultCompostables;
-		this.presentInConfig = presentInConfig;
-	}
 
 	/**
 	 * Checks if the material is present in the compostable set, if it is, tries to
@@ -50,28 +46,7 @@ public class CompostableTable {
 		return permission.getName().substring(PERM_PREFIX.length(), permission.getName().length());
 	}
 
-	public Compostable get(String compostableId) {
+	public Compostable getCompostable(String compostableId) {
 		return compostables.stream().filter(compostable -> compostable.getId().equals(compostableId)).findFirst().get();
 	}
-
-	public int getPriority() {
-		return priority;
-	}
-
-	public void setPriority(int priority) {
-		this.priority = priority;
-	}
-
-	public Set<Compostable> getCompostables() {
-		return compostables;
-	}
-
-	public boolean getReplaceDefaultCompostables() {
-		return replaceDefaultCompostables;
-	}
-
-	public boolean isPresentInConfig() {
-		return presentInConfig;
-	}
-
 }

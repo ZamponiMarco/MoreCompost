@@ -3,7 +3,7 @@ package com.github.jummes.morecompost.drops.factory;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.configuration.ConfigurationSection;
 
-import com.github.jummes.morecompost.drops.CompostDrop;
+import com.github.jummes.morecompost.drops.AbstractCompostDrop;
 
 public interface CompostDropFactory {
 
@@ -13,7 +13,7 @@ public interface CompostDropFactory {
 	 * @param drop
 	 * @return
 	 */
-	public CompostDrop buildCompostDrop(ConfigurationSection drop);
+	public AbstractCompostDrop buildCompostDrop(ConfigurationSection drop);
 
 	/**
 	 * Gets the correct CompostDropFactory from a string 

@@ -39,7 +39,7 @@ public class CompostableSettingsInventoryHolder extends MoreCompostInventoryHold
 		CompostablesManager manager = MoreCompost.getInstance().getCompostablesManager();
 
 		CompostableTable compostableTable = manager.get(compostableTableId);
-		Compostable compostable = compostableTable.get(compostableId);
+		Compostable compostable = compostableTable.getCompostable(compostableId);
 
 		ConfigurationSection section = manager.getDataYaml().getConfigurationSection(compostableTable.getId())
 				.getConfigurationSection("compostables").getConfigurationSection(compostable.getId());

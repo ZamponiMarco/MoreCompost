@@ -8,8 +8,13 @@ import java.util.stream.IntStream;
 import org.bukkit.block.Block;
 import org.bukkit.permissions.Permission;
 
-import com.github.jummes.morecompost.drops.CompostDrop;
+import com.github.jummes.morecompost.drops.AbstractCompostDrop;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class DropTable {
 
 	private static final String PERM_PREFIX = "morecompost.drops.";
@@ -18,12 +23,12 @@ public class DropTable {
 	private int minRolls;
 	private int maxRolls;
 	private int priority;
-	private Map<Integer, CompostDrop> weightMap;
+	private Map<Integer, AbstractCompostDrop> weightMap;
 	private boolean presentInConfig;
 	private Random random;
 
 	public DropTable(Permission permission, int minRolls, int maxRolls, int priority,
-			Map<Integer, CompostDrop> weightMap, boolean presentInConfig) {
+			Map<Integer, AbstractCompostDrop> weightMap, boolean presentInConfig) {
 		this.permission = permission;
 		this.minRolls = minRolls;
 		this.maxRolls = maxRolls;
@@ -55,36 +60,12 @@ public class DropTable {
 		weightMap.get(set.higher(random.nextInt(set.last()))).putInContainer(block);
 	}
 
-	public int getPriority() {
-		return priority;
-	}
-
-	public void setPriority(int priority) {
-		this.priority = priority;
-	}
-
 	public String getId() {
 		return permission.getName().substring(PERM_PREFIX.length(), permission.getName().length());
 	}
 
-	public int getMinRolls() {
-		return minRolls;
-	}
-
-	public int getMaxRolls() {
-		return maxRolls;
-	}
-
-	public Map<Integer, CompostDrop> getWeightMap() {
-		return weightMap;
-	}
-
-	public CompostDrop getDropById(String dropId) {
+	public AbstractCompostDrop getDropById(String dropId) {
 		return weightMap.values().stream().filter(drop -> drop.getId().equals(dropId)).findFirst().get();
-	}
-
-	public boolean isPresentInConfig() {
-		return presentInConfig;
 	}
 
 }

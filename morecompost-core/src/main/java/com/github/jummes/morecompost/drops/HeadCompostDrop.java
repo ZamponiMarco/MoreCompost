@@ -10,18 +10,18 @@ import org.bukkit.inventory.meta.ItemMeta;
 import com.github.jummes.morecompost.core.MoreCompost;
 import com.github.jummes.morecompost.utils.MessageUtils;
 
-public class HeadCompostDrop implements CompostDrop {
+import lombok.Getter;
 
-	private String id;
-	private int weight;
+@Getter
+public class HeadCompostDrop extends AbstractCompostDrop {
+
 	private ItemStack item;
 	private int minCount;
 	private int maxCount;
 	private String texture;
 
 	public HeadCompostDrop(String id, int weight, ItemStack item, int minCount, int maxCount, String texture) {
-		this.id = id;
-		this.weight = weight;
+		super(id, weight);
 		this.item = item;
 		this.minCount = minCount;
 		this.maxCount = maxCount;
@@ -43,16 +43,6 @@ public class HeadCompostDrop implements CompostDrop {
 	}
 
 	@Override
-	public int getWeight() {
-		return weight;
-	}
-
-	@Override
-	public String getId() {
-		return id;
-	}
-
-	@Override
 	public ItemStack getGUIItem() {
 		ItemStack toReturn = new ItemStack(item.getType());
 		ItemMeta meta = item.getItemMeta();
@@ -64,22 +54,6 @@ public class HeadCompostDrop implements CompostDrop {
 	@Override
 	public String getType() {
 		return "head";
-	}
-
-	public ItemStack getItem() {
-		return item;
-	}
-
-	public int getMinCount() {
-		return minCount;
-	}
-
-	public int getMaxCount() {
-		return maxCount;
-	}
-
-	public String getTexture() {
-		return texture.substring(0, 7).concat("...");
 	}
 
 }

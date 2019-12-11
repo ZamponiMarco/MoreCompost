@@ -21,8 +21,12 @@ import com.github.jummes.morecompost.managers.SettingsManager;
 import com.github.jummes.morecompost.settings.Settings;
 import com.github.jummes.morecompost.wrapper.VersionWrapper;
 
+import lombok.Getter;
+
+@Getter
 public class MoreCompost extends JavaPlugin {
 
+	@Getter
 	private static MoreCompost instance;
 
 	private VersionWrapper wrapper;
@@ -90,34 +94,6 @@ public class MoreCompost extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new HopperInteractComposterListener(), this);
 		Bukkit.getPluginManager().registerEvents(new ComposterDropListener(), this);
 		Bukkit.getPluginManager().registerEvents(new BoneMealSpawnListener(), this);
-	}
-
-	public static MoreCompost getInstance() {
-		return instance;
-	}
-
-	public DropsManager getDropsManager() {
-		return dropsManager;
-	}
-
-	public CompostablesManager getCompostablesManager() {
-		return compostablesManager;
-	}
-
-	public CompostersManager getCompostersManager() {
-		return compostersManager;
-	}
-
-	public SettingsManager getSettingsManager() {
-		return settingsManager;
-	}
-
-	public LocalesManager getLocalesManager() {
-		return localesManager;
-	}
-
-	public VersionWrapper getWrapper() {
-		return wrapper;
 	}
 
 }

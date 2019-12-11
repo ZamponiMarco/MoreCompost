@@ -2,7 +2,7 @@ package com.github.jummes.morecompost.gui.drops.factory;
 
 import org.bukkit.inventory.InventoryHolder;
 
-import com.github.jummes.morecompost.drops.CompostDrop;
+import com.github.jummes.morecompost.drops.AbstractCompostDrop;
 import com.github.jummes.morecompost.drops.ExperienceCompostDrop;
 import com.github.jummes.morecompost.drops.HeadCompostDrop;
 import com.github.jummes.morecompost.drops.ItemCompostDrop;
@@ -14,7 +14,7 @@ import com.github.jummes.morecompost.gui.drops.ItemDropSettingsInventoryHolder;
 
 public class DropSettingsInventoryHolderFactory {
 
-	public static DropSettingsInventoryHolder buildDropSettingInventoryHolder(InventoryHolder holder, DropTable dropTable, CompostDrop drop) {
+	public static DropSettingsInventoryHolder buildDropSettingInventoryHolder(InventoryHolder holder, DropTable dropTable, AbstractCompostDrop drop) {
 		if(drop instanceof ItemCompostDrop) {
 			return new ItemDropSettingsInventoryHolder(dropTable.getId(), drop.getId(), holder);
 		} else if(drop instanceof ExperienceCompostDrop) {
