@@ -4,7 +4,7 @@
 
   <groupId>com.github.jummes</groupId>
   <artifactId>morecompost-parent</artifactId>
-  <version>0.9.7</version>
+  <version>1.0</version>
   <packaging>pom</packaging>
   <name>MoreCompost</name>
   <properties>
@@ -14,5 +14,6 @@
   	<module>morecompost-core</module>
     <module>morecompost-craftbukkit_1_14_R1</module>
     <module>morecompost-dist</module>
+    <module>morecompost-craftbukkit_1_15_R1</module>
   </modules>
 </project>

@@ -1,5 +1,5 @@
 name: MoreCompost
-version: 0.9.7
+version: 1.0
 author: jummes
 main: com.github.jummes.morecompost.core.MoreCompost
 load: POSTWORLD

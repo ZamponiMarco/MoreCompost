@@ -47,7 +47,7 @@ public class SettingsManager implements DataManager {
 	@Override
 	public void loadData() {
 		settings.put(Settings.METRICS, dataYaml.getString("metrics", "true"));
-		settings.put(Settings.UPDATECHECKER, dataYaml.getString("updateChecker", "true"));
+		settings.put(Settings.UPDATE_CHECKER, dataYaml.getString("updateChecker", "true"));
 		settings.put(Settings.VERSION, dataYaml.getString("version", ""));
 		settings.put(Settings.LOCALE, dataYaml.getString("locale", "en-US"));
 	}

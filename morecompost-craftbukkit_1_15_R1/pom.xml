@@ -7,7 +7,7 @@
     <artifactId>morecompost-parent</artifactId>
     <version>1.0</version>
   </parent>
-  <artifactId>morecompost-craftbukkit_1_14_R1</artifactId>
+  <artifactId>morecompost-craftbukkit_1_15_R1</artifactId>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
@@ -27,7 +27,7 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>craftbukkit</artifactId>
-            <version>1.14.4-R0.1-SNAPSHOT</version>
+            <version>1.15-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

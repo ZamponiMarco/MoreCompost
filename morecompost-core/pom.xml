@@ -5,10 +5,9 @@
   <parent>
     <groupId>com.github.jummes</groupId>
     <artifactId>morecompost-parent</artifactId>
-    <version>0.9.7</version>
+    <version>1.0</version>
   </parent>
   <artifactId>morecompost-core</artifactId>
-  <name>morecompost-core</name>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>

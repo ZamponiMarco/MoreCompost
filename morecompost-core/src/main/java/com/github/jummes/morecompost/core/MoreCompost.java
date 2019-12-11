@@ -55,6 +55,7 @@ public class MoreCompost extends JavaPlugin {
 			wrapper = (VersionWrapper) Class.forName("com.github.jummes.morecompost.wrapper.VersionWrapper_" + version)
 					.getConstructor().newInstance();
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -65,7 +66,7 @@ public class MoreCompost extends JavaPlugin {
 			new Metrics(this);
 		}
 
-		if (Boolean.valueOf(settingsManager.getSetting(Settings.UPDATECHECKER))) {
+		if (Boolean.valueOf(settingsManager.getSetting(Settings.UPDATE_CHECKER))) {
 			new UpdateChecker().checkForUpdate();
 		}
 
