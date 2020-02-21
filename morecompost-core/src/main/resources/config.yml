@@ -7,6 +7,5 @@ updateChecker: true
 #Sets the locale file for translations
 locale: en-US
 
-#config.yml file version
-# DO NOT MODIFY
-version: 1.0.1
+#DO NOT MODIFY
+version: 2.0

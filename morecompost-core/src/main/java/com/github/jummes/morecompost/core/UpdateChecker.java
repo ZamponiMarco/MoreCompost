@@ -17,7 +17,7 @@ import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import com.github.jummes.morecompost.utils.MessageUtils;
+import com.github.jummes.libs.util.MessageUtils;
 
 import net.md_5.bungee.api.ChatColor;
 

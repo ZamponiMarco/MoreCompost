@@ -1,99 +1,130 @@
 package com.github.jummes.morecompost.core;
 
-import org.bukkit.Bukkit;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.TabCompleter;
-import org.bukkit.plugin.java.JavaPlugin;
+import java.io.File;
 
-import com.github.jummes.morecompost.commands.executor.MoreCompostCommandExecutor;
-import com.github.jummes.morecompost.listeners.BoneMealSpawnListener;
-import com.github.jummes.morecompost.listeners.ComposterBreakListener;
-import com.github.jummes.morecompost.listeners.ComposterDropListener;
-import com.github.jummes.morecompost.listeners.ComposterPlaceListener;
-import com.github.jummes.morecompost.listeners.HopperInteractComposterListener;
-import com.github.jummes.morecompost.listeners.InventoryClickListener;
-import com.github.jummes.morecompost.listeners.PlayerChatListener;
-import com.github.jummes.morecompost.managers.CompostablesManager;
-import com.github.jummes.morecompost.managers.CompostersManager;
-import com.github.jummes.morecompost.managers.DropsManager;
-import com.github.jummes.morecompost.managers.LocalesManager;
-import com.github.jummes.morecompost.managers.SettingsManager;
-import com.github.jummes.morecompost.settings.Settings;
-import com.github.jummes.morecompost.wrapper.VersionWrapper;
+import org.bukkit.Bukkit;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.FileUtil;
+
+import com.github.jummes.libs.command.PluginCommandExecutor;
+import com.github.jummes.libs.core.Libs;
+import com.github.jummes.libs.localization.PluginLocale;
+import com.github.jummes.morecompost.command.CompostablesCommand;
+import com.github.jummes.morecompost.command.DropsCommand;
+import com.github.jummes.morecompost.command.HelpCommand;
+import com.github.jummes.morecompost.command.InspectCommand;
+import com.github.jummes.morecompost.command.ReloadCommand;
+import com.github.jummes.morecompost.compostable.Compostable;
+import com.github.jummes.morecompost.compostabletable.CompostableTable;
+import com.github.jummes.morecompost.composter.Composter;
+import com.github.jummes.morecompost.drop.Drop;
+import com.github.jummes.morecompost.dropdescription.DropDescription;
+import com.github.jummes.morecompost.dropdescription.ExperienceDropDescription;
+import com.github.jummes.morecompost.dropdescription.HeadDropDescription;
+import com.github.jummes.morecompost.dropdescription.ItemDropDescription;
+import com.github.jummes.morecompost.dropdescription.NoDropDescription;
+import com.github.jummes.morecompost.droptable.DropTable;
+import com.github.jummes.morecompost.listener.ComposterBreakListener;
+import com.github.jummes.morecompost.listener.ComposterDropListener;
+import com.github.jummes.morecompost.listener.ComposterPlaceListener;
+import com.github.jummes.morecompost.listener.HopperInteractComposterListener;
+import com.github.jummes.morecompost.manager.CompostablesManager;
+import com.github.jummes.morecompost.manager.CompostersManager;
+import com.github.jummes.morecompost.manager.DropsManager;
+import com.google.common.collect.Lists;
 
 import lombok.Getter;
 
 @Getter
 public class MoreCompost extends JavaPlugin {
 
+	static {
+		Libs.registerSerializables();
+		ConfigurationSerialization.registerClass(DropTable.class);
+		ConfigurationSerialization.registerClass(Drop.class);
+		ConfigurationSerialization.registerClass(DropDescription.class);
+		ConfigurationSerialization.registerClass(ItemDropDescription.class);
+		ConfigurationSerialization.registerClass(ExperienceDropDescription.class);
+		ConfigurationSerialization.registerClass(HeadDropDescription.class);
+		ConfigurationSerialization.registerClass(NoDropDescription.class);
+		ConfigurationSerialization.registerClass(CompostableTable.class);
+		ConfigurationSerialization.registerClass(Compostable.class);
+		ConfigurationSerialization.registerClass(Composter.class);
+	}
+
+	private static final String CONFIG_VERSION = "2.0";
+
 	@Getter
 	private static MoreCompost instance;
 
-	private VersionWrapper wrapper;
 	private DropsManager dropsManager;
 	private CompostablesManager compostablesManager;
 	private CompostersManager compostersManager;
-	private SettingsManager settingsManager;
-	private LocalesManager localesManager;
+	private PluginLocale locale;
 
 	public void onEnable() {
 		instance = this;
 		setUpFolder();
-		setUpWrapper();
 		setUpData();
 		setUpCommands();
 		registerEvents();
+		powerUpServices();
 	}
 
 	private void setUpFolder() {
 		if (!getDataFolder().exists()) {
 			getDataFolder().mkdir();
 		}
-	}
 
-	private void setUpWrapper() {
-		String serverVersion = getServer().getClass().getPackage().getName();
-		String version = serverVersion.substring(serverVersion.lastIndexOf('.') + 1);
+		File configFile = new File(getDataFolder(), "config.yml");
 
-		try {
-			wrapper = (VersionWrapper) Class.forName("com.github.jummes.morecompost.wrapper.VersionWrapper_" + version)
-					.getConstructor().newInstance();
-		} catch (Exception e) {
-			e.printStackTrace();
+		if (!configFile.exists()) {
+			saveDefaultConfig();
+		}
+
+		if (!getConfig().getString("version").equals(CONFIG_VERSION)) {
+			File outputFile = new File(getDataFolder(), "config-" + getConfig().getString("version") + ".yml");
+			FileUtil.copy(configFile, outputFile);
+			configFile.delete();
+			saveDefaultConfig();
 		}
 	}
 
 	private void setUpData() {
-		settingsManager = new SettingsManager();
+		locale = new PluginLocale(this, Lists.newArrayList("en-US"), getConfig().getString("locale"));
+		Libs.initializeLibrary(instance, locale);
 
-		if (Boolean.valueOf(settingsManager.getSetting(Settings.METRICS))) {
-			new Metrics(this);
-		}
-
-		if (Boolean.valueOf(settingsManager.getSetting(Settings.UPDATE_CHECKER))) {
-			new UpdateChecker().checkForUpdate();
-		}
-
-		compostersManager = new CompostersManager();
-		dropsManager = new DropsManager();
-		compostablesManager = new CompostablesManager();
-		localesManager = new LocalesManager();
+		compostersManager = new CompostersManager(Composter.class, "yaml", this);
+		dropsManager = new DropsManager(DropTable.class, "yaml", this);
+		compostablesManager = new CompostablesManager(CompostableTable.class, "yaml", this);
 	}
 
 	private void setUpCommands() {
-		CommandExecutor commandExecutor = new MoreCompostCommandExecutor();
-		getCommand("mc").setExecutor(commandExecutor);
-		getCommand("mc").setTabCompleter((TabCompleter) commandExecutor);
+		PluginCommandExecutor executor = new PluginCommandExecutor(HelpCommand.class, "help");
+		executor.registerCommand("drops", DropsCommand.class);
+		executor.registerCommand("compostables", CompostablesCommand.class);
+		executor.registerCommand("inspect", InspectCommand.class);
+		executor.registerCommand("reload", ReloadCommand.class);
+		getCommand("mc").setExecutor(executor);
+		getCommand("mc").setTabCompleter(executor);
 	}
 
 	private void registerEvents() {
-		Bukkit.getPluginManager().registerEvents(new PlayerChatListener(), this);
-		Bukkit.getPluginManager().registerEvents(new InventoryClickListener(), this);
 		Bukkit.getPluginManager().registerEvents(new ComposterBreakListener(), this);
 		Bukkit.getPluginManager().registerEvents(new ComposterPlaceListener(), this);
 		Bukkit.getPluginManager().registerEvents(new HopperInteractComposterListener(), this);
 		Bukkit.getPluginManager().registerEvents(new ComposterDropListener(), this);
-		Bukkit.getPluginManager().registerEvents(new BoneMealSpawnListener(), this);
+	}
+
+	private void powerUpServices() {
+		if (Boolean.valueOf(getConfig().getString("metrics"))) {
+			new Metrics(this);
+		}
+
+		if (Boolean.valueOf(getConfig().getString("updateChecker"))) {
+			new UpdateChecker().checkForUpdate();
+		}
 	}
 
 }

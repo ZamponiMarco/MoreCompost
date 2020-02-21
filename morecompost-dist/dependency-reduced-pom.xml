@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
-    <artifactId>morecompost-parent</artifactId>
+    <artifactId>morecompost</artifactId>
     <groupId>com.github.jummes</groupId>
-    <version>1.0</version>
+    <version>2.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>morecompost-dist</artifactId>
   <build>
     <directory>../target</directory>
-    <finalName>morecompost-${project.version}</finalName>
+    <finalName>${project.name}-${project.version}</finalName>
     <plugins>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
@@ -21,11 +21,37 @@
               <goal>shade</goal>
             </goals>
             <configuration>
-              <artifactSet>
-                <includes>
-                  <include>com.github.jummes:morecompost-*</include>
-                </includes>
-              </artifactSet>
+              <filters>
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/</exclude>
+                  </excludes>
+                </filter>
+              </filters>
+              <relocations>
+                <relocation>
+                  <pattern>com.github.jummes.libs</pattern>
+                  <shadedPattern>${groupId}.${project.parent.artifactId}.libs</shadedPattern>
+                </relocation>
+              </relocations>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.8</version>
+        <executions>
+          <execution>
+            <phase>install</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <copy />
+              </target>
             </configuration>
           </execution>
         </executions>
