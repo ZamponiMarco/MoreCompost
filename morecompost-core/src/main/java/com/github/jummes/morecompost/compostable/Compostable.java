@@ -119,6 +119,9 @@ public class Compostable implements Model {
 
 	@Override
 	public ItemStack getGUIItem() {
+		if (isDefault) {
+			return null;
+		}
 		ItemStack item = this.item.getWrapped().clone();
 		ItemMeta meta = item.getItemMeta();
 		List<String> lore = meta.getLore() == null ? new ArrayList<String>() : meta.getLore();
@@ -127,7 +130,7 @@ public class Compostable implements Model {
 				MessageUtils.color("&6&lRight click &eto delete.")));
 		meta.setLore(lore);
 		item.setItemMeta(meta);
-		return isDefault ? null : item;
+		return item;
 	}
 
 }

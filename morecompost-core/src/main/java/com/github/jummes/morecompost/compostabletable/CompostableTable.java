@@ -88,7 +88,7 @@ public class CompostableTable implements Model {
 		map.put("permissionString", permissionString);
 		map.put("priority", priority);
 		List<Compostable> filteredCompostables = compostables.stream()
-				.filter(compostable -> !DefaultCompostable.isDefaultCompostable(compostable))
+				.filter(compostable -> !compostable.isDefault())
 				.collect(Collectors.toList());
 		map.put("compostables", filteredCompostables);
 		map.put("replaceDefaultCompostables", replaceDefaultCompostables);

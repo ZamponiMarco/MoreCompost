@@ -1,7 +1,5 @@
 package com.github.jummes.morecompost.compostable;
 
-import java.util.Arrays;
-
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -32,11 +30,6 @@ public enum DefaultCompostable {
 
 	public Compostable getCompostable() {
 		return new Compostable(new ItemStackWrapper(item), new IntRange(1, 1), percentage, null, true);
-	}
-
-	public static boolean isDefaultCompostable(Compostable compostable) {
-		return Arrays.stream(values())
-				.anyMatch(defaultCompostable -> defaultCompostable.getCompostable().equals(compostable));
 	}
 
 }
