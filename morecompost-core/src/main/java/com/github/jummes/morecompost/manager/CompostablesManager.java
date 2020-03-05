@@ -19,11 +19,13 @@ public class CompostablesManager extends ModelManager<CompostableTable> {
 	}
 
 	public CompostableTable getHighestPriorityCompostableTable(Player owner) {
-		return compostableTables.stream().filter(dropTable -> owner.hasPermission(dropTable.getPermissionString()))
-				.sorted((d1, d2) -> d1.getPriority() - d2.getPriority()).findFirst()
-				.orElse(getDefaultCompostableTable());
+		if (owner != null)
+			return compostableTables.stream().filter(dropTable -> owner.hasPermission(dropTable.getPermissionString()))
+					.sorted((d1, d2) -> d1.getPriority() - d2.getPriority()).findFirst()
+					.orElse(getDefaultCompostableTable());
+		return getDefaultCompostableTable();
 	}
-	
+
 	public void reloadData() {
 		this.compostableTables = database.loadObjects();
 	}

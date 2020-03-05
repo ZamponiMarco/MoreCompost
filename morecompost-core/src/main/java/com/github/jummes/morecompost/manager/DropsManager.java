@@ -30,10 +30,12 @@ public class DropsManager extends ModelManager<DropTable> {
 	}
 
 	public DropTable getHighestPriorityDropTable(Player owner) {
-		return dropTables.stream().filter(dropTable -> owner.hasPermission(dropTable.getPermissionString()))
-				.sorted((d1, d2) -> d1.getPriority() - d2.getPriority()).findFirst().orElse(getDefaultDropTable());
+		if (owner != null)
+			return dropTables.stream().filter(dropTable -> owner.hasPermission(dropTable.getPermissionString()))
+					.sorted((d1, d2) -> d1.getPriority() - d2.getPriority()).findFirst().orElse(getDefaultDropTable());
+		return getDefaultDropTable();
 	}
-	
+
 	public void reloadData() {
 		this.dropTables = database.loadObjects();
 	}
