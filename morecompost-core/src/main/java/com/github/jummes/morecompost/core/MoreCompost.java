@@ -53,7 +53,7 @@ public class MoreCompost extends JavaPlugin {
 		ConfigurationSerialization.registerClass(Composter.class);
 	}
 
-	private static final String CONFIG_VERSION = "2.0";
+	private static final String CONFIG_VERSION = "2.0.3";
 
 	@Getter
 	private static MoreCompost instance;
@@ -84,6 +84,8 @@ public class MoreCompost extends JavaPlugin {
 		}
 
 		if (!getConfig().getString("version").equals(CONFIG_VERSION)) {
+			getLogger().info("config.yml has changed. Old config is stored inside config-"
+					+ getConfig().getString("version") + ".yml");
 			File outputFile = new File(getDataFolder(), "config-" + getConfig().getString("version") + ".yml");
 			FileUtil.copy(configFile, outputFile);
 			configFile.delete();
@@ -118,10 +120,6 @@ public class MoreCompost extends JavaPlugin {
 	}
 
 	private void powerUpServices() {
-		if (Boolean.valueOf(getConfig().getString("metrics"))) {
-			new Metrics(this);
-		}
-
 		if (Boolean.valueOf(getConfig().getString("updateChecker"))) {
 			new UpdateChecker().checkForUpdate();
 		}

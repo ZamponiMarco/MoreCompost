@@ -1,6 +1,3 @@
-#If it is true, the plugin will send data to bstats, for statistical purposes
-metrics: true
-
 #If it is true, the plugin will check for updates
 updateChecker: true
 
@@ -8,4 +5,4 @@ updateChecker: true
 locale: en-US
 
 #DO NOT MODIFY
-version: 2.0
+version: 2.0.3

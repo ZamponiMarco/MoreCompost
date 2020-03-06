@@ -21,7 +21,6 @@ public class HelpCommand extends AbstractCommand {
 	@Override
 	protected void execute() {
 		sender.sendMessage(HELP_MSG);
-
 	}
 
 	@Override

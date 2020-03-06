@@ -3,7 +3,7 @@
   <parent>
     <artifactId>morecompost</artifactId>
     <groupId>com.github.jummes</groupId>
-    <version>2.0.1</version>
+    <version>2.0.3</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>morecompost-dist</artifactId>
