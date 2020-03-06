@@ -13,6 +13,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
 import com.github.jummes.morecompost.core.MoreCompost;
+import com.github.jummes.morecompost.droptable.DropTable;
 import com.github.jummes.morecompost.manager.CompostablesManager;
 import com.github.jummes.morecompost.manager.DropsManager;
 
@@ -53,7 +54,8 @@ public class ComposterDropListener implements Listener {
 		DropsManager dropsManager = MoreCompost.getInstance().getDropsManager();
 		Levelled levelled = (Levelled) composter.getBlockData();
 		if (composter.hasMetadata(METADATA_KEY)) {
-			dropsManager.getDropTableById(composter.getMetadata(METADATA_KEY).get(0).asString()).dropAllLoot(composter);
+			DropTable table = dropsManager.getDropTableById(composter.getMetadata(METADATA_KEY).get(0).asString());
+			table.dropAllLoot(composter);
 			composter.removeMetadata(METADATA_KEY, MoreCompost.getInstance());
 		} else {
 			dropsManager.getHighestPriorityDropTable(player).dropAllLoot(composter);

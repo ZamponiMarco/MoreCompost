@@ -73,8 +73,8 @@ public class CompostableTable implements Model {
 	 */
 	public boolean compost(Block block, ItemStack item) {
 		AtomicBoolean isPresent = new AtomicBoolean(false);
-		compostables.stream().filter(compostable -> compostable.getItem().getWrapped().isSimilar(item)).findFirst()
-				.ifPresent(compostable -> {
+		compostables.stream().filter(compostable -> ItemUtils.isSimilar(item, compostable.getItem().getWrapped()))
+				.findFirst().ifPresent(compostable -> {
 					compostable.compost(block);
 					isPresent.set(true);
 				});
@@ -87,8 +87,7 @@ public class CompostableTable implements Model {
 		map.put("==", "CompostableTable");
 		map.put("permissionString", permissionString);
 		map.put("priority", priority);
-		List<Compostable> filteredCompostables = compostables.stream()
-				.filter(compostable -> !compostable.isDefault())
+		List<Compostable> filteredCompostables = compostables.stream().filter(compostable -> !compostable.isDefault())
 				.collect(Collectors.toList());
 		map.put("compostables", filteredCompostables);
 		map.put("replaceDefaultCompostables", replaceDefaultCompostables);

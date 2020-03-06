@@ -15,6 +15,9 @@ import com.github.jummes.morecompost.dropdescription.ItemDropDescription;
 import com.github.jummes.morecompost.droptable.DropTable;
 import com.google.common.collect.Lists;
 
+import lombok.Getter;
+
+@Getter
 public class DropsManager extends ModelManager<DropTable> {
 
 	private List<DropTable> dropTables;

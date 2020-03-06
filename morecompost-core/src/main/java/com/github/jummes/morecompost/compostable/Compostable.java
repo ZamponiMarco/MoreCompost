@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.bukkit.Material;
@@ -18,6 +20,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 
 import com.github.jummes.libs.annotation.Serializable;
 import com.github.jummes.libs.model.Model;
+import com.github.jummes.libs.model.ModelPath;
 import com.github.jummes.libs.model.math.IntRange;
 import com.github.jummes.libs.model.wrapper.ItemStackWrapper;
 import com.github.jummes.libs.util.MessageUtils;
@@ -36,6 +39,8 @@ public class Compostable implements Model {
 
 	private static final String METADATA_KEY = "forcedDropTableId";
 
+	private static final String PERM_PREFIX = "morecompost.drops.";
+
 	private static final String CHANCE_HEAD = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWZlMTk3MmYyY2ZhNGQzMGRjMmYzNGU4ZDIxNTM1OGMwYzU3NDMyYTU1ZjZjMzdhZDkxZTBkZDQ0MTkxYSJ9fX0===";
 	private static final String ROLLS_HEAD = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTI0MjMwMmViZDY1NWY2ZDQyOWMxZTRhZWRlMjFiN2Y1YzRkYjY4YTQwNDVlYmFlYzE3NjMzYTA1MGExYTEifX19=";
 	private static final String ITEM_HEAD = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGI2YTI5ZWE2OGEwYzYxYjFlZGEyZDhhZWMzZTIyMjk3MjczMjNiN2QyZGE2YmMwNGNjMGNkMmRlZjNiNDcxMiJ9fX0====";
@@ -48,7 +53,7 @@ public class Compostable implements Model {
 	private IntRange rolls;
 	@Serializable(headTexture = CHANCE_HEAD, description = "gui.compostabletable.chance")
 	private double chance;
-	@Serializable(headTexture = FORCED_DROPTABLE_ID, description = "gui.compostabletable.forced")
+	@Serializable(headTexture = FORCED_DROPTABLE_ID, description = "gui.compostabletable.forced", fromList = "getDropTables", fromListMapper = "mapDropTables")
 	private String forcedDropTableId;
 	private boolean isDefault;
 	private Random random;
@@ -78,11 +83,12 @@ public class Compostable implements Model {
 			Levelled composter = (Levelled) block.getBlockData();
 
 			if (composter.getLevel() == 0 && forcedDropTableId != null) {
-				block.setMetadata(METADATA_KEY, new FixedMetadataValue(MoreCompost.getInstance(), forcedDropTableId));
+				block.setMetadata(METADATA_KEY,
+						new FixedMetadataValue(MoreCompost.getInstance(), PERM_PREFIX + forcedDropTableId));
 			}
 
 			if (block.hasMetadata(METADATA_KEY) && (forcedDropTableId == null || (forcedDropTableId != null
-					&& !block.getMetadata(METADATA_KEY).get(0).asString().equals(this.forcedDropTableId)))) {
+					&& !block.getMetadata(METADATA_KEY).get(0).asString().equals(PERM_PREFIX + forcedDropTableId)))) {
 				block.removeMetadata(METADATA_KEY, MoreCompost.getInstance());
 			}
 
@@ -107,6 +113,21 @@ public class Compostable implements Model {
 			return hasFilled.get();
 		}
 		return false;
+	}
+
+	// ---
+
+	@SuppressWarnings("unused")
+	public static List<Object> getDropTables(ModelPath<?> path) {
+		return MoreCompost.getInstance().getDropsManager().getDropTables().stream()
+				.map(dropTable -> dropTable.getPermissionString().substring(PERM_PREFIX.length()))
+				.collect(Collectors.toList());
+	}
+
+	public static Function<Object, ItemStack> mapDropTables() {
+		return obj -> {
+			return MoreCompost.getInstance().getDropsManager().getDropTableById(PERM_PREFIX + (String) obj).getGUIItem();
+		};
 	}
 
 	public static Compostable deserialize(Map<String, Object> map) {
