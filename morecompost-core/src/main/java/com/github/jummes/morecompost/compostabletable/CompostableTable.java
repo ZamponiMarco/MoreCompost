@@ -80,6 +80,8 @@ public class CompostableTable implements Model {
 				});
 		return isPresent.get();
 	}
+	
+	// ---
 
 	@Override
 	public Map<String, Object> serialize() {

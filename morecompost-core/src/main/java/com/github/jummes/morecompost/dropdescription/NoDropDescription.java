@@ -29,5 +29,10 @@ public class NoDropDescription extends DropDescription {
 	public ItemStack getGUIItem() {
 		return ItemUtils.getNamedItem(new ItemStack(Material.BARRIER), "&c&lNothing", new ArrayList<String>());
 	}
+	
+	@Override
+	public String toString() {
+		return "Nothing";
+	}
 
 }

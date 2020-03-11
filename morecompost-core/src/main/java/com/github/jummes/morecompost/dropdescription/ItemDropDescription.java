@@ -3,6 +3,7 @@ package com.github.jummes.morecompost.dropdescription;
 import java.util.Map;
 import java.util.Random;
 
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -62,6 +63,13 @@ public class ItemDropDescription extends DropDescription {
 	@Override
 	public ItemStack getGUIItem() {
 		return item.getWrapped();
+	}
+
+	@Override
+	public String toString() {
+		return item.getWrapped().getItemMeta().getDisplayName().equals("")
+				? StringUtils.capitalize(item.getWrapped().getType().name())
+				: item.getWrapped().getItemMeta().getDisplayName();
 	}
 
 }

@@ -50,5 +50,10 @@ public class ExperienceDropDescription extends DropDescription {
 	public ItemStack getGUIItem() {
 		return new ItemStack(Material.GOLD_INGOT);
 	}
+	
+	@Override
+	public String toString() {
+		return "Experience";
+	}
 
 }

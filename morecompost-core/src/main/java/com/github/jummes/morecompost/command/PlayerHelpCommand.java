@@ -6,16 +6,15 @@ import org.bukkit.permissions.Permission;
 import com.github.jummes.libs.command.AbstractCommand;
 import com.github.jummes.libs.util.MessageUtils;
 
-public class HelpCommand extends AbstractCommand {
+public class PlayerHelpCommand extends AbstractCommand {
 
 	private final static String HELP_MSG = MessageUtils.header("MoreCompost Help")
-			+ MessageUtils.color("&2/mc help &7Print the help message.\n"
-					+ "&2/mc reload &7Reload configuration files.\n" + "&2/mc inspect &7Inspect a composter\n"
-					+ "&2/mc drops &7Open drops menu.\n" + "&2/mc compostables &7Open compostables menu.\n"
-					+ "&2/mc about &7Print the plugin info.\n")
+			+ MessageUtils.color("&2/composter help &7Print the help message.\n"
+					+ "&2/composter drops &7Show the drops and their percentage.\n"
+					+ "&2/composter compostable &7Show a list of custom compostables\n")
 			+ MessageUtils.delimiter("MoreCompost Help");
 
-	public HelpCommand(CommandSender sender, String subCommand, String[] arguments, boolean isSenderPlayer) {
+	public PlayerHelpCommand(CommandSender sender, String subCommand, String[] arguments, boolean isSenderPlayer) {
 		super(sender, subCommand, arguments, isSenderPlayer);
 	}
 
@@ -31,7 +30,7 @@ public class HelpCommand extends AbstractCommand {
 
 	@Override
 	protected Permission getPermission() {
-		return new Permission("morecompost.commands.help");
+		return new Permission("morecompost.player.help");
 	}
 
 }

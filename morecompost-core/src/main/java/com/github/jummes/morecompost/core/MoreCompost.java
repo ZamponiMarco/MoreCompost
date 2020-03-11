@@ -10,10 +10,14 @@ import org.bukkit.util.FileUtil;
 import com.github.jummes.libs.command.PluginCommandExecutor;
 import com.github.jummes.libs.core.Libs;
 import com.github.jummes.libs.localization.PluginLocale;
+import com.github.jummes.morecompost.command.AboutCommand;
+import com.github.jummes.morecompost.command.CompostableListCommand;
 import com.github.jummes.morecompost.command.CompostablesCommand;
 import com.github.jummes.morecompost.command.DropsCommand;
 import com.github.jummes.morecompost.command.HelpCommand;
 import com.github.jummes.morecompost.command.InspectCommand;
+import com.github.jummes.morecompost.command.PlayerHelpCommand;
+import com.github.jummes.morecompost.command.DropPercentageCommand;
 import com.github.jummes.morecompost.command.ReloadCommand;
 import com.github.jummes.morecompost.compostable.Compostable;
 import com.github.jummes.morecompost.compostabletable.CompostableTable;
@@ -108,8 +112,14 @@ public class MoreCompost extends JavaPlugin {
 		executor.registerCommand("compostables", CompostablesCommand.class);
 		executor.registerCommand("inspect", InspectCommand.class);
 		executor.registerCommand("reload", ReloadCommand.class);
+		executor.registerCommand("about", AboutCommand.class);
 		getCommand("mc").setExecutor(executor);
 		getCommand("mc").setTabCompleter(executor);
+		PluginCommandExecutor composterExecutor = new PluginCommandExecutor(PlayerHelpCommand.class, "help");
+		composterExecutor.registerCommand("drops", DropPercentageCommand.class);
+		composterExecutor.registerCommand("compostables", CompostableListCommand.class);
+		getCommand("composter").setExecutor(composterExecutor);
+		getCommand("composter").setTabCompleter(composterExecutor);
 	}
 
 	private void registerEvents() {

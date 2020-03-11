@@ -18,7 +18,8 @@ public class CompostablesCommand extends AbstractCommand {
 	protected void execute() {
 		Player p = (Player) sender;
 		try {
-			p.openInventory(new ModelCollectionInventoryHolder(MoreCompost.getInstance(), MoreCompost.getInstance().getCompostablesManager(), "compostableTables").getInventory());
+			p.openInventory(new ModelCollectionInventoryHolder(MoreCompost.getInstance(),
+					MoreCompost.getInstance().getCompostablesManager(), "compostableTables").getInventory());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

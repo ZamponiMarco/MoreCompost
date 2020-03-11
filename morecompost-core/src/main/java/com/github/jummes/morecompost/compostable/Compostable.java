@@ -9,6 +9,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -126,7 +127,8 @@ public class Compostable implements Model {
 
 	public static Function<Object, ItemStack> mapDropTables() {
 		return obj -> {
-			return MoreCompost.getInstance().getDropsManager().getDropTableById(PERM_PREFIX + (String) obj).getGUIItem();
+			return MoreCompost.getInstance().getDropsManager().getDropTableById(PERM_PREFIX + (String) obj)
+					.getGUIItem();
 		};
 	}
 
@@ -152,6 +154,13 @@ public class Compostable implements Model {
 		meta.setLore(lore);
 		item.setItemMeta(meta);
 		return item;
+	}
+
+	@Override
+	public String toString() {
+		return item.getWrapped().getItemMeta().getDisplayName().equals("")
+				? StringUtils.capitalize(item.getWrapped().getType().name())
+				: item.getWrapped().getItemMeta().getDisplayName();
 	}
 
 }

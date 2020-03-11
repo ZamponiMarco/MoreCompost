@@ -76,4 +76,9 @@ public class HeadDropDescription extends DropDescription {
 		return item;
 	}
 
+	@Override
+	public String toString() {
+		return meta.getWrapped().getDisplayName().equals("") ? "Player Head" : meta.getWrapped().getDisplayName();
+	}
+
 }

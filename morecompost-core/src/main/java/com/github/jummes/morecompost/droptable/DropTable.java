@@ -63,10 +63,7 @@ public class DropTable implements Model {
 		this.priority = priority;
 		this.drops = drops;
 		this.random = new Random();
-		AtomicInteger integer = new AtomicInteger();
-		this.weightMap = drops.stream().collect(Collectors
-				.toMap(drop -> integer.accumulateAndGet(drop.getWeight(), (i, j) -> i + j), Functions.identity()));
-		this.sortedWeightSet = new TreeSet<>(weightMap.keySet());
+		reloadTables();
 	}
 
 	public void dropAllLoot(Block block) {
@@ -89,6 +86,20 @@ public class DropTable implements Model {
 
 	private void fillContainerRandom(Block block) {
 		getRandomDrop().getDropDescription().putInContainer(block);
+	}
+	
+	private void reloadTables() {
+		AtomicInteger integer = new AtomicInteger();
+		this.weightMap = drops.stream().collect(Collectors
+				.toMap(drop -> integer.accumulateAndGet(drop.getWeight(), (i, j) -> i + j), Functions.identity()));
+		this.sortedWeightSet = new TreeSet<>(weightMap.keySet());
+	}
+	
+	// ---
+	
+	@Override
+	public void onModify() {
+		reloadTables();
 	}
 
 	@SuppressWarnings("unchecked")

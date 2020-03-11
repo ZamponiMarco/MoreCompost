@@ -3,10 +3,13 @@ version: ${version}
 author: jummes
 main: com.github.jummes.morecompost.core.MoreCompost
 load: POSTWORLD
+softdepend: [Multiverse-Core, MultiWorld]
 api-version: 1.14
 commands:
   mc:
     description: Base MoreCompost command
+  composter:
+    description: Player MoreCompost command
 permissions:
   morecompost.commands.compostables:
     description: Opening compostables menu permission
@@ -32,3 +35,19 @@ permissions:
       morecompost.commands.help: true
       morecompost.commands.inspect: true
       morecompost.commands.reload: true
+  morecompost.player.drops:
+    description: List percentages of the drop table
+    default: true
+  morecompost.player.compostables:
+    description: List compostables of a compostabletable
+    default: true
+  morecompost.player.help:
+    description: Show help command for players
+    default: true
+  morecompost.player.*:
+    description: Wildcard permission for players
+    default: true
+    children:
+      morecompost.player.drops: true
+      morecompost.player.compostables: true
+      morecompost.player.help: true
