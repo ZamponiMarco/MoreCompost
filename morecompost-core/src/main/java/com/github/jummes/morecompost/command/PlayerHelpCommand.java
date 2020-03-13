@@ -11,7 +11,7 @@ public class PlayerHelpCommand extends AbstractCommand {
 	private final static String HELP_MSG = MessageUtils.header("MoreCompost Help")
 			+ MessageUtils.color("&2/composter help &7Print the help message.\n"
 					+ "&2/composter drops &7Show the drops and their percentage.\n"
-					+ "&2/composter compostable &7Show a list of custom compostables.\n")
+					+ "&2/composter compostables &7Show a list of custom compostables.\n")
 			+ MessageUtils.delimiter("MoreCompost Help");
 
 	public PlayerHelpCommand(CommandSender sender, String subCommand, String[] arguments, boolean isSenderPlayer) {
