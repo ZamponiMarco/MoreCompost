@@ -58,10 +58,12 @@ public class HopperInteractComposterListener implements Listener {
 		CompostablesManager compostablesManager = MoreCompost.getInstance().getCompostablesManager();
 		if (compostablesManager.getHighestPriorityCompostableTable(getOwner(destination)).compost(destination,
 				e.getItem())) {
+			ItemStack toSet = e.getItem();
 			int amount = e.getItem().getAmount();
-			e.getItem().setAmount(--amount);
+			toSet.setAmount(amount - 1);
+			e.setItem(toSet);
 		} else {
-			e.setCancelled(true);
+			e.setCancelled(true);			
 		}
 	}
 
