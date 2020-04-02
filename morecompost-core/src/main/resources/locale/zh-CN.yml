@@ -1,3 +1,5 @@
+# These files are not modifiable, create a new one and mark it in config.yml to use custom translations
+# You can submit your translations with pull requests in the wiki page
 # 简体中文由 RinAfter 提供
 command:
   inspect: "&6该堆肥桶的主人是: &a{0}"
@@ -48,7 +50,7 @@ gui:
     - "&7&o则只使用优先级数最低的权限"
     permission:
     - "&7&o列表id"
-    - "&7&o使用权限为morecompost.drops.[id]"
+    - "&7&o使用权限为morecompost.compostables.[id]"
     replace:
     - "&7&o是否覆盖默认可堆肥物品"
     compostables:

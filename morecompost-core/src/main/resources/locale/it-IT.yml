@@ -1,0 +1,94 @@
+# These files are not modifiable, create a new one and mark it in config.yml to use custom translations
+# You can submit your translations with pull requests in the wiki page
+command:
+  inspect: "&6Il possessore di questo composter è: &c{0}"
+  reload: "&6MoreCompost &aè stato riavviato"
+gui:
+  droptable:
+    priority:
+    - "&7&oPriorità di questa"
+    - "&7&otabella, se un giocatore ha"
+    - "&7&omolteplici permessi, solo"
+    - "&7&ola tabella con la priorità"
+    - "&7&ominore sarà usato."
+    drops:
+    - "&7&oLista di drop"
+    - "&7&odi questa tabella."
+    rolls:
+    - "&7&oAmmontare minimo e massimo"
+    - "&7&odi lanci che verranno eseguiti."
+    permission:
+    - "&7&oId della tabella, il"
+    - "&7&opermesso per utilizzarla"
+    - "&7&osarà morecompost.drops.[id]"
+    weight:
+    - "&7&oPeso di questo drop"
+    - "&7&onella tabella, la probabilità"
+    - "&7&odi ottenere questo drop è"
+    - "&7&opari al suo peso diviso"
+    - "&7&ola somma dei pesi dei drop"
+    - "&7&onella tabella."
+    description:
+    - "&7&oDescrizione del drop,"
+    - "&7&oper ricrearla da zero clicca col destro,"
+    - "&7&oper modificarla clicca col sinistro."
+    item-description:
+      item:
+      - "&7&oItem che verrà rilasciato."
+      - "&6&oClicca e rilascia qui&7&o per"
+      - "&7&oimpostare un item specifico"
+      count:
+      - "&7&oAmmontare minimo e massimo"
+      - "&7&odi oggetti rilasciabili in"
+      - "&7&oun singolo drop."
+    head-description:
+      texture:
+      - "&7&oIl valore della texture"
+      - "&7&odella testa che verrà"
+      - "&7&o rilasciata in base64."
+      count:
+      - "&7&oAmmontare minimo e massimo"
+      - "&7&odi oggetti rilasciabili"
+      - "&7&oin un singolo drop.."
+      meta:
+      - "&7&oItemMeta della testa"
+      - "&7&oche sarà rilasciata."
+    experience-description:
+      amount:
+      - "&7&oAmmontare minimo e massimo di"
+      - "&7&oesperienza rilasciabile."
+  compostabletable:
+    priority:
+    - "&7&oLa priorità di questa"
+    - "&7&otabella, se un giocatore ha"
+    - "&7&omolteplici permessi, solo"
+    - "&7&ola tabella con la priorità"
+    - "&7&ominore sarà usato."
+    permission:
+    - "&7&oId della tabella, il"
+    - "&7&opermesso per utilizzarla"
+    - "&7&osarà morecompost.compostables.[id]"
+    replace:
+    - "&7&oSe questa tabella rimpiazzerà"
+    - "&7&ogli oggetti compostabili"
+    - "&7&oin vanilla oppure no."
+    compostables:
+    - "&7&oLista di compostabili di"
+    - "&7&oquesta tabella"
+    item:
+    - "&7&oItemStack che verrà compostato."
+    - "&6&oClicca e rilascia qui&7 per"
+    - "&7&oimpostare un item specifico"
+    chance:
+    - "&7&oPossibilità di successo"
+    - "&7&outilizzando questo item"
+    - "&7&ocome compostabile."
+    rolls:
+    - "&7&oAmmontare minimo e massimo"
+    - "&7&odi lanci che verranno eseguiti."
+    forced:
+    - "&7&oId della tabella di drop"
+    - "&7&oche sarà usata se il"
+    - "&7&ocomposter è riempito"
+    - "&7&ointeramente utilizzando"
+    - "&7&oquesto compostabile."

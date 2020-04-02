@@ -98,7 +98,7 @@ public class MoreCompost extends JavaPlugin {
 	}
 
 	private void setUpData() {
-		locale = new PluginLocale(this, Lists.newArrayList("en-US"), getConfig().getString("locale"));
+		locale = new PluginLocale(this, Lists.newArrayList("en-US", "it-IT", "zh-CN"), getConfig().getString("locale"));
 		Libs.initializeLibrary(instance, locale);
 
 		compostersManager = new CompostersManager(Composter.class, "yaml", this);
