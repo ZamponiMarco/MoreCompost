@@ -48,7 +48,7 @@ public class Compostable implements Model {
     private static final String FORCED_DROPTABLE_ID = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjc0ZDEzYjUxMDE2OGM3YWNiNDRiNjQ0MTY4NmFkN2FiMWNiNWI3NDg4ZThjZGY5ZDViMjJiNDdjNDgzZjIzIn19fQ======";
 
     @EqualsAndHashCode.Include
-    @Serializable(headTexture = ITEM_HEAD, description = "gui.compostabletable.item")
+    @Serializable(displayItem = "getFlatItem", description = "gui.compostabletable.item")
     private ItemStackWrapper item;
     @Serializable(headTexture = ROLLS_HEAD, description = "gui.compostabletable.rolls")
     private IntRange rolls;
@@ -123,10 +123,8 @@ public class Compostable implements Model {
     }
 
     public static Function<Object, ItemStack> mapDropTables() {
-        return obj -> {
-            return MoreCompost.getInstance().getDropsManager().getDropTableById(PERM_PREFIX + (String) obj)
-                    .getGUIItem();
-        };
+        return obj -> MoreCompost.getInstance().getDropsManager().getDropTableById(PERM_PREFIX + obj)
+                .getGUIItem();
     }
 
     public static Compostable deserialize(Map<String, Object> map) {
@@ -137,14 +135,18 @@ public class Compostable implements Model {
         return new Compostable(item, rolls, chance, forcedDropTableId, false);
     }
 
+    public ItemStack getFlatItem() {
+        return this.item.getWrapped().clone();
+    }
+
     @Override
     public ItemStack getGUIItem() {
         if (isDefault) {
             return null;
         }
-        ItemStack item = this.item.getWrapped().clone();
+        ItemStack item = getFlatItem();
         ItemMeta meta = item.getItemMeta();
-        List<String> lore = meta.getLore() == null ? new ArrayList<String>() : meta.getLore();
+        List<String> lore = meta.getLore() == null ? new ArrayList<>() : meta.getLore();
         lore.addAll(Lists.newArrayList(MessageUtils.color("&7Chance » &8&l" + String.valueOf(chance)),
                 MessageUtils.color("&7Rolls » &8&l" + rolls), MessageUtils.color("&6&lLeft click &eto modify."),
                 MessageUtils.color("&6&lRight click &eto delete.")));

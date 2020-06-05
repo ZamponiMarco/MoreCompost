@@ -1,8 +1,11 @@
 package com.github.jummes.morecompost.dropdescription;
 
-import java.util.Map;
-import java.util.Random;
-
+import com.github.jummes.libs.annotation.Serializable;
+import com.github.jummes.libs.model.math.IntRange;
+import com.github.jummes.libs.model.wrapper.ItemStackWrapper;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -11,13 +14,8 @@ import org.bukkit.block.Container;
 import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.inventory.ItemStack;
 
-import com.github.jummes.libs.annotation.Serializable;
-import com.github.jummes.libs.model.math.IntRange;
-import com.github.jummes.libs.model.wrapper.ItemStackWrapper;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import java.util.Map;
+import java.util.Random;
 
 @Getter
 @Setter
@@ -25,16 +23,21 @@ import lombok.Setter;
 @SerializableAs("ItemDropDescription")
 public class ItemDropDescription extends DropDescription {
 
-    private static final String ITEM_HEAD = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGI2YTI5ZWE2OGEwYzYxYjFlZGEyZDhhZWMzZTIyMjk3MjczMjNiN2QyZGE2YmMwNGNjMGNkMmRlZjNiNDcxMiJ9fX0====";
     private static final String COUNT_HEAD = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTI0MjMwMmViZDY1NWY2ZDQyOWMxZTRhZWRlMjFiN2Y1YzRkYjY4YTQwNDVlYmFlYzE3NjMzYTA1MGExYTEifX19";
 
-    @Serializable(headTexture = ITEM_HEAD, description = "gui.droptable.item-description.item")
+    @Serializable(displayItem = "getGUIItem", description = "gui.droptable.item-description.item")
     private ItemStackWrapper item;
     @Serializable(headTexture = COUNT_HEAD, description = "gui.droptable.item-description.count")
     private IntRange count;
 
     public ItemDropDescription() {
         this(new ItemStackWrapper(new ItemStack(Material.STONE)), new IntRange(1, 1));
+    }
+
+    public static ItemDropDescription deserialize(Map<String, Object> map) {
+        ItemStackWrapper item = (ItemStackWrapper) map.get("item");
+        IntRange count = (IntRange) map.get("count");
+        return new ItemDropDescription(item, count);
     }
 
     @Override
@@ -54,15 +57,9 @@ public class ItemDropDescription extends DropDescription {
         container.getInventory().addItem(toDrop);
     }
 
-    public static ItemDropDescription deserialize(Map<String, Object> map) {
-        ItemStackWrapper item = (ItemStackWrapper) map.get("item");
-        IntRange count = (IntRange) map.get("count");
-        return new ItemDropDescription(item, count);
-    }
-
     @Override
     public ItemStack getGUIItem() {
-        return item.getWrapped();
+        return item.getWrapped().clone();
     }
 
     @Override

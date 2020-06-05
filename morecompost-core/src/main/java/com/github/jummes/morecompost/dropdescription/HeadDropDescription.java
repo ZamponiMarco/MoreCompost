@@ -28,7 +28,7 @@ public class HeadDropDescription extends DropDescription {
 
     @Serializable(headTexture = COUNT_HEAD, description = "gui.droptable.head-description.count")
     private IntRange count;
-    @Serializable(headTexture = ITEM_HEAD, description = "gui.droptable.head-description.texture")
+    @Serializable(displayItem = "getGUIItem", description = "gui.droptable.head-description.texture")
     private String texture;
     @Serializable(headTexture = META_HEAD, description = "gui.droptable.head-description.meta")
     private ItemMetaWrapper meta;
