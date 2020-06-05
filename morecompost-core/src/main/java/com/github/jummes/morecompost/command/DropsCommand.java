@@ -12,31 +12,31 @@ import com.github.jummes.morecompost.droptable.DropTable;
 
 public class DropsCommand extends AbstractCommand {
 
-	public DropsCommand(CommandSender sender, String subCommand, String[] arguments, boolean isSenderPlayer) {
-		super(sender, subCommand, arguments, isSenderPlayer);
-	}
+    public DropsCommand(CommandSender sender, String subCommand, String[] arguments, boolean isSenderPlayer) {
+        super(sender, subCommand, arguments, isSenderPlayer);
+    }
 
-	@Override
-	protected void execute() {
-		Player p = (Player) sender;
-		try {
-			p.openInventory(new ModelCollectionInventoryHolder(MoreCompost.getInstance(), null,
-					new ModelPath<DropTable>(MoreCompost.getInstance().getDropsManager(), null),
-					MoreCompost.getInstance().getDropsManager().getClass().getDeclaredField("dropTables"), 1)
-							.getInventory());
-		} catch (NoSuchFieldException | SecurityException e) {
-			e.printStackTrace();
-		}
-	}
+    @Override
+    protected void execute() {
+        Player p = (Player) sender;
+        try {
+            p.openInventory(new ModelCollectionInventoryHolder(MoreCompost.getInstance(), null,
+                    new ModelPath<DropTable>(MoreCompost.getInstance().getDropsManager(), null),
+                    MoreCompost.getInstance().getDropsManager().getClass().getDeclaredField("dropTables"), 1)
+                    .getInventory());
+        } catch (NoSuchFieldException | SecurityException e) {
+            e.printStackTrace();
+        }
+    }
 
-	@Override
-	protected boolean isOnlyPlayer() {
-		return true;
-	}
+    @Override
+    protected boolean isOnlyPlayer() {
+        return true;
+    }
 
-	@Override
-	protected Permission getPermission() {
-		return new Permission("morecompost.commands.drops");
-	}
+    @Override
+    protected Permission getPermission() {
+        return new Permission("morecompost.commands.drops");
+    }
 
 }

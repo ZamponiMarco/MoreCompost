@@ -12,16 +12,16 @@ import com.github.jummes.morecompost.manager.CompostersManager;
 
 public class ComposterBreakListener implements Listener {
 
-	@EventHandler
-	public void onComposterBreak(BlockBreakEvent e) {
+    @EventHandler
+    public void onComposterBreak(BlockBreakEvent e) {
 
-		Player p = e.getPlayer();
-		Block b = e.getBlock();
+        Player p = e.getPlayer();
+        Block b = e.getBlock();
 
-		if (b.getType().equals(Material.COMPOSTER)) {
-			CompostersManager compostersManager = MoreCompost.getInstance().getCompostersManager();
-			compostersManager.removeBlockFromPlayer(p.getUniqueId(), b);	
-		}
-	}
+        if (b.getType().equals(Material.COMPOSTER)) {
+            CompostersManager compostersManager = MoreCompost.getInstance().getCompostersManager();
+            compostersManager.removeBlockFromPlayer(p.getUniqueId(), b);
+        }
+    }
 
 }

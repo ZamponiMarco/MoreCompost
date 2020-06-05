@@ -38,129 +38,129 @@ import lombok.Setter;
 @SerializableAs("Compostable")
 public class Compostable implements Model {
 
-	private static final String METADATA_KEY = "forcedDropTableId";
+    private static final String METADATA_KEY = "forcedDropTableId";
 
-	private static final String PERM_PREFIX = "morecompost.drops.";
+    private static final String PERM_PREFIX = "morecompost.drops.";
 
-	private static final String CHANCE_HEAD = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWZlMTk3MmYyY2ZhNGQzMGRjMmYzNGU4ZDIxNTM1OGMwYzU3NDMyYTU1ZjZjMzdhZDkxZTBkZDQ0MTkxYSJ9fX0===";
-	private static final String ROLLS_HEAD = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTI0MjMwMmViZDY1NWY2ZDQyOWMxZTRhZWRlMjFiN2Y1YzRkYjY4YTQwNDVlYmFlYzE3NjMzYTA1MGExYTEifX19=";
-	private static final String ITEM_HEAD = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGI2YTI5ZWE2OGEwYzYxYjFlZGEyZDhhZWMzZTIyMjk3MjczMjNiN2QyZGE2YmMwNGNjMGNkMmRlZjNiNDcxMiJ9fX0====";
-	private static final String FORCED_DROPTABLE_ID = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjc0ZDEzYjUxMDE2OGM3YWNiNDRiNjQ0MTY4NmFkN2FiMWNiNWI3NDg4ZThjZGY5ZDViMjJiNDdjNDgzZjIzIn19fQ======";
+    private static final String CHANCE_HEAD = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWZlMTk3MmYyY2ZhNGQzMGRjMmYzNGU4ZDIxNTM1OGMwYzU3NDMyYTU1ZjZjMzdhZDkxZTBkZDQ0MTkxYSJ9fX0===";
+    private static final String ROLLS_HEAD = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTI0MjMwMmViZDY1NWY2ZDQyOWMxZTRhZWRlMjFiN2Y1YzRkYjY4YTQwNDVlYmFlYzE3NjMzYTA1MGExYTEifX19=";
+    private static final String ITEM_HEAD = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGI2YTI5ZWE2OGEwYzYxYjFlZGEyZDhhZWMzZTIyMjk3MjczMjNiN2QyZGE2YmMwNGNjMGNkMmRlZjNiNDcxMiJ9fX0====";
+    private static final String FORCED_DROPTABLE_ID = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjc0ZDEzYjUxMDE2OGM3YWNiNDRiNjQ0MTY4NmFkN2FiMWNiNWI3NDg4ZThjZGY5ZDViMjJiNDdjNDgzZjIzIn19fQ======";
 
-	@EqualsAndHashCode.Include
-	@Serializable(headTexture = ITEM_HEAD, description = "gui.compostabletable.item")
-	private ItemStackWrapper item;
-	@Serializable(headTexture = ROLLS_HEAD, description = "gui.compostabletable.rolls")
-	private IntRange rolls;
-	@Serializable(headTexture = CHANCE_HEAD, description = "gui.compostabletable.chance")
-	private double chance;
-	@Serializable(headTexture = FORCED_DROPTABLE_ID, description = "gui.compostabletable.forced", fromList = "getDropTables", fromListMapper = "mapDropTables")
-	private String forcedDropTableId;
-	private boolean isDefault;
-	private Random random;
+    @EqualsAndHashCode.Include
+    @Serializable(headTexture = ITEM_HEAD, description = "gui.compostabletable.item")
+    private ItemStackWrapper item;
+    @Serializable(headTexture = ROLLS_HEAD, description = "gui.compostabletable.rolls")
+    private IntRange rolls;
+    @Serializable(headTexture = CHANCE_HEAD, description = "gui.compostabletable.chance")
+    private double chance;
+    @Serializable(headTexture = FORCED_DROPTABLE_ID, description = "gui.compostabletable.forced", fromList = "getDropTables", fromListMapper = "mapDropTables")
+    private String forcedDropTableId;
+    private boolean isDefault;
+    private Random random;
 
-	public Compostable() {
-		this(new ItemStackWrapper(new ItemStack(Material.STONE)), new IntRange(1, 1), 0.5, null, false);
-	}
+    public Compostable() {
+        this(new ItemStackWrapper(new ItemStack(Material.STONE)), new IntRange(1, 1), 0.5, null, false);
+    }
 
-	public Compostable(ItemStackWrapper item, IntRange rolls, double chance, String forcedDropTableId,
-			boolean isDefault) {
-		this.item = item;
-		this.rolls = rolls;
-		this.chance = chance;
-		this.forcedDropTableId = forcedDropTableId;
-		this.isDefault = isDefault;
-		this.random = new Random();
-	}
+    public Compostable(ItemStackWrapper item, IntRange rolls, double chance, String forcedDropTableId,
+                       boolean isDefault) {
+        this.item = item;
+        this.rolls = rolls;
+        this.chance = chance;
+        this.forcedDropTableId = forcedDropTableId;
+        this.isDefault = isDefault;
+        this.random = new Random();
+    }
 
-	/**
-	 * Composts a block
-	 * 
-	 * @param block block to be composted
-	 * @return true if block was succesfully composted, false otherwise
-	 */
-	public boolean compost(Block block) {
-		if (block.getType().equals(Material.COMPOSTER)) {
-			Levelled composter = (Levelled) block.getBlockData();
+    /**
+     * Composts a block
+     *
+     * @param block block to be composted
+     * @return true if block was succesfully composted, false otherwise
+     */
+    public boolean compost(Block block) {
+        if (block.getType().equals(Material.COMPOSTER)) {
+            Levelled composter = (Levelled) block.getBlockData();
 
-			if (composter.getLevel() == 0 && forcedDropTableId != null) {
-				block.setMetadata(METADATA_KEY,
-						new FixedMetadataValue(MoreCompost.getInstance(), PERM_PREFIX + forcedDropTableId));
-			}
+            if (composter.getLevel() == 0 && forcedDropTableId != null) {
+                block.setMetadata(METADATA_KEY,
+                        new FixedMetadataValue(MoreCompost.getInstance(), PERM_PREFIX + forcedDropTableId));
+            }
 
-			if (block.hasMetadata(METADATA_KEY) && (forcedDropTableId == null || (forcedDropTableId != null
-					&& !block.getMetadata(METADATA_KEY).get(0).asString().equals(PERM_PREFIX + forcedDropTableId)))) {
-				block.removeMetadata(METADATA_KEY, MoreCompost.getInstance());
-			}
+            if (block.hasMetadata(METADATA_KEY) && (forcedDropTableId == null || (forcedDropTableId != null
+                    && !block.getMetadata(METADATA_KEY).get(0).asString().equals(PERM_PREFIX + forcedDropTableId)))) {
+                block.removeMetadata(METADATA_KEY, MoreCompost.getInstance());
+            }
 
-			int maxLevel = composter.getMaximumLevel() - 1;
-			AtomicBoolean hasFilled = new AtomicBoolean(false);
+            int maxLevel = composter.getMaximumLevel() - 1;
+            AtomicBoolean hasFilled = new AtomicBoolean(false);
 
-			if (composter.getLevel() != maxLevel) {
-				int randomRolls = random.nextInt(rolls.getDifference() + 1) + rolls.getMin();
-				IntStream.range(0, randomRolls).forEach(i -> {
-					if (composter.getLevel() != maxLevel) {
-						int currLevel = composter.getLevel();
-						if (currLevel < maxLevel && new Random().nextDouble() < chance) {
-							composter.setLevel(++currLevel);
-							hasFilled.set(true);
-						}
-						block.setBlockData(composter);
-					}
-				});
-				block.getWorld().playSound(block.getLocation(),
-						hasFilled.get() ? Sound.BLOCK_COMPOSTER_FILL_SUCCESS : Sound.BLOCK_COMPOSTER_FILL, 1, 1);
-			}
-			return hasFilled.get();
-		}
-		return false;
-	}
+            if (composter.getLevel() != maxLevel) {
+                int randomRolls = random.nextInt(rolls.getDifference() + 1) + rolls.getMin();
+                IntStream.range(0, randomRolls).forEach(i -> {
+                    if (composter.getLevel() != maxLevel) {
+                        int currLevel = composter.getLevel();
+                        if (currLevel < maxLevel && new Random().nextDouble() < chance) {
+                            composter.setLevel(++currLevel);
+                            hasFilled.set(true);
+                        }
+                        block.setBlockData(composter);
+                    }
+                });
+                block.getWorld().playSound(block.getLocation(),
+                        hasFilled.get() ? Sound.BLOCK_COMPOSTER_FILL_SUCCESS : Sound.BLOCK_COMPOSTER_FILL, 1, 1);
+            }
+            return hasFilled.get();
+        }
+        return false;
+    }
 
-	// ---
+    // ---
 
-	@SuppressWarnings("unused")
-	public static List<Object> getDropTables(ModelPath<?> path) {
-		return MoreCompost.getInstance().getDropsManager().getDropTables().stream()
-				.map(dropTable -> dropTable.getPermissionString().substring(PERM_PREFIX.length()))
-				.collect(Collectors.toList());
-	}
+    @SuppressWarnings("unused")
+    public static List<Object> getDropTables(ModelPath<?> path) {
+        return MoreCompost.getInstance().getDropsManager().getDropTables().stream()
+                .map(dropTable -> dropTable.getPermissionString().substring(PERM_PREFIX.length()))
+                .collect(Collectors.toList());
+    }
 
-	public static Function<Object, ItemStack> mapDropTables() {
-		return obj -> {
-			return MoreCompost.getInstance().getDropsManager().getDropTableById(PERM_PREFIX + (String) obj)
-					.getGUIItem();
-		};
-	}
+    public static Function<Object, ItemStack> mapDropTables() {
+        return obj -> {
+            return MoreCompost.getInstance().getDropsManager().getDropTableById(PERM_PREFIX + (String) obj)
+                    .getGUIItem();
+        };
+    }
 
-	public static Compostable deserialize(Map<String, Object> map) {
-		ItemStackWrapper item = (ItemStackWrapper) map.get("item");
-		IntRange rolls = (IntRange) map.get("rolls");
-		double chance = (double) map.get("chance");
-		String forcedDropTableId = (String) map.get("forcedDropTableId");
-		return new Compostable(item, rolls, chance, forcedDropTableId, false);
-	}
+    public static Compostable deserialize(Map<String, Object> map) {
+        ItemStackWrapper item = (ItemStackWrapper) map.get("item");
+        IntRange rolls = (IntRange) map.get("rolls");
+        double chance = (double) map.get("chance");
+        String forcedDropTableId = (String) map.get("forcedDropTableId");
+        return new Compostable(item, rolls, chance, forcedDropTableId, false);
+    }
 
-	@Override
-	public ItemStack getGUIItem() {
-		if (isDefault) {
-			return null;
-		}
-		ItemStack item = this.item.getWrapped().clone();
-		ItemMeta meta = item.getItemMeta();
-		List<String> lore = meta.getLore() == null ? new ArrayList<String>() : meta.getLore();
-		lore.addAll(Lists.newArrayList(MessageUtils.color("&7Chance → &8&l" + String.valueOf(chance)),
-				MessageUtils.color("&7Rolls → &8&l" + rolls), MessageUtils.color("&6&lLeft click &eto modify."),
-				MessageUtils.color("&6&lRight click &eto delete.")));
-		meta.setLore(lore);
-		item.setItemMeta(meta);
-		return item;
-	}
+    @Override
+    public ItemStack getGUIItem() {
+        if (isDefault) {
+            return null;
+        }
+        ItemStack item = this.item.getWrapped().clone();
+        ItemMeta meta = item.getItemMeta();
+        List<String> lore = meta.getLore() == null ? new ArrayList<String>() : meta.getLore();
+        lore.addAll(Lists.newArrayList(MessageUtils.color("&7Chance » &8&l" + String.valueOf(chance)),
+                MessageUtils.color("&7Rolls » &8&l" + rolls), MessageUtils.color("&6&lLeft click &eto modify."),
+                MessageUtils.color("&6&lRight click &eto delete.")));
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        return item;
+    }
 
-	@Override
-	public String toString() {
-		return item.getWrapped().getItemMeta().getDisplayName().equals("")
-				? StringUtils.capitalize(item.getWrapped().getType().name())
-				: item.getWrapped().getItemMeta().getDisplayName();
-	}
+    @Override
+    public String toString() {
+        return item.getWrapped().getItemMeta().getDisplayName().equals("")
+                ? StringUtils.capitalize(item.getWrapped().getType().name())
+                : item.getWrapped().getItemMeta().getDisplayName();
+    }
 
 }

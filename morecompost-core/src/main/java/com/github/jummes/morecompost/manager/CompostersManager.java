@@ -17,44 +17,44 @@ import com.github.jummes.morecompost.core.MoreCompost;
 
 public class CompostersManager extends ModelManager<Composter> {
 
-	private Set<Composter> composters;
+    private Set<Composter> composters;
 
-	public CompostersManager(Class<Composter> classObject, String databaseType, JavaPlugin plugin) {
-		super(classObject, databaseType, plugin);
-		this.composters = new HashSet<Composter>(database.loadObjects());
-		composters.forEach(composter -> {
-			composter.getComposters().forEach(loc -> {
-				Block b = loc.getBlock();
-				if (b.getType().equals(Material.COMPOSTER)) {
-					b.setMetadata("owner", new FixedMetadataValue(MoreCompost.getInstance(), composter.getId()));
-				}
-			});
-		});
-	}
+    public CompostersManager(Class<Composter> classObject, String databaseType, JavaPlugin plugin) {
+        super(classObject, databaseType, plugin);
+        this.composters = new HashSet<Composter>(database.loadObjects());
+        composters.forEach(composter -> {
+            composter.getComposters().forEach(loc -> {
+                Block b = loc.getBlock();
+                if (b.getType().equals(Material.COMPOSTER)) {
+                    b.setMetadata("owner", new FixedMetadataValue(MoreCompost.getInstance(), composter.getId()));
+                }
+            });
+        });
+    }
 
-	public void addBlockToPlayer(UUID id, Block b) {
-		Composter composter = getComposterByPlayer(id);
-		if (composter == null) {
-			composter = new Composter(id, new ArrayList<Location>());
-			composters.add(composter);
-		}
-		composter.getComposters().add(b.getLocation());
-		saveModel(composter);
-	}
+    public void addBlockToPlayer(UUID id, Block b) {
+        Composter composter = getComposterByPlayer(id);
+        if (composter == null) {
+            composter = new Composter(id, new ArrayList<Location>());
+            composters.add(composter);
+        }
+        composter.getComposters().add(b.getLocation());
+        saveModel(composter);
+    }
 
-	public void removeBlockFromPlayer(UUID id, Block b) {
-		Composter composter = getComposterByPlayer(id);
-		if (composter != null) {
-			composter.getComposters().remove(b.getLocation());
-			saveModel(composter);
-		}
-	}
+    public void removeBlockFromPlayer(UUID id, Block b) {
+        Composter composter = getComposterByPlayer(id);
+        if (composter != null) {
+            composter.getComposters().remove(b.getLocation());
+            saveModel(composter);
+        }
+    }
 
-	public void reloadData() {
-		this.composters = new HashSet<Composter>(database.loadObjects());
-	}
+    public void reloadData() {
+        this.composters = new HashSet<Composter>(database.loadObjects());
+    }
 
-	private Composter getComposterByPlayer(UUID id) {
-		return composters.stream().filter(composter -> composter.getId().equals(id)).findFirst().orElse(null);
-	}
+    private Composter getComposterByPlayer(UUID id) {
+        return composters.stream().filter(composter -> composter.getId().equals(id)).findFirst().orElse(null);
+    }
 }

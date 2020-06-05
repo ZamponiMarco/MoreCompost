@@ -17,34 +17,34 @@ import com.github.jummes.morecompost.droptable.DropTable;
 
 public class DropPercentageCommand extends AbstractCommand {
 
-	public DropPercentageCommand(CommandSender sender, String subCommand, String[] arguments, boolean isSenderPlayer) {
-		super(sender, subCommand, arguments, isSenderPlayer);
-	}
+    public DropPercentageCommand(CommandSender sender, String subCommand, String[] arguments, boolean isSenderPlayer) {
+        super(sender, subCommand, arguments, isSenderPlayer);
+    }
 
-	@Override
-	protected void execute() {
-		Player p = (Player) sender;
-		DropTable table = MoreCompost.getInstance().getDropsManager().getHighestPriorityDropTable(p);
-		double maxWeight = table.getSortedWeightSet().last();
-		Map<Drop, Double> percentages = new HashMap<Drop, Double>();
-		table.getDrops().forEach(drop -> percentages.put(drop, (drop.getWeight() / maxWeight) * 100));
-		NumberFormat f = new DecimalFormat("#0.00");	
-		StringBuilder string = new StringBuilder();
-		string.append(MessageUtils.header("&cDrops"));
-		percentages.forEach((drop, d) -> string.append(MessageUtils
-				.color(String.format("&6%s → &c&l%s%%\n", drop.getDropDescription().toString(), f.format(d)))));
-		string.append(MessageUtils.delimiter("&cDrops"));
-		p.sendMessage(string.toString());
-	}
+    @Override
+    protected void execute() {
+        Player p = (Player) sender;
+        DropTable table = MoreCompost.getInstance().getDropsManager().getHighestPriorityDropTable(p);
+        double maxWeight = table.getSortedWeightSet().last();
+        Map<Drop, Double> percentages = new HashMap<Drop, Double>();
+        table.getDrops().forEach(drop -> percentages.put(drop, (drop.getWeight() / maxWeight) * 100));
+        NumberFormat f = new DecimalFormat("#0.00");
+        StringBuilder string = new StringBuilder();
+        string.append(MessageUtils.header("&cDrops"));
+        percentages.forEach((drop, d) -> string.append(MessageUtils
+                .color(String.format("&6%s » &c&l%s%%\n", drop.getDropDescription().toString(), f.format(d)))));
+        string.append(MessageUtils.delimiter("&cDrops"));
+        p.sendMessage(string.toString());
+    }
 
-	@Override
-	protected boolean isOnlyPlayer() {
-		return true;
-	}
+    @Override
+    protected boolean isOnlyPlayer() {
+        return true;
+    }
 
-	@Override
-	protected Permission getPermission() {
-		return new Permission("morecompost.player.drops");
-	}
+    @Override
+    protected Permission getPermission() {
+        return new Permission("morecompost.player.drops");
+    }
 
 }

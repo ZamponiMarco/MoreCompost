@@ -43,96 +43,96 @@ import lombok.Getter;
 @Getter
 public class MoreCompost extends JavaPlugin {
 
-	static {
-		Libs.registerSerializables();
-		ConfigurationSerialization.registerClass(DropTable.class);
-		ConfigurationSerialization.registerClass(Drop.class);
-		ConfigurationSerialization.registerClass(DropDescription.class);
-		ConfigurationSerialization.registerClass(ItemDropDescription.class);
-		ConfigurationSerialization.registerClass(ExperienceDropDescription.class);
-		ConfigurationSerialization.registerClass(HeadDropDescription.class);
-		ConfigurationSerialization.registerClass(NoDropDescription.class);
-		ConfigurationSerialization.registerClass(CompostableTable.class);
-		ConfigurationSerialization.registerClass(Compostable.class);
-		ConfigurationSerialization.registerClass(Composter.class);
-	}
+    static {
+        Libs.registerSerializables();
+        ConfigurationSerialization.registerClass(DropTable.class);
+        ConfigurationSerialization.registerClass(Drop.class);
+        ConfigurationSerialization.registerClass(DropDescription.class);
+        ConfigurationSerialization.registerClass(ItemDropDescription.class);
+        ConfigurationSerialization.registerClass(ExperienceDropDescription.class);
+        ConfigurationSerialization.registerClass(HeadDropDescription.class);
+        ConfigurationSerialization.registerClass(NoDropDescription.class);
+        ConfigurationSerialization.registerClass(CompostableTable.class);
+        ConfigurationSerialization.registerClass(Compostable.class);
+        ConfigurationSerialization.registerClass(Composter.class);
+    }
 
-	private static final String CONFIG_VERSION = "2.0.3";
+    private static final String CONFIG_VERSION = "2.0.3";
 
-	@Getter
-	private static MoreCompost instance;
+    @Getter
+    private static MoreCompost instance;
 
-	private DropsManager dropsManager;
-	private CompostablesManager compostablesManager;
-	private CompostersManager compostersManager;
-	private PluginLocale locale;
+    private DropsManager dropsManager;
+    private CompostablesManager compostablesManager;
+    private CompostersManager compostersManager;
+    private PluginLocale locale;
 
-	public void onEnable() {
-		instance = this;
-		setUpFolder();
-		setUpData();
-		setUpCommands();
-		registerEvents();
-		powerUpServices();
-	}
+    public void onEnable() {
+        instance = this;
+        setUpFolder();
+        setUpData();
+        setUpCommands();
+        registerEvents();
+        powerUpServices();
+    }
 
-	private void setUpFolder() {
-		if (!getDataFolder().exists()) {
-			getDataFolder().mkdir();
-		}
+    private void setUpFolder() {
+        if (!getDataFolder().exists()) {
+            getDataFolder().mkdir();
+        }
 
-		File configFile = new File(getDataFolder(), "config.yml");
+        File configFile = new File(getDataFolder(), "config.yml");
 
-		if (!configFile.exists()) {
-			saveDefaultConfig();
-		}
+        if (!configFile.exists()) {
+            saveDefaultConfig();
+        }
 
-		if (!getConfig().getString("version").equals(CONFIG_VERSION)) {
-			getLogger().info("config.yml has changed. Old config is stored inside config-"
-					+ getConfig().getString("version") + ".yml");
-			File outputFile = new File(getDataFolder(), "config-" + getConfig().getString("version") + ".yml");
-			FileUtil.copy(configFile, outputFile);
-			configFile.delete();
-			saveDefaultConfig();
-		}
-	}
+        if (!getConfig().getString("version").equals(CONFIG_VERSION)) {
+            getLogger().info("config.yml has changed. Old config is stored inside config-"
+                    + getConfig().getString("version") + ".yml");
+            File outputFile = new File(getDataFolder(), "config-" + getConfig().getString("version") + ".yml");
+            FileUtil.copy(configFile, outputFile);
+            configFile.delete();
+            saveDefaultConfig();
+        }
+    }
 
-	private void setUpData() {
-		locale = new PluginLocale(this, Lists.newArrayList("en-US", "it-IT", "zh-CN"), getConfig().getString("locale"));
-		Libs.initializeLibrary(instance, locale);
+    private void setUpData() {
+        locale = new PluginLocale(this, Lists.newArrayList("en-US", "it-IT", "zh-CN"), getConfig().getString("locale"));
+        Libs.initializeLibrary(instance, locale);
 
-		compostersManager = new CompostersManager(Composter.class, "yaml", this);
-		dropsManager = new DropsManager(DropTable.class, "yaml", this);
-		compostablesManager = new CompostablesManager(CompostableTable.class, "yaml", this);
-	}
+        compostersManager = new CompostersManager(Composter.class, "yaml", this);
+        dropsManager = new DropsManager(DropTable.class, "yaml", this);
+        compostablesManager = new CompostablesManager(CompostableTable.class, "yaml", this);
+    }
 
-	private void setUpCommands() {
-		PluginCommandExecutor executor = new PluginCommandExecutor(HelpCommand.class, "help");
-		executor.registerCommand("drops", DropsCommand.class);
-		executor.registerCommand("compostables", CompostablesCommand.class);
-		executor.registerCommand("inspect", InspectCommand.class);
-		executor.registerCommand("reload", ReloadCommand.class);
-		executor.registerCommand("about", AboutCommand.class);
-		getCommand("mc").setExecutor(executor);
-		getCommand("mc").setTabCompleter(executor);
-		PluginCommandExecutor composterExecutor = new PluginCommandExecutor(PlayerHelpCommand.class, "help");
-		composterExecutor.registerCommand("drops", DropPercentageCommand.class);
-		composterExecutor.registerCommand("compostables", CompostableListCommand.class);
-		getCommand("composter").setExecutor(composterExecutor);
-		getCommand("composter").setTabCompleter(composterExecutor);
-	}
+    private void setUpCommands() {
+        PluginCommandExecutor executor = new PluginCommandExecutor(HelpCommand.class, "help");
+        executor.registerCommand("drops", DropsCommand.class);
+        executor.registerCommand("compostables", CompostablesCommand.class);
+        executor.registerCommand("inspect", InspectCommand.class);
+        executor.registerCommand("reload", ReloadCommand.class);
+        executor.registerCommand("about", AboutCommand.class);
+        getCommand("mc").setExecutor(executor);
+        getCommand("mc").setTabCompleter(executor);
+        PluginCommandExecutor composterExecutor = new PluginCommandExecutor(PlayerHelpCommand.class, "help");
+        composterExecutor.registerCommand("drops", DropPercentageCommand.class);
+        composterExecutor.registerCommand("compostables", CompostableListCommand.class);
+        getCommand("composter").setExecutor(composterExecutor);
+        getCommand("composter").setTabCompleter(composterExecutor);
+    }
 
-	private void registerEvents() {
-		Bukkit.getPluginManager().registerEvents(new ComposterBreakListener(), this);
-		Bukkit.getPluginManager().registerEvents(new ComposterPlaceListener(), this);
-		Bukkit.getPluginManager().registerEvents(new HopperInteractComposterListener(), this);
-		Bukkit.getPluginManager().registerEvents(new ComposterDropListener(), this);
-	}
+    private void registerEvents() {
+        Bukkit.getPluginManager().registerEvents(new ComposterBreakListener(), this);
+        Bukkit.getPluginManager().registerEvents(new ComposterPlaceListener(), this);
+        Bukkit.getPluginManager().registerEvents(new HopperInteractComposterListener(), this);
+        Bukkit.getPluginManager().registerEvents(new ComposterDropListener(), this);
+    }
 
-	private void powerUpServices() {
-		if (Boolean.valueOf(getConfig().getString("updateChecker"))) {
-			new UpdateChecker().checkForUpdate();
-		}
-	}
+    private void powerUpServices() {
+        if (Boolean.valueOf(getConfig().getString("updateChecker"))) {
+            new UpdateChecker().checkForUpdate();
+        }
+    }
 
 }

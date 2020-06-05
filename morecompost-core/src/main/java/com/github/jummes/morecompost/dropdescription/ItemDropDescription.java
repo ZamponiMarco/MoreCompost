@@ -25,51 +25,51 @@ import lombok.Setter;
 @SerializableAs("ItemDropDescription")
 public class ItemDropDescription extends DropDescription {
 
-	private static final String ITEM_HEAD = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGI2YTI5ZWE2OGEwYzYxYjFlZGEyZDhhZWMzZTIyMjk3MjczMjNiN2QyZGE2YmMwNGNjMGNkMmRlZjNiNDcxMiJ9fX0====";
-	private static final String COUNT_HEAD = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTI0MjMwMmViZDY1NWY2ZDQyOWMxZTRhZWRlMjFiN2Y1YzRkYjY4YTQwNDVlYmFlYzE3NjMzYTA1MGExYTEifX19";
+    private static final String ITEM_HEAD = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGI2YTI5ZWE2OGEwYzYxYjFlZGEyZDhhZWMzZTIyMjk3MjczMjNiN2QyZGE2YmMwNGNjMGNkMmRlZjNiNDcxMiJ9fX0====";
+    private static final String COUNT_HEAD = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTI0MjMwMmViZDY1NWY2ZDQyOWMxZTRhZWRlMjFiN2Y1YzRkYjY4YTQwNDVlYmFlYzE3NjMzYTA1MGExYTEifX19";
 
-	@Serializable(headTexture = ITEM_HEAD, description = "gui.droptable.item-description.item")
-	private ItemStackWrapper item;
-	@Serializable(headTexture = COUNT_HEAD, description = "gui.droptable.item-description.count")
-	private IntRange count;
+    @Serializable(headTexture = ITEM_HEAD, description = "gui.droptable.item-description.item")
+    private ItemStackWrapper item;
+    @Serializable(headTexture = COUNT_HEAD, description = "gui.droptable.item-description.count")
+    private IntRange count;
 
-	public ItemDropDescription() {
-		this(new ItemStackWrapper(new ItemStack(Material.STONE)), new IntRange(1, 1));
-	}
+    public ItemDropDescription() {
+        this(new ItemStackWrapper(new ItemStack(Material.STONE)), new IntRange(1, 1));
+    }
 
-	@Override
-	public void dropLoot(Block block) {
-		ItemStack toDrop = item.getWrapped();
-		Random random = new Random();
-		toDrop.setAmount(random.nextInt(count.getDifference() + 1) + count.getMin());
-		Location loc = block.getLocation().clone().add(0, .3, 0);
-		block.getWorld().dropItemNaturally(loc, toDrop);
-	}
+    @Override
+    public void dropLoot(Block block) {
+        ItemStack toDrop = item.getWrapped();
+        Random random = new Random();
+        toDrop.setAmount(random.nextInt(count.getDifference() + 1) + count.getMin());
+        Location loc = block.getLocation().clone().add(0, .3, 0);
+        block.getWorld().dropItemNaturally(loc, toDrop);
+    }
 
-	@Override
-	public void putInContainer(Block block) {
-		Container container = (Container) block.getState();
-		ItemStack toDrop = item.getWrapped();
-		toDrop.setAmount(new Random().nextInt(count.getDifference() + 1) + count.getMin());
-		container.getInventory().addItem(toDrop);
-	}
+    @Override
+    public void putInContainer(Block block) {
+        Container container = (Container) block.getState();
+        ItemStack toDrop = item.getWrapped();
+        toDrop.setAmount(new Random().nextInt(count.getDifference() + 1) + count.getMin());
+        container.getInventory().addItem(toDrop);
+    }
 
-	public static ItemDropDescription deserialize(Map<String, Object> map) {
-		ItemStackWrapper item = (ItemStackWrapper) map.get("item");
-		IntRange count = (IntRange) map.get("count");
-		return new ItemDropDescription(item, count);
-	}
+    public static ItemDropDescription deserialize(Map<String, Object> map) {
+        ItemStackWrapper item = (ItemStackWrapper) map.get("item");
+        IntRange count = (IntRange) map.get("count");
+        return new ItemDropDescription(item, count);
+    }
 
-	@Override
-	public ItemStack getGUIItem() {
-		return item.getWrapped();
-	}
+    @Override
+    public ItemStack getGUIItem() {
+        return item.getWrapped();
+    }
 
-	@Override
-	public String toString() {
-		return item.getWrapped().getItemMeta().getDisplayName().equals("")
-				? StringUtils.capitalize(item.getWrapped().getType().name())
-				: item.getWrapped().getItemMeta().getDisplayName();
-	}
+    @Override
+    public String toString() {
+        return item.getWrapped().getItemMeta().getDisplayName().equals("")
+                ? StringUtils.capitalize(item.getWrapped().getType().name())
+                : item.getWrapped().getItemMeta().getDisplayName();
+    }
 
 }

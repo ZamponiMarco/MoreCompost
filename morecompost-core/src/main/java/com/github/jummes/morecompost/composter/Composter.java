@@ -20,17 +20,17 @@ import lombok.Getter;
 @SerializableAs("Composter")
 public class Composter implements Model {
 
-	@EqualsAndHashCode.Include
-	@Serializable(stringValue = true)
-	private UUID id;
-	@Serializable()
-	private List<Location> composters;
-	
-	@SuppressWarnings("unchecked")
-	public static Composter deserialize(Map<String, Object> map) {
-		UUID id = UUID.fromString((String) map.get("id"));
-		List<Location> composters = (List<Location>) map.get("composters");
-		return new Composter(id, composters);
-	}
-	
+    @EqualsAndHashCode.Include
+    @Serializable(stringValue = true)
+    private UUID id;
+    @Serializable()
+    private List<Location> composters;
+
+    @SuppressWarnings("unchecked")
+    public static Composter deserialize(Map<String, Object> map) {
+        UUID id = UUID.fromString((String) map.get("id"));
+        List<Location> composters = (List<Location>) map.get("composters");
+        return new Composter(id, composters);
+    }
+
 }
