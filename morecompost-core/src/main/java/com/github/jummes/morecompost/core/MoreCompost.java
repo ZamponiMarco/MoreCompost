@@ -130,7 +130,7 @@ public class MoreCompost extends JavaPlugin {
     }
 
     private void powerUpServices() {
-        if (Boolean.valueOf(getConfig().getString("updateChecker"))) {
+        if (Boolean.parseBoolean(getConfig().getString("updateChecker"))) {
             new UpdateChecker().checkForUpdate();
         }
     }

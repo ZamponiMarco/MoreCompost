@@ -77,9 +77,8 @@ public class Compostable implements Model {
      * Composts a block
      *
      * @param block block to be composted
-     * @return true if block was succesfully composted, false otherwise
      */
-    public boolean compost(Block block) {
+    public void compost(Block block) {
         if (block.getType().equals(Material.COMPOSTER)) {
             Levelled composter = (Levelled) block.getBlockData();
 
@@ -88,8 +87,7 @@ public class Compostable implements Model {
                         new FixedMetadataValue(MoreCompost.getInstance(), PERM_PREFIX + forcedDropTableId));
             }
 
-            if (block.hasMetadata(METADATA_KEY) && (forcedDropTableId == null || (forcedDropTableId != null
-                    && !block.getMetadata(METADATA_KEY).get(0).asString().equals(PERM_PREFIX + forcedDropTableId)))) {
+            if (block.hasMetadata(METADATA_KEY) && (forcedDropTableId == null || !block.getMetadata(METADATA_KEY).get(0).asString().equals(PERM_PREFIX + forcedDropTableId))) {
                 block.removeMetadata(METADATA_KEY, MoreCompost.getInstance());
             }
 
@@ -111,9 +109,8 @@ public class Compostable implements Model {
                 block.getWorld().playSound(block.getLocation(),
                         hasFilled.get() ? Sound.BLOCK_COMPOSTER_FILL_SUCCESS : Sound.BLOCK_COMPOSTER_FILL, 1, 1);
             }
-            return hasFilled.get();
+            hasFilled.get();
         }
-        return false;
     }
 
     // ---

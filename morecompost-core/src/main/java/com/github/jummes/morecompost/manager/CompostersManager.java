@@ -1,19 +1,17 @@
 package com.github.jummes.morecompost.manager;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
-
-import org.bukkit.Location;
+import com.github.jummes.libs.model.ModelManager;
+import com.github.jummes.morecompost.composter.Composter;
+import com.github.jummes.morecompost.core.MoreCompost;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.github.jummes.libs.model.ModelManager;
-import com.github.jummes.morecompost.composter.Composter;
-import com.github.jummes.morecompost.core.MoreCompost;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 public class CompostersManager extends ModelManager<Composter> {
 
@@ -21,21 +19,19 @@ public class CompostersManager extends ModelManager<Composter> {
 
     public CompostersManager(Class<Composter> classObject, String databaseType, JavaPlugin plugin) {
         super(classObject, databaseType, plugin);
-        this.composters = new HashSet<Composter>(database.loadObjects());
-        composters.forEach(composter -> {
-            composter.getComposters().forEach(loc -> {
-                Block b = loc.getBlock();
-                if (b.getType().equals(Material.COMPOSTER)) {
-                    b.setMetadata("owner", new FixedMetadataValue(MoreCompost.getInstance(), composter.getId()));
-                }
-            });
-        });
+        this.composters = new HashSet<>(database.loadObjects());
+        composters.forEach(composter -> composter.getComposters().forEach(loc -> {
+            Block b = loc.getBlock();
+            if (b.getType().equals(Material.COMPOSTER)) {
+                b.setMetadata("owner", new FixedMetadataValue(MoreCompost.getInstance(), composter.getId()));
+            }
+        }));
     }
 
     public void addBlockToPlayer(UUID id, Block b) {
         Composter composter = getComposterByPlayer(id);
         if (composter == null) {
-            composter = new Composter(id, new ArrayList<Location>());
+            composter = new Composter(id, new ArrayList<>());
             composters.add(composter);
         }
         composter.getComposters().add(b.getLocation());
@@ -51,7 +47,7 @@ public class CompostersManager extends ModelManager<Composter> {
     }
 
     public void reloadData() {
-        this.composters = new HashSet<Composter>(database.loadObjects());
+        this.composters = new HashSet<>(database.loadObjects());
     }
 
     private Composter getComposterByPlayer(UUID id) {

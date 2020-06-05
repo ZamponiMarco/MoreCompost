@@ -1,5 +1,6 @@
 package com.github.jummes.morecompost.manager;
 
+import java.util.Comparator;
 import java.util.List;
 
 import org.bukkit.entity.Player;
@@ -20,8 +21,7 @@ public class CompostablesManager extends ModelManager<CompostableTable> {
 
     public CompostableTable getHighestPriorityCompostableTable(Player owner) {
         if (owner != null)
-            return compostableTables.stream().filter(dropTable -> owner.hasPermission(dropTable.getPermissionString()))
-                    .sorted((d1, d2) -> d1.getPriority() - d2.getPriority()).findFirst()
+            return compostableTables.stream().filter(dropTable -> owner.hasPermission(dropTable.getPermissionString())).min(Comparator.comparingInt(CompostableTable::getPriority))
                     .orElse(getDefaultCompostableTable());
         return getDefaultCompostableTable();
     }

@@ -26,7 +26,7 @@ public class DropPercentageCommand extends AbstractCommand {
         Player p = (Player) sender;
         DropTable table = MoreCompost.getInstance().getDropsManager().getHighestPriorityDropTable(p);
         double maxWeight = table.getSortedWeightSet().last();
-        Map<Drop, Double> percentages = new HashMap<Drop, Double>();
+        Map<Drop, Double> percentages = new HashMap<>();
         table.getDrops().forEach(drop -> percentages.put(drop, (drop.getWeight() / maxWeight) * 100));
         NumberFormat f = new DecimalFormat("#0.00");
         StringBuilder string = new StringBuilder();

@@ -48,7 +48,7 @@ public class Drop implements Model {
         ItemStack item = dropDescription.getGUIItem().clone();
         ItemMeta meta = item.getItemMeta();
         List<String> lore = meta.getLore() == null ? new ArrayList<String>() : meta.getLore();
-        lore.addAll(Lists.newArrayList(MessageUtils.color("&7Weight » &8" + String.valueOf(weight)),
+        lore.addAll(Lists.newArrayList(MessageUtils.color("&7Weight » &8" + weight),
                 MessageUtils.color("&6&lLeft click &eto modify."), MessageUtils.color("&6&lRight click &eto delete.")));
         meta.setLore(lore);
         item.setItemMeta(meta);

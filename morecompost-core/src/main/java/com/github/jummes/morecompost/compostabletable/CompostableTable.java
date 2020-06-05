@@ -68,7 +68,7 @@ public class CompostableTable implements Model {
      * compost the block
      *
      * @param block    block to compost
-     * @param material compostable material
+     * @param item compostable item
      * @return true if the compostable is contained inside the compostable table
      */
     public boolean compost(Block block, ItemStack item) {
@@ -85,7 +85,7 @@ public class CompostableTable implements Model {
 
     @Override
     public Map<String, Object> serialize() {
-        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        Map<String, Object> map = new LinkedHashMap<>();
         map.put("==", "CompostableTable");
         map.put("permissionString", permissionString);
         map.put("priority", priority);
@@ -109,7 +109,7 @@ public class CompostableTable implements Model {
     @Override
     public ItemStack getGUIItem() {
         return ItemUtils.getNamedItem(new ItemStack(Material.COMPOSTER), "&6&lPermission » &c&l" + permissionString,
-                Lists.newArrayList(MessageUtils.color("&7Priority » &8&l" + String.valueOf(priority)),
+                Lists.newArrayList(MessageUtils.color("&7Priority » &8&l" + priority),
                         MessageUtils.color("&6&lLeft click &eto modify."),
                         MessageUtils.color("&6&lRight click &eto delete.")));
     }

@@ -20,8 +20,8 @@ public enum DefaultCompostable {
     BREAD(.85), COOKIE(.85), HAY_BLOCK(.85), BROWN_MUSHROOM_BLOCK(.85), RED_MUSHROOM_BLOCK(.85), CAKE(1),
     PUMPKIN_PIE(1);
 
-    private ItemStack item;
-    private double percentage;
+    private final ItemStack item;
+    private final double percentage;
 
     private DefaultCompostable(double percentage) {
         this.item = new ItemStack(Material.valueOf(this.name()));

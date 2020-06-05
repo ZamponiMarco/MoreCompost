@@ -1,5 +1,6 @@
 package com.github.jummes.morecompost.manager;
 
+import java.util.Comparator;
 import java.util.List;
 
 import org.bukkit.Material;
@@ -34,8 +35,7 @@ public class DropsManager extends ModelManager<DropTable> {
 
     public DropTable getHighestPriorityDropTable(Player owner) {
         if (owner != null)
-            return dropTables.stream().filter(dropTable -> owner.hasPermission(dropTable.getPermissionString()))
-                    .sorted((d1, d2) -> d1.getPriority() - d2.getPriority()).findFirst().orElse(getDefaultDropTable());
+            return dropTables.stream().filter(dropTable -> owner.hasPermission(dropTable.getPermissionString())).min(Comparator.comparingInt(DropTable::getPriority)).orElse(getDefaultDropTable());
         return getDefaultDropTable();
     }
 
