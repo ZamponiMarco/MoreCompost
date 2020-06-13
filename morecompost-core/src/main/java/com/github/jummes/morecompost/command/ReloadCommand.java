@@ -14,7 +14,7 @@ public class ReloadCommand extends AbstractCommand {
 
     @Override
     protected void execute() {
-
+        MoreCompost.getInstance().reloadConfig();
         MoreCompost.getInstance().getCompostersManager().reloadData();
         MoreCompost.getInstance().getCompostablesManager().reloadData();
         MoreCompost.getInstance().getDropsManager().reloadData();
