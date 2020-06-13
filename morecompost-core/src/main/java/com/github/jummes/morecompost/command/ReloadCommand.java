@@ -1,11 +1,10 @@
 package com.github.jummes.morecompost.command;
 
-import org.bukkit.command.CommandSender;
-import org.bukkit.permissions.Permission;
-
 import com.github.jummes.libs.command.AbstractCommand;
 import com.github.jummes.libs.core.Libs;
 import com.github.jummes.morecompost.core.MoreCompost;
+import org.bukkit.command.CommandSender;
+import org.bukkit.permissions.Permission;
 
 public class ReloadCommand extends AbstractCommand {
 
@@ -19,7 +18,7 @@ public class ReloadCommand extends AbstractCommand {
         MoreCompost.getInstance().getCompostersManager().reloadData();
         MoreCompost.getInstance().getCompostablesManager().reloadData();
         MoreCompost.getInstance().getDropsManager().reloadData();
-        Libs.getLocale().reloadData();
+        Libs.getLocale().reloadData(MoreCompost.getInstance().getConfig().getString("locale"));
         sender.sendMessage(MoreCompost.getInstance().getLocale().get("command.reload"));
 
     }

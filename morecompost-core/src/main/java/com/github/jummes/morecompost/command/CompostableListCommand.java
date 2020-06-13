@@ -1,5 +1,6 @@
 package com.github.jummes.morecompost.command;
 
+import com.github.jummes.libs.core.Libs;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
@@ -23,7 +24,7 @@ public class CompostableListCommand extends AbstractCommand {
         StringBuilder string = new StringBuilder();
         string.append(MessageUtils.header("&cCompostables"));
         if (!table.isReplaceDefaultCompostables()) {
-            string.append(MessageUtils.color("&6All the default compostables\n"));
+            string.append(Libs.getLocale().get("command.compostables.default"));
         }
         table.getCompostables().stream().filter(compostable -> !compostable.isDefault())
                 .forEach(compostable -> string.append(MessageUtils.color("&6" + compostable.toString() + "\n")));
@@ -38,7 +39,7 @@ public class CompostableListCommand extends AbstractCommand {
 
     @Override
     protected Permission getPermission() {
-        return new Permission("morecompost.player.drops");
+        return new Permission("morecompost.player.compostables");
     }
 
 }

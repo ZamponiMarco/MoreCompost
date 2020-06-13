@@ -4,6 +4,8 @@
 command:
   inspect: "&6该堆肥桶的主人是: &a{0}"
   reload: "&6MoreCompost&a已重新加载"
+  compostables:
+    default: "&6All the default compostables\n"
 gui:
   droptable:
     priority:

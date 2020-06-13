@@ -3,6 +3,8 @@
 command:
   inspect: "&6The owner of this composter is: &c{0}"
   reload: "&6MoreCompost &ahas been reloaded"
+  compostables:
+    default: "&6All the default compostables\n"
 gui:
   droptable:
     priority:
