@@ -20,10 +20,7 @@ public class DropsCommand extends AbstractCommand {
     protected void execute() {
         Player p = (Player) sender;
         try {
-            p.openInventory(new ModelCollectionInventoryHolder(MoreCompost.getInstance(), null,
-                    new ModelPath<>(MoreCompost.getInstance().getDropsManager(), null),
-                    MoreCompost.getInstance().getDropsManager().getClass().getDeclaredField("dropTables"), 1)
-                    .getInventory());
+            p.openInventory(new ModelCollectionInventoryHolder<>(MoreCompost.getInstance(), MoreCompost.getInstance().getDropsManager(), "dropTables").getInventory());
         } catch (NoSuchFieldException | SecurityException e) {
             e.printStackTrace();
         }
