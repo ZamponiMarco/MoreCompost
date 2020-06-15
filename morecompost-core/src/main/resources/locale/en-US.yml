@@ -31,19 +31,23 @@ gui:
       - "&7&odivided by the sum of"
       - "&7&othe weights of the table."
     description:
-      - "&7&oDescription of the drop,"
-      - "&7&oto recreate it right click,"
-      - "&7&oto modify it left click."
+      - "&7&oDescription of the drop."
     item-description:
+      description:
+        - "&7&oSet the item drop."
+        - "&6&lLeft click &7&oto select."
       item:
         - "&7&oThe ItemStack that will"
         - "&7&odropped. &6&oDrag and drop&7 to"
-        - "&7&oset a specific item"
+        - "&7&oset a specific item."
       count:
         - "&7&oThe max and min count of"
         - "&7&oitems that can be given"
         - "&7&oin a single drop."
     head-description:
+      description:
+        - "&7&oSet the head drop."
+        - "&6&lLeft click &7&oto select."
       texture:
         - "&7&oThe texture value of the"
         - "&7&ohead that will be spawned"
@@ -56,9 +60,16 @@ gui:
         - "&7&oThe ItemMeta of the head"
         - "&7&othat will be dropped"
     experience-description:
+      description:
+        - "&7&oSet the experience drop."
+        - "&6&lLeft click &7&oto select."
       amount:
         - "&7&oThe min and max amount of xp"
         - "&7&othat can be dropped."
+    no-drop-description:
+      description:
+        - "&7&oSet no drops."
+        - "&6&lLeft click &7&oto select."
   compostabletable:
     priority:
       - "&7&oThe importance of this"

@@ -115,7 +115,7 @@ public class DropTable implements Model {
     @Override
     public ItemStack getGUIItem() {
         return ItemUtils.getNamedItem(new ItemStack(Material.CHEST), "&6&lPermission » &c&l" + permissionString,
-                Lists.newArrayList(MessageUtils.color("&7Priority » &8&l" + String.valueOf(priority)),
+                Lists.newArrayList(MessageUtils.color("&7Priority » &8&l" + priority),
                         MessageUtils.color("&6&lLeft click &eto modify."),
                         MessageUtils.color("&6&lRight click &eto delete.")));
     }

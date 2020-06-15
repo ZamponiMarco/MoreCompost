@@ -1,5 +1,6 @@
 package com.github.jummes.morecompost.dropdescription;
 
+import com.github.jummes.libs.annotation.Enumerable;
 import com.github.jummes.libs.annotation.Serializable;
 import com.github.jummes.libs.model.math.IntRange;
 import com.github.jummes.libs.model.wrapper.ItemStackWrapper;
@@ -20,6 +21,7 @@ import java.util.Random;
 @Getter
 @Setter
 @AllArgsConstructor
+@Enumerable.Child(name = "&c&lItem", description = "gui.droptable.item-description.description", headTexture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTY0ZjI1Y2ZmZjc1NGYyODdhOTgzOGQ4ZWZlMDM5OTgwNzNjMjJkZjdhOWQzMDI1YzQyNWUzZWQ3ZmY1MmMyMCJ9fX0=")
 @SerializableAs("ItemDropDescription")
 public class ItemDropDescription extends DropDescription {
 

@@ -35,6 +35,9 @@ gui:
       - "&7&oper ricrearla da zero clicca col destro,"
       - "&7&oper modificarla clicca col sinistro."
     item-description:
+      description:
+        - "&7&oImposta il drop di un item."
+        - "&6&lClick sinistro &7&oper selezionare."
       item:
         - "&7&oItem che verrà rilasciato."
         - "&6&oClicca e rilascia qui&7&o per"
@@ -44,6 +47,9 @@ gui:
         - "&7&odi oggetti rilasciabili in"
         - "&7&oun singolo drop."
     head-description:
+      description:
+        - "&7&oImposta il drop di una testa."
+        - "&6&lClick sinistro &7&oper selezionare."
       texture:
         - "&7&oIl valore della texture"
         - "&7&odella testa che verrà"
@@ -56,9 +62,16 @@ gui:
         - "&7&oItemMeta della testa"
         - "&7&oche sarà rilasciata."
     experience-description:
+      description:
+        - "&7&oImposta un drop di esperienza."
+        - "&6&lClick sinistro &7&oper selezionare."
       amount:
         - "&7&oAmmontare minimo e massimo di"
         - "&7&oesperienza rilasciabile."
+    no-drop-description:
+      description:
+        - "&7&oImposta nessun drop."
+        - "&6&lClick sinistro &7&oper selezionare."
   compostabletable:
     priority:
       - "&7&oLa priorità di questa"

@@ -5,7 +5,7 @@ import org.bukkit.block.Block;
 import com.github.jummes.libs.annotation.Enumerable;
 import com.github.jummes.libs.model.Model;
 
-@Enumerable(classArray = {ItemDropDescription.class, ExperienceDropDescription.class, HeadDropDescription.class, NoDropDescription.class})
+@Enumerable.Parent(classArray = {ItemDropDescription.class, ExperienceDropDescription.class, HeadDropDescription.class, NoDropDescription.class})
 public abstract class DropDescription implements Model {
 
     /**
