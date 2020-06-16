@@ -1,14 +1,11 @@
 package com.github.jummes.morecompost.command;
 
+import com.github.jummes.libs.command.AbstractCommand;
+import com.github.jummes.libs.gui.model.ModelCollectionInventoryHolder;
+import com.github.jummes.morecompost.core.MoreCompost;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
-
-import com.github.jummes.libs.command.AbstractCommand;
-import com.github.jummes.libs.gui.model.ModelCollectionInventoryHolder;
-import com.github.jummes.libs.model.ModelPath;
-import com.github.jummes.morecompost.core.MoreCompost;
-import com.github.jummes.morecompost.droptable.DropTable;
 
 public class DropsCommand extends AbstractCommand {
 

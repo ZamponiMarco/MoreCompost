@@ -1,30 +1,26 @@
 package com.github.jummes.morecompost.droptable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.TreeSet;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
+import com.github.jummes.libs.annotation.Serializable;
+import com.github.jummes.libs.model.Model;
+import com.github.jummes.libs.model.math.IntRange;
+import com.github.jummes.libs.model.wrapper.ItemStackWrapper;
+import com.github.jummes.libs.util.ItemUtils;
+import com.github.jummes.libs.util.MessageUtils;
+import com.github.jummes.morecompost.drop.Drop;
+import com.github.jummes.morecompost.dropdescription.ItemDropDescription;
+import com.google.common.base.Functions;
+import com.google.common.collect.Lists;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.inventory.ItemStack;
 
-import com.github.jummes.libs.annotation.Serializable;
-import com.github.jummes.libs.model.Model;
-import com.github.jummes.libs.model.math.IntRange;
-import com.github.jummes.libs.util.ItemUtils;
-import com.github.jummes.libs.util.MessageUtils;
-import com.github.jummes.morecompost.drop.Drop;
-import com.google.common.base.Functions;
-import com.google.common.collect.Lists;
-
-import lombok.Getter;
-import lombok.Setter;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Getter
 @Setter
@@ -54,7 +50,7 @@ public class DropTable implements Model {
     private TreeSet<Integer> sortedWeightSet;
 
     public DropTable() {
-        this("Tier" + String.valueOf(currentPriority), new IntRange(1, 1), currentPriority++, new ArrayList<Drop>());
+        this("Tier" + currentPriority, new IntRange(1, 1), currentPriority++, new ArrayList<>());
     }
 
     public DropTable(String permissionString, IntRange rolls, int priority, List<Drop> drops) {
@@ -64,6 +60,16 @@ public class DropTable implements Model {
         this.drops = drops;
         this.random = new Random();
         reloadTables();
+    }
+
+    @SuppressWarnings("unchecked")
+    public static DropTable deserialize(Map<String, Object> map) {
+        String permissionString = (String) map.get("permissionString");
+        IntRange rolls = (IntRange) map.get("rolls");
+        int priority = (int) map.get("priority");
+        currentPriority = Math.max(currentPriority, priority + 1);
+        List<Drop> drops = (List<Drop>) map.get("drops");
+        return new DropTable(permissionString, rolls, priority, drops);
     }
 
     public void dropAllLoot(Block block) {
@@ -77,6 +83,8 @@ public class DropTable implements Model {
     }
 
     private Drop getRandomDrop() {
+        if (sortedWeightSet.isEmpty())
+            return new Drop(1, new ItemDropDescription(new ItemStackWrapper(new ItemStack(Material.BONE_MEAL)), new IntRange(1, 1)));
         return weightMap.get(sortedWeightSet.higher(random.nextInt(sortedWeightSet.last())));
     }
 
@@ -88,28 +96,18 @@ public class DropTable implements Model {
         getRandomDrop().getDropDescription().putInContainer(block);
     }
 
+    // ---
+
     private void reloadTables() {
         AtomicInteger integer = new AtomicInteger();
         this.weightMap = drops.stream().collect(Collectors
-                .toMap(drop -> integer.accumulateAndGet(drop.getWeight(), (i, j) -> i + j), Functions.identity()));
+                .toMap(drop -> integer.accumulateAndGet(drop.getWeight(), Integer::sum), Functions.identity()));
         this.sortedWeightSet = new TreeSet<>(weightMap.keySet());
     }
-
-    // ---
 
     @Override
     public void onModify() {
         reloadTables();
-    }
-
-    @SuppressWarnings("unchecked")
-    public static DropTable deserialize(Map<String, Object> map) {
-        String permissionString = (String) map.get("permissionString");
-        IntRange rolls = (IntRange) map.get("rolls");
-        int priority = (int) map.get("priority");
-        currentPriority = Math.max(currentPriority, priority + 1);
-        List<Drop> drops = (List<Drop>) map.get("drops");
-        return new DropTable(permissionString, rolls, priority, drops);
     }
 
     @Override

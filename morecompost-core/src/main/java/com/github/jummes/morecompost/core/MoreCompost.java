@@ -1,6 +1,7 @@
 package com.github.jummes.morecompost.core;
 
 import java.io.File;
+import java.util.Objects;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
@@ -87,7 +88,7 @@ public class MoreCompost extends JavaPlugin {
             saveDefaultConfig();
         }
 
-        if (!getConfig().getString("version").equals(CONFIG_VERSION)) {
+        if (!Objects.equals(getConfig().getString("version"), CONFIG_VERSION)) {
             getLogger().info("config.yml has changed. Old config is stored inside config-"
                     + getConfig().getString("version") + ".yml");
             File outputFile = new File(getDataFolder(), "config-" + getConfig().getString("version") + ".yml");

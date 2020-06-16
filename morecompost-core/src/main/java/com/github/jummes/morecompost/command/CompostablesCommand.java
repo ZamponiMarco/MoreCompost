@@ -1,5 +1,6 @@
 package com.github.jummes.morecompost.command;
 
+import com.github.jummes.morecompost.compostabletable.CompostableTable;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
@@ -18,7 +19,7 @@ public class CompostablesCommand extends AbstractCommand {
     protected void execute() {
         Player p = (Player) sender;
         try {
-            p.openInventory(new ModelCollectionInventoryHolder(MoreCompost.getInstance(),
+            p.openInventory(new ModelCollectionInventoryHolder<>(MoreCompost.getInstance(),
                     MoreCompost.getInstance().getCompostablesManager(), "compostableTables").getInventory());
         } catch (Exception e) {
             e.printStackTrace();
