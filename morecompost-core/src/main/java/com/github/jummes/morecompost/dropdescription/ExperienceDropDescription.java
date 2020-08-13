@@ -19,7 +19,8 @@ import java.util.Random;
 
 @Getter
 @AllArgsConstructor
-@Enumerable.Child(name = "&c&lExperience", description = "gui.droptable.experience-description.description", headTexture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTg5MDFmNzE0MzRkNTM5MjA3NDc2OTRmNjgyZjVlNTNiOGY3NDQ4M2YyNjljMzg0YzY5MzZiN2Q4NjU4MiJ9fX0=")
+@Enumerable.Child
+@Enumerable.Displayable(name = "&c&lExperience", description = "gui.droptable.experience-description.description", headTexture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTg5MDFmNzE0MzRkNTM5MjA3NDc2OTRmNjgyZjVlNTNiOGY3NDQ4M2YyNjljMzg0YzY5MzZiN2Q4NjU4MiJ9fX0=")
 @SerializableAs("ExperienceDropDescription")
 public class ExperienceDropDescription extends DropDescription {
 
