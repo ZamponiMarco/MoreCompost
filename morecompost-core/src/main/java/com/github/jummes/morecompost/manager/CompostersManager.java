@@ -8,10 +8,7 @@ import org.bukkit.block.Block;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class CompostersManager extends ModelManager<Composter> {
 
@@ -20,12 +17,17 @@ public class CompostersManager extends ModelManager<Composter> {
     public CompostersManager(Class<Composter> classObject, String databaseType, JavaPlugin plugin) {
         super(classObject, databaseType, plugin);
         this.composters = new HashSet<>(database.loadObjects());
-        composters.forEach(composter -> composter.getComposters().forEach(loc -> {
-            Block b = loc.getBlock();
-            if (b.getType().equals(Material.COMPOSTER)) {
-                b.setMetadata("owner", new FixedMetadataValue(MoreCompost.getInstance(), composter.getId()));
+        composters.forEach(composter -> {
+            if (composter.getComposters().removeIf(Objects::isNull)) {
+                saveModel(composter);
             }
-        }));
+            composter.getComposters().forEach(loc -> {
+                Block b = loc.getBlock();
+                if (b.getType().equals(Material.COMPOSTER)) {
+                    b.setMetadata("owner", new FixedMetadataValue(MoreCompost.getInstance(), composter.getId()));
+                }
+            });
+        });
     }
 
     public void addBlockToPlayer(UUID id, Block b) {
