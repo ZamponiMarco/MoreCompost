@@ -39,6 +39,7 @@ public class CompostableTable implements Model {
     @Serializable(headTexture = PERMISSION_HEAD, description = "gui.compostabletable.permission")
     private String permissionString;
     @Serializable(headTexture = PRIORITY_HEAD, description = "gui.compostabletable.priority")
+    @Serializable.Number(minValue = 0)
     private int priority;
     @Serializable(headTexture = COMPOSTABLES_HEAD, description = "gui.compostabletable.compostables")
     private List<Compostable> compostables;

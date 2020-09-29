@@ -41,6 +41,7 @@ public class DropTable implements Model {
     @Serializable(headTexture = ROLLS_HEAD, description = "gui.droptable.rolls")
     private IntRange rolls;
     @Serializable(headTexture = PRIORITY_HEAD, description = "gui.droptable.priority")
+    @Serializable.Number(minValue = 0)
     private int priority;
     @Serializable(headTexture = DROPS_HEAD, description = "gui.droptable.drops")
     private List<Drop> drops;

@@ -53,6 +53,7 @@ public class Compostable implements Model {
     @Serializable(headTexture = ROLLS_HEAD, description = "gui.compostabletable.rolls")
     private IntRange rolls;
     @Serializable(headTexture = CHANCE_HEAD, description = "gui.compostabletable.chance")
+    @Serializable.Number(minValue = 0, maxValue = 1)
     private double chance;
     @Serializable(headTexture = FORCED_DROPTABLE_ID, description = "gui.compostabletable.forced", fromList = "getDropTables", fromListMapper = "mapDropTables")
     private String forcedDropTableId;
