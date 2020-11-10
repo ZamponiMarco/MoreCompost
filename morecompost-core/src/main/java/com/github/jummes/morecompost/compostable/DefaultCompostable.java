@@ -23,13 +23,13 @@ public enum DefaultCompostable {
     private final ItemStack item;
     private final double percentage;
 
-    private DefaultCompostable(double percentage) {
+    DefaultCompostable(double percentage) {
         this.item = new ItemStack(Material.valueOf(this.name()));
         this.percentage = percentage;
     }
 
     public Compostable getCompostable() {
-        return new Compostable(new ItemStackWrapper(item), new IntRange(1, 1), percentage, null, true);
+        return new Compostable(new ItemStackWrapper(item, true), new IntRange(1, 1), percentage, null, true);
     }
 
 }

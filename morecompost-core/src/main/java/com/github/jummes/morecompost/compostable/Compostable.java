@@ -45,7 +45,7 @@ public class Compostable implements Model {
     private static final String CHANCE_HEAD = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWZlMTk3MmYyY2ZhNGQzMGRjMmYzNGU4ZDIxNTM1OGMwYzU3NDMyYTU1ZjZjMzdhZDkxZTBkZDQ0MTkxYSJ9fX0===";
     private static final String ROLLS_HEAD = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTI0MjMwMmViZDY1NWY2ZDQyOWMxZTRhZWRlMjFiN2Y1YzRkYjY4YTQwNDVlYmFlYzE3NjMzYTA1MGExYTEifX19=";
     private static final String ITEM_HEAD = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGI2YTI5ZWE2OGEwYzYxYjFlZGEyZDhhZWMzZTIyMjk3MjczMjNiN2QyZGE2YmMwNGNjMGNkMmRlZjNiNDcxMiJ9fX0====";
-    private static final String FORCED_DROPTABLE_ID = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjc0ZDEzYjUxMDE2OGM3YWNiNDRiNjQ0MTY4NmFkN2FiMWNiNWI3NDg4ZThjZGY5ZDViMjJiNDdjNDgzZjIzIn19fQ======";
+    private static final String FORCED_DROPTABLE_ID_HEAD = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjc0ZDEzYjUxMDE2OGM3YWNiNDRiNjQ0MTY4NmFkN2FiMWNiNWI3NDg4ZThjZGY5ZDViMjJiNDdjNDgzZjIzIn19fQ======";
 
     @EqualsAndHashCode.Include
     @Serializable(displayItem = "getFlatItem", description = "gui.compostabletable.item")
@@ -55,13 +55,13 @@ public class Compostable implements Model {
     @Serializable(headTexture = CHANCE_HEAD, description = "gui.compostabletable.chance")
     @Serializable.Number(minValue = 0, maxValue = 1)
     private double chance;
-    @Serializable(headTexture = FORCED_DROPTABLE_ID, description = "gui.compostabletable.forced", fromList = "getDropTables", fromListMapper = "mapDropTables")
+    @Serializable(headTexture = FORCED_DROPTABLE_ID_HEAD, description = "gui.compostabletable.forced", fromList = "getDropTables", fromListMapper = "mapDropTables")
     private String forcedDropTableId;
     private boolean isDefault;
     private Random random;
 
     public Compostable() {
-        this(new ItemStackWrapper(new ItemStack(Material.STONE)), new IntRange(1, 1), 0.5, null, false);
+        this(new ItemStackWrapper(true), new IntRange(1, 1), 0.5, null, false);
     }
 
     public Compostable(ItemStackWrapper item, IntRange rolls, double chance, String forcedDropTableId,
@@ -114,9 +114,6 @@ public class Compostable implements Model {
         }
     }
 
-    // ---
-
-    @SuppressWarnings("unused")
     public static List<Object> getDropTables(ModelPath<?> path) {
         return MoreCompost.getInstance().getDropsManager().getDropTables().stream()
                 .map(dropTable -> dropTable.getPermissionString().substring(PERM_PREFIX.length()))

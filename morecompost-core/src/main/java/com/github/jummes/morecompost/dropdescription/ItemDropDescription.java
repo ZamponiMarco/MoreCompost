@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Container;
 import org.bukkit.configuration.serialization.SerializableAs;
@@ -34,7 +33,7 @@ public class ItemDropDescription extends DropDescription {
     private IntRange count;
 
     public ItemDropDescription() {
-        this(new ItemStackWrapper(new ItemStack(Material.STONE)), new IntRange(1, 1));
+        this(new ItemStackWrapper(true), new IntRange(1, 1));
     }
 
     public static ItemDropDescription deserialize(Map<String, Object> map) {

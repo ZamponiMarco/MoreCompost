@@ -106,3 +106,7 @@ gui:
       - "&7&ocomposter is filled"
       - "&7&oentirely only by this"
       - "&7&ocompostable."
+  additional-tooltips:
+    recreate:
+      - "&6&lLeft click &eto modify."
+      - "&6&lRight click &eto recreate."

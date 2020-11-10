@@ -31,7 +31,7 @@ public class Drop implements Model {
     @Serializable(headTexture = WEIGHT_HEAD, description = "gui.droptable.weight")
     @Serializable.Number(minValue = 0)
     private int weight;
-    @Serializable(headTexture = DESCRIPTION_HEAD, description = "gui.droptable.description", recreateTooltip = true)
+    @Serializable(headTexture = DESCRIPTION_HEAD, description = "gui.droptable.description", additionalDescription = "gui.additional-tooltips.recreate")
     private DropDescription dropDescription;
 
     public Drop() {

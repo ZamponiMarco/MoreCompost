@@ -49,10 +49,6 @@ public class MoreCompost extends JavaPlugin {
         ConfigurationSerialization.registerClass(DropTable.class);
         ConfigurationSerialization.registerClass(Drop.class);
         ConfigurationSerialization.registerClass(DropDescription.class);
-        ConfigurationSerialization.registerClass(ItemDropDescription.class);
-        ConfigurationSerialization.registerClass(ExperienceDropDescription.class);
-        ConfigurationSerialization.registerClass(HeadDropDescription.class);
-        ConfigurationSerialization.registerClass(NoDropDescription.class);
         ConfigurationSerialization.registerClass(CompostableTable.class);
         ConfigurationSerialization.registerClass(Compostable.class);
         ConfigurationSerialization.registerClass(Composter.class);

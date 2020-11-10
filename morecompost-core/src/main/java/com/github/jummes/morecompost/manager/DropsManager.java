@@ -45,7 +45,7 @@ public class DropsManager extends ModelManager<DropTable> {
 
     private DropTable getDefaultDropTable() {
         return new DropTable("", new IntRange(1, 1), Integer.MAX_VALUE, Lists.newArrayList(new Drop(1,
-                new ItemDropDescription(new ItemStackWrapper(new ItemStack(Material.BONE_MEAL)), new IntRange(1, 1)))));
+                new ItemDropDescription(new ItemStackWrapper(new ItemStack(Material.BONE_MEAL), true), new IntRange(1, 1)))));
     }
 
 }

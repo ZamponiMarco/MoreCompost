@@ -83,3 +83,7 @@ gui:
       - "&7&o如果堆肥桶完全由"
       - "&7&o这种可堆肥材料填充"
       - "&7&o将被使用的掉落id"
+  additional-tooltips:
+    recreate:
+      - "&6&lLeft click &eto modify."
+      - "&6&lRight click &eto recreate."

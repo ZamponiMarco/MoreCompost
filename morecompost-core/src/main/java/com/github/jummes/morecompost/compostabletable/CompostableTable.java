@@ -47,7 +47,7 @@ public class CompostableTable implements Model {
     private boolean replaceDefaultCompostables;
 
     public CompostableTable() {
-        this("Tier" + String.valueOf(currentPriority), currentPriority++, new ArrayList<Compostable>(), false);
+        this("Tier" + currentPriority, currentPriority++, new ArrayList<>(), false);
     }
 
     public CompostableTable(String permissionString, int priority, List<Compostable> compostables,

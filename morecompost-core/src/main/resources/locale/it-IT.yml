@@ -107,3 +107,7 @@ gui:
       - "&7&ocomposter è riempito"
       - "&7&ointeramente utilizzando"
       - "&7&oquesto compostabile."
+  additional-tooltips:
+    recreate:
+      - "&6&lClick sinistro &7&oper modificare."
+        - "&6&lClick destro &7&oper ricreare."

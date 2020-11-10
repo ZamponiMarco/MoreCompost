@@ -17,6 +17,7 @@ import org.bukkit.block.Block;
 import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.inventory.ItemStack;
 
+import java.lang.reflect.Field;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -85,7 +86,7 @@ public class DropTable implements Model {
 
     private Drop getRandomDrop() {
         if (sortedWeightSet.isEmpty())
-            return new Drop(1, new ItemDropDescription(new ItemStackWrapper(new ItemStack(Material.BONE_MEAL)), new IntRange(1, 1)));
+            return new Drop(1, new ItemDropDescription(new ItemStackWrapper(new ItemStack(Material.BONE_MEAL), true), new IntRange(1, 1)));
         return weightMap.get(sortedWeightSet.higher(random.nextInt(sortedWeightSet.last())));
     }
 
@@ -107,7 +108,7 @@ public class DropTable implements Model {
     }
 
     @Override
-    public void onModify() {
+    public void onModify(Field field) {
         reloadTables();
     }
 
