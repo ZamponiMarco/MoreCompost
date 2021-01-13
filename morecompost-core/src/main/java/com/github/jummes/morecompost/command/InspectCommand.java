@@ -2,6 +2,7 @@ package com.github.jummes.morecompost.command;
 
 import java.util.UUID;
 
+import com.github.jummes.libs.core.Libs;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
@@ -25,7 +26,7 @@ public class InspectCommand extends AbstractCommand {
                 ? getOwner(p.rayTraceBlocks(20).getHitBlock()).getName()
                 : "null";
 
-        p.sendMessage(MoreCompost.getInstance().getLocale().get("command.inspect", name));
+        p.sendMessage(Libs.getLocale().get("command.inspect", name));
 
     }
 

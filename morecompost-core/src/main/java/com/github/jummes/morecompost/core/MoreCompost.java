@@ -62,7 +62,6 @@ public class MoreCompost extends JavaPlugin {
     private DropsManager dropsManager;
     private CompostablesManager compostablesManager;
     private CompostersManager compostersManager;
-    private PluginLocale locale;
 
     public void onEnable() {
         instance = this;
@@ -95,8 +94,9 @@ public class MoreCompost extends JavaPlugin {
     }
 
     private void setUpData() {
-        locale = new PluginLocale(this, Lists.newArrayList("en-US", "it-IT", "zh-CN"), getConfig().getString("locale"));
-        Libs.initializeLibrary(instance, locale);
+        Libs.initializeLibrary(instance);
+        Libs.getLocale().registerLocaleFiles(this, Lists.newArrayList("en-US", "it-IT", "zh-CN"),
+                getConfig().getString("locale", "en-US"));
 
         compostersManager = new CompostersManager(Composter.class, "yaml", this);
         dropsManager = new DropsManager(DropTable.class, "yaml", this);

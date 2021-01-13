@@ -18,8 +18,7 @@ public class ReloadCommand extends AbstractCommand {
         MoreCompost.getInstance().getCompostersManager().reloadData();
         MoreCompost.getInstance().getCompostablesManager().reloadData();
         MoreCompost.getInstance().getDropsManager().reloadData();
-        Libs.getLocale().reloadData(MoreCompost.getInstance().getConfig().getString("locale"));
-        sender.sendMessage(MoreCompost.getInstance().getLocale().get("command.reload"));
+        sender.sendMessage(Libs.getLocale().get("command.reload"));
 
     }
 
