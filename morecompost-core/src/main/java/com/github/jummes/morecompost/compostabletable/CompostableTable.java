@@ -1,10 +1,6 @@
 package com.github.jummes.morecompost.compostabletable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
@@ -58,8 +54,8 @@ public class CompostableTable implements Model {
         this.compostables = compostables;
         this.replaceDefaultCompostables = replaceDefaultCompostables;
         if (!replaceDefaultCompostables) {
-            Arrays.stream(DefaultCompostable.values())
-                    .filter(compostable -> !compostables.contains(compostable.getCompostable()))
+            Arrays.stream(DefaultCompostable.values()).filter(Objects::nonNull).
+                    filter(compostable -> !compostables.contains(compostable.getCompostable()))
                     .forEach(compostable -> compostables.add(compostable.getCompostable()));
         }
     }

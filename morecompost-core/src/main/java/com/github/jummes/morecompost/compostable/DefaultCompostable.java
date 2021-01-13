@@ -1,10 +1,9 @@
 package com.github.jummes.morecompost.compostable;
 
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
-
 import com.github.jummes.libs.model.math.IntRange;
 import com.github.jummes.libs.model.wrapper.ItemStackWrapper;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 public enum DefaultCompostable {
 
@@ -21,21 +20,28 @@ public enum DefaultCompostable {
     OXEYE_DAISY(.65), CORNFLOWER(.65), LILY_OF_THE_VALLEY(.65), WITHER_ROSE(.65),
     SUNFLOWER(.65), LILAC(.65), ROSE_BUSH(.65), PEONY(.65), LILY_PAD(.65),
     MELON(.65), RED_MUSHROOM(.65), BROWN_MUSHROOM(.65), POTATO(.65),
-    PUMPKIN(.65), CARVED_PUMPKIN(.65), SEA_PICKLE(.65), WHEAT(.65),CRIMSON_FUNGUS(.65),
+    PUMPKIN(.65), CARVED_PUMPKIN(.65), SEA_PICKLE(.65), WHEAT(.65), CRIMSON_FUNGUS(.65),
     WARPED_FUNGUS(.65), BAKED_POTATO(.85), BREAD(.85), COOKIE(.85), HAY_BLOCK(.85),
-    BROWN_MUSHROOM_BLOCK(.85), RED_MUSHROOM_BLOCK(.85), NETHER_WART_BLOCK(.85),WARPED_WART_BLOCK(.85),
+    BROWN_MUSHROOM_BLOCK(.85), RED_MUSHROOM_BLOCK(.85), NETHER_WART_BLOCK(.85), WARPED_WART_BLOCK(.85),
     CAKE(1), PUMPKIN_PIE(1);
 
     private final ItemStack item;
     private final double percentage;
 
     DefaultCompostable(double percentage) {
-        this.item = new ItemStack(Material.valueOf(this.name()));
+        ItemStack item;
+        try {
+            item = new ItemStack(Material.valueOf(this.name()));
+        } catch (IllegalArgumentException e) {
+            item = null;
+        }
+        this.item = item;
         this.percentage = percentage;
     }
 
     public Compostable getCompostable() {
-        return new Compostable(new ItemStackWrapper(item, true), new IntRange(1, 1), percentage, null, true);
+        return item  == null ? null : new Compostable(new ItemStackWrapper(item, true), new IntRange(1, 1),
+                percentage, null, true);
     }
 
 }
