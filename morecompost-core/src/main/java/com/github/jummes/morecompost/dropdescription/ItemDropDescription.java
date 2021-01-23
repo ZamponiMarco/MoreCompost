@@ -33,12 +33,12 @@ public class ItemDropDescription extends DropDescription {
     private IntRange count;
 
     public ItemDropDescription() {
-        this(new ItemStackWrapper(true), new IntRange(1, 1));
+        this(new ItemStackWrapper(true), new IntRange());
     }
 
     public static ItemDropDescription deserialize(Map<String, Object> map) {
         ItemStackWrapper item = (ItemStackWrapper) map.get("item");
-        IntRange count = (IntRange) map.get("count");
+        IntRange count = (IntRange) map.getOrDefault("count", new IntRange());
         return new ItemDropDescription(item, count);
     }
 

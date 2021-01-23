@@ -52,7 +52,7 @@ public class DropTable implements Model {
     private TreeSet<Integer> sortedWeightSet;
 
     public DropTable() {
-        this("Tier" + currentPriority, new IntRange(1, 1), currentPriority++, new ArrayList<>());
+        this("Tier" + currentPriority, new IntRange(), currentPriority++, new ArrayList<>());
     }
 
     public DropTable(String permissionString, IntRange rolls, int priority, List<Drop> drops) {
@@ -67,7 +67,7 @@ public class DropTable implements Model {
     @SuppressWarnings("unchecked")
     public static DropTable deserialize(Map<String, Object> map) {
         String permissionString = (String) map.get("permissionString");
-        IntRange rolls = (IntRange) map.get("rolls");
+        IntRange rolls = (IntRange) map.getOrDefault("rolls", new IntRange());
         int priority = (int) map.get("priority");
         currentPriority = Math.max(currentPriority, priority + 1);
         List<Drop> drops = (List<Drop>) map.get("drops");

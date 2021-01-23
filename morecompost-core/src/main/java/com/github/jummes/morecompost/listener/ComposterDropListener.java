@@ -1,9 +1,15 @@
 package com.github.jummes.morecompost.listener;
 
+import com.github.jummes.morecompost.core.MoreCompost;
+import com.github.jummes.morecompost.dropdescription.ExperienceDropDescription;
+import com.github.jummes.morecompost.droptable.DropTable;
+import com.github.jummes.morecompost.manager.CompostablesManager;
+import com.github.jummes.morecompost.manager.DropsManager;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
+import org.bukkit.block.TileState;
 import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,11 +17,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
-
-import com.github.jummes.morecompost.core.MoreCompost;
-import com.github.jummes.morecompost.droptable.DropTable;
-import com.github.jummes.morecompost.manager.CompostablesManager;
-import com.github.jummes.morecompost.manager.DropsManager;
+import org.bukkit.persistence.PersistentDataType;
 
 public class ComposterDropListener implements Listener {
 
@@ -34,6 +36,18 @@ public class ComposterDropListener implements Listener {
                 compostBlock(player, block);
             }
             e.setCancelled(true);
+        } else if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && block.getState() instanceof TileState
+                && !e.getPlayer().isSneaking() && e.getHand().equals(EquipmentSlot.HAND)) {
+            TileState state = (TileState) block.getState();
+            if (state.getPersistentDataContainer().has(ExperienceDropDescription.EXPERIENCE_KEY,
+                    PersistentDataType.INTEGER)) {
+                int expAmount = state.getPersistentDataContainer().get(ExperienceDropDescription.EXPERIENCE_KEY,
+                        PersistentDataType.INTEGER);
+                e.getPlayer().giveExp(expAmount);
+                state.getPersistentDataContainer().set(ExperienceDropDescription.EXPERIENCE_KEY,
+                        PersistentDataType.INTEGER, 0);
+                state.update();
+            }
         }
     }
 

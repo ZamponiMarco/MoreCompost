@@ -1,14 +1,16 @@
 package com.github.jummes.morecompost.compostable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
+import com.github.jummes.libs.annotation.Serializable;
+import com.github.jummes.libs.model.Model;
+import com.github.jummes.libs.model.ModelPath;
+import com.github.jummes.libs.model.math.IntRange;
+import com.github.jummes.libs.model.wrapper.ItemStackWrapper;
+import com.github.jummes.libs.util.MessageUtils;
+import com.github.jummes.morecompost.core.MoreCompost;
+import com.google.common.collect.Lists;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -19,18 +21,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 
-import com.github.jummes.libs.annotation.Serializable;
-import com.github.jummes.libs.model.Model;
-import com.github.jummes.libs.model.ModelPath;
-import com.github.jummes.libs.model.math.IntRange;
-import com.github.jummes.libs.model.wrapper.ItemStackWrapper;
-import com.github.jummes.libs.util.MessageUtils;
-import com.github.jummes.morecompost.core.MoreCompost;
-import com.google.common.collect.Lists;
-
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Getter
 @Setter
@@ -61,7 +59,7 @@ public class Compostable implements Model {
     private Random random;
 
     public Compostable() {
-        this(new ItemStackWrapper(true), new IntRange(1, 1), 0.5, null, false);
+        this(new ItemStackWrapper(true), new IntRange(), 0.5, null, false);
     }
 
     public Compostable(ItemStackWrapper item, IntRange rolls, double chance, String forcedDropTableId,
@@ -72,6 +70,25 @@ public class Compostable implements Model {
         this.forcedDropTableId = forcedDropTableId;
         this.isDefault = isDefault;
         this.random = new Random();
+    }
+
+    public static List<Object> getDropTables(ModelPath<?> path) {
+        return MoreCompost.getInstance().getDropsManager().getDropTables().stream()
+                .map(dropTable -> dropTable.getPermissionString().substring(PERM_PREFIX.length()))
+                .collect(Collectors.toList());
+    }
+
+    public static Function<Object, ItemStack> mapDropTables() {
+        return obj -> MoreCompost.getInstance().getDropsManager().getDropTableById(PERM_PREFIX + obj)
+                .getGUIItem();
+    }
+
+    public static Compostable deserialize(Map<String, Object> map) {
+        ItemStackWrapper item = (ItemStackWrapper) map.get("item");
+        IntRange rolls = (IntRange) map.getOrDefault("rolls", new IntRange());
+        double chance = (double) map.get("chance");
+        String forcedDropTableId = (String) map.get("forcedDropTableId");
+        return new Compostable(item, rolls, chance, forcedDropTableId, false);
     }
 
     /**
@@ -112,25 +129,6 @@ public class Compostable implements Model {
             }
             hasFilled.get();
         }
-    }
-
-    public static List<Object> getDropTables(ModelPath<?> path) {
-        return MoreCompost.getInstance().getDropsManager().getDropTables().stream()
-                .map(dropTable -> dropTable.getPermissionString().substring(PERM_PREFIX.length()))
-                .collect(Collectors.toList());
-    }
-
-    public static Function<Object, ItemStack> mapDropTables() {
-        return obj -> MoreCompost.getInstance().getDropsManager().getDropTableById(PERM_PREFIX + obj)
-                .getGUIItem();
-    }
-
-    public static Compostable deserialize(Map<String, Object> map) {
-        ItemStackWrapper item = (ItemStackWrapper) map.get("item");
-        IntRange rolls = (IntRange) map.get("rolls");
-        double chance = (double) map.get("chance");
-        String forcedDropTableId = (String) map.get("forcedDropTableId");
-        return new Compostable(item, rolls, chance, forcedDropTableId, false);
     }
 
     public ItemStack getFlatItem() {

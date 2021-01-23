@@ -37,7 +37,7 @@ public class HeadDropDescription extends DropDescription {
     private ItemMetaWrapper meta;
 
     public HeadDropDescription() {
-        this(new IntRange(1, 1), ITEM_HEAD, new ItemMetaWrapper(new ItemStack(Material.CARROT).getItemMeta()));
+        this(new IntRange(), ITEM_HEAD, new ItemMetaWrapper(new ItemStack(Material.CARROT).getItemMeta()));
     }
 
     @Override
@@ -66,7 +66,7 @@ public class HeadDropDescription extends DropDescription {
     }
 
     public static HeadDropDescription deserialize(Map<String, Object> map) {
-        IntRange count = (IntRange) map.get("count");
+        IntRange count = (IntRange) map.getOrDefault("count", new IntRange());
         String texture = (String) map.get("texture");
         ItemMetaWrapper meta = (ItemMetaWrapper) map.get("meta");
         return new HeadDropDescription(count, texture, meta);
