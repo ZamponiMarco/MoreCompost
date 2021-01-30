@@ -2,6 +2,7 @@ package com.github.jummes.morecompost.manager;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -23,8 +24,8 @@ public class DropsManager extends ModelManager<DropTable> {
 
     private List<DropTable> dropTables;
 
-    public DropsManager(Class<DropTable> classObject, String databaseType, JavaPlugin plugin) {
-        super(classObject, databaseType, plugin);
+    public DropsManager(Class<DropTable> classObject, String databaseType, JavaPlugin plugin, Map<String, Object> args) {
+        super(classObject, databaseType, plugin, args);
         this.dropTables = database.loadObjects();
     }
 

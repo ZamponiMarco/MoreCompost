@@ -14,8 +14,8 @@ public class CompostersManager extends ModelManager<Composter> {
 
     private Set<Composter> composters;
 
-    public CompostersManager(Class<Composter> classObject, String databaseType, JavaPlugin plugin) {
-        super(classObject, databaseType, plugin);
+    public CompostersManager(Class<Composter> classObject, String databaseType, JavaPlugin plugin, Map<String, Object> args) {
+        super(classObject, databaseType, plugin, args);
         this.composters = new HashSet<>(database.loadObjects());
         composters.forEach(composter -> {
             if (composter.getComposters().removeIf(Objects::isNull)) {

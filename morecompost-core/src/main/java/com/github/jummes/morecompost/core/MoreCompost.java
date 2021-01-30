@@ -3,6 +3,7 @@ package com.github.jummes.morecompost.core;
 import java.io.File;
 import java.util.Objects;
 
+import com.google.common.collect.Maps;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -98,9 +99,9 @@ public class MoreCompost extends JavaPlugin {
         Libs.getLocale().registerLocaleFiles(this, Lists.newArrayList("en-US", "it-IT", "zh-CN"),
                 getConfig().getString("locale", "en-US"));
 
-        compostersManager = new CompostersManager(Composter.class, "yaml", this);
-        dropsManager = new DropsManager(DropTable.class, "yaml", this);
-        compostablesManager = new CompostablesManager(CompostableTable.class, "yaml", this);
+        compostersManager = new CompostersManager(Composter.class, "yaml", this, Maps.newHashMap());
+        dropsManager = new DropsManager(DropTable.class, "yaml", this, Maps.newHashMap());
+        compostablesManager = new CompostablesManager(CompostableTable.class, "yaml", this, Maps.newHashMap());
     }
 
     private void setUpCommands() {
