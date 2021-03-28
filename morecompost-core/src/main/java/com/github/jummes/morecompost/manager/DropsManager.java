@@ -45,8 +45,9 @@ public class DropsManager extends ModelManager<DropTable> {
     }
 
     private DropTable getDefaultDropTable() {
-        return new DropTable("", new IntRange(1, 1), Integer.MAX_VALUE, Lists.newArrayList(new Drop(1,
-                new ItemDropDescription(new ItemStackWrapper(new ItemStack(Material.BONE_MEAL), true), new IntRange(1, 1)))));
+        return dropTables.stream().filter(dropTable -> dropTable.getPermissionString().equals("morecompost.drops.default")).findFirst().orElse(
+        		new DropTable("", new IntRange(1, 1), Integer.MAX_VALUE, Lists.newArrayList(new Drop(1,
+                new ItemDropDescription(new ItemStackWrapper(new ItemStack(Material.BONE_MEAL), true), new IntRange(1, 1))))));
     }
 
 }
