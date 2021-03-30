@@ -21,7 +21,7 @@ public class CompostablesManager extends ModelManager<CompostableTable> {
 
     public CompostableTable getHighestPriorityCompostableTable(Player owner) {
         if (owner != null)
-            return compostableTables.stream().filter(dropTable -> owner.hasPermission(dropTable.getPermissionString())).min(Comparator.comparingInt(CompostableTable::getPriority))
+            return compostableTables.stream().filter(compostableTable -> owner.hasPermission(compostableTable.getPermissionString())).min(Comparator.comparingInt(CompostableTable::getPriority))
                     .orElse(getDefaultCompostableTable());
         return getDefaultCompostableTable();
     }
@@ -31,7 +31,9 @@ public class CompostablesManager extends ModelManager<CompostableTable> {
     }
 
     private CompostableTable getDefaultCompostableTable() {
-        return new CompostableTable("", Integer.MAX_VALUE, Lists.newArrayList(), false);
+        return compostableTables.stream()
+        		.filter(compostableTable -> compostableTable.getPermissionString().equals("morecompost.compostables.default")).findFirst()
+        		.orElse(new CompostableTable("", Integer.MAX_VALUE, Lists.newArrayList(), false));
     }
 
 }
