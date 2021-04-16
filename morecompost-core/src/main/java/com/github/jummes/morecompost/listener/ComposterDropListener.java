@@ -26,27 +26,30 @@ public class ComposterDropListener implements Listener {
     @EventHandler
     public void onComposterInteract(PlayerInteractEvent e) {
         Block block = e.getClickedBlock();
-        if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && block.getType().equals(Material.COMPOSTER)
-                && !e.getPlayer().isSneaking() && e.getHand().equals(EquipmentSlot.HAND)) {
-            Levelled composter = (Levelled) block.getBlockData();
-            Player player = e.getPlayer();
-            if (composter.getLevel() == composter.getMaximumLevel()) {
-                dropFromComposter(player, block);
-            } else if (composter.getLevel() < composter.getMaximumLevel() - 1) {
-                compostBlock(player, block);
+        if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && !e.getPlayer().isSneaking()) {
+            if (block.getType().equals(Material.COMPOSTER)) {
+                if (e.getHand().equals(EquipmentSlot.HAND)) {
+                    Levelled composter = (Levelled) block.getBlockData();
+                    Player player = e.getPlayer();
+                    if (composter.getLevel() == composter.getMaximumLevel()) {
+                        dropFromComposter(player, block);
+                    } else if (composter.getLevel() < composter.getMaximumLevel() - 1) {
+                        compostBlock(player, block);
+                    }
+                }
+                e.setCancelled(true);
             }
-            e.setCancelled(true);
-        } else if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && block.getState() instanceof TileState
-                && !e.getPlayer().isSneaking() && e.getHand().equals(EquipmentSlot.HAND)) {
-            TileState state = (TileState) block.getState();
-            if (state.getPersistentDataContainer().has(ExperienceDropDescription.EXPERIENCE_KEY,
-                    PersistentDataType.INTEGER)) {
-                int expAmount = state.getPersistentDataContainer().get(ExperienceDropDescription.EXPERIENCE_KEY,
-                        PersistentDataType.INTEGER);
-                e.getPlayer().giveExp(expAmount);
-                state.getPersistentDataContainer().set(ExperienceDropDescription.EXPERIENCE_KEY,
-                        PersistentDataType.INTEGER, 0);
-                state.update();
+            if (block.getState() instanceof TileState && e.getHand().equals(EquipmentSlot.HAND)) {
+                TileState state = (TileState) block.getState();
+                if (state.getPersistentDataContainer().has(ExperienceDropDescription.EXPERIENCE_KEY,
+                        PersistentDataType.INTEGER)) {
+                    int expAmount = state.getPersistentDataContainer().get(ExperienceDropDescription.EXPERIENCE_KEY,
+                            PersistentDataType.INTEGER);
+                    e.getPlayer().giveExp(expAmount);
+                    state.getPersistentDataContainer().set(ExperienceDropDescription.EXPERIENCE_KEY,
+                            PersistentDataType.INTEGER, 0);
+                    state.update();
+                }
             }
         }
     }
