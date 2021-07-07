@@ -32,8 +32,8 @@ public class CompostablesManager extends ModelManager<CompostableTable> {
 
     private CompostableTable getDefaultCompostableTable() {
         return compostableTables.stream()
-        		.filter(compostableTable -> compostableTable.getPermissionString().equals("morecompost.compostables.default")).findFirst()
-        		.orElse(new CompostableTable("", Integer.MAX_VALUE, Lists.newArrayList(), false));
+                .filter(compostableTable -> compostableTable.getPermissionString().equals("morecompost.compostables.default")).findFirst()
+                .orElse(new CompostableTable("", Integer.MAX_VALUE, Lists.newArrayList(), false));
     }
 
 }

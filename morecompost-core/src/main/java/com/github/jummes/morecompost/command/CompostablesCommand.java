@@ -1,13 +1,11 @@
 package com.github.jummes.morecompost.command;
 
-import com.github.jummes.morecompost.compostabletable.CompostableTable;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import org.bukkit.permissions.Permission;
-
 import com.github.jummes.libs.command.AbstractCommand;
 import com.github.jummes.libs.gui.model.ModelCollectionInventoryHolder;
 import com.github.jummes.morecompost.core.MoreCompost;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.permissions.Permission;
 
 public class CompostablesCommand extends AbstractCommand {
 

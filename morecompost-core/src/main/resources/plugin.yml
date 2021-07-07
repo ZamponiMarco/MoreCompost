@@ -3,7 +3,7 @@ version: ${version}
 author: jummes
 main: com.github.jummes.morecompost.core.MoreCompost
 load: POSTWORLD
-softdepend: [Multiverse-Core, MultiWorld]
+softdepend: [ Multiverse-Core, MultiWorld ]
 api-version: 1.14
 commands:
   mc:

@@ -110,7 +110,7 @@ public enum DefaultCompostable {
     }
 
     public Compostable getCompostable() {
-        return item  == null ? null : new Compostable(new ItemStackWrapper(item, true), new IntRange(1, 1),
+        return item == null ? null : new Compostable(new ItemStackWrapper(item, true), new IntRange(1, 1),
                 percentage, null, true);
     }
 

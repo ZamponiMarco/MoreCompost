@@ -1,9 +1,8 @@
 package com.github.jummes.morecompost.dropdescription;
 
-import org.bukkit.block.Block;
-
 import com.github.jummes.libs.annotation.Enumerable;
 import com.github.jummes.libs.model.Model;
+import org.bukkit.block.Block;
 
 @Enumerable.Parent(classArray = {ItemDropDescription.class, ExperienceDropDescription.class, HeadDropDescription.class, NoDropDescription.class})
 public abstract class DropDescription implements Model {

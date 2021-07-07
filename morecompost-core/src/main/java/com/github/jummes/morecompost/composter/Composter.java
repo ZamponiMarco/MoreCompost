@@ -1,18 +1,16 @@
 package com.github.jummes.morecompost.composter;
 
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
-import org.bukkit.Location;
-import org.bukkit.configuration.serialization.SerializableAs;
-
 import com.github.jummes.libs.annotation.Serializable;
 import com.github.jummes.libs.model.Model;
-
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import org.bukkit.Location;
+import org.bukkit.configuration.serialization.SerializableAs;
+
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 @Getter
 @AllArgsConstructor

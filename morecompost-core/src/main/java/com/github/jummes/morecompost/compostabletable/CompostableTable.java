@@ -1,14 +1,5 @@
 package com.github.jummes.morecompost.compostabletable;
 
-import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.stream.Collectors;
-
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.configuration.serialization.SerializableAs;
-import org.bukkit.inventory.ItemStack;
-
 import com.github.jummes.libs.annotation.Serializable;
 import com.github.jummes.libs.model.Model;
 import com.github.jummes.libs.util.ItemUtils;
@@ -16,8 +7,15 @@ import com.github.jummes.libs.util.MessageUtils;
 import com.github.jummes.morecompost.compostable.Compostable;
 import com.github.jummes.morecompost.compostable.DefaultCompostable;
 import com.google.common.collect.Lists;
-
 import lombok.Getter;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.configuration.serialization.SerializableAs;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
 @Getter
 @SerializableAs("CompostableTable")
@@ -64,8 +62,8 @@ public class CompostableTable implements Model {
      * Checks if the material is present in the compostable set, if it is, tries to
      * compost the block
      *
-     * @param block    block to compost
-     * @param item compostable item
+     * @param block block to compost
+     * @param item  compostable item
      * @return true if the compostable is contained inside the compostable table
      */
     public boolean compost(Block block, ItemStack item) {

@@ -1,10 +1,9 @@
 package com.github.jummes.morecompost.command;
 
-import org.bukkit.command.CommandSender;
-import org.bukkit.permissions.Permission;
-
 import com.github.jummes.libs.command.AbstractCommand;
 import com.github.jummes.libs.util.MessageUtils;
+import org.bukkit.command.CommandSender;
+import org.bukkit.permissions.Permission;
 
 public class PlayerHelpCommand extends AbstractCommand {
 

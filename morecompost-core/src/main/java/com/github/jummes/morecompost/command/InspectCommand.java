@@ -1,16 +1,15 @@
 package com.github.jummes.morecompost.command;
 
-import java.util.UUID;
-
+import com.github.jummes.libs.command.AbstractCommand;
 import com.github.jummes.libs.core.Libs;
+import com.github.jummes.morecompost.core.MoreCompost;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 
-import com.github.jummes.libs.command.AbstractCommand;
-import com.github.jummes.morecompost.core.MoreCompost;
+import java.util.UUID;
 
 public class InspectCommand extends AbstractCommand {
 

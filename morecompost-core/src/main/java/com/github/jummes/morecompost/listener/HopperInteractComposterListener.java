@@ -1,7 +1,8 @@
 package com.github.jummes.morecompost.listener;
 
-import java.util.UUID;
-
+import com.github.jummes.morecompost.core.MoreCompost;
+import com.github.jummes.morecompost.manager.CompostablesManager;
+import com.github.jummes.morecompost.manager.DropsManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -16,9 +17,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
-import com.github.jummes.morecompost.core.MoreCompost;
-import com.github.jummes.morecompost.manager.CompostablesManager;
-import com.github.jummes.morecompost.manager.DropsManager;
+import java.util.UUID;
 
 public class HopperInteractComposterListener implements Listener {
 

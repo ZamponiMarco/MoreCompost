@@ -1,23 +1,21 @@
 package com.github.jummes.morecompost.drop;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import org.bukkit.configuration.serialization.SerializableAs;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
 import com.github.jummes.libs.annotation.Serializable;
 import com.github.jummes.libs.model.Model;
 import com.github.jummes.libs.util.MessageUtils;
 import com.github.jummes.morecompost.dropdescription.DropDescription;
 import com.github.jummes.morecompost.dropdescription.ItemDropDescription;
 import com.google.common.collect.Lists;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.configuration.serialization.SerializableAs;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter

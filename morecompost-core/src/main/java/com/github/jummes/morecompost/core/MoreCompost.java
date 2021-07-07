@@ -1,35 +1,13 @@
 package com.github.jummes.morecompost.core;
 
-import java.io.File;
-import java.util.Objects;
-
-import com.google.common.collect.Maps;
-import org.bukkit.Bukkit;
-import org.bukkit.configuration.serialization.ConfigurationSerialization;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.util.FileUtil;
-
 import com.github.jummes.libs.command.PluginCommandExecutor;
 import com.github.jummes.libs.core.Libs;
-import com.github.jummes.libs.localization.PluginLocale;
-import com.github.jummes.morecompost.command.AboutCommand;
-import com.github.jummes.morecompost.command.CompostableListCommand;
-import com.github.jummes.morecompost.command.CompostablesCommand;
-import com.github.jummes.morecompost.command.DropsCommand;
-import com.github.jummes.morecompost.command.HelpCommand;
-import com.github.jummes.morecompost.command.InspectCommand;
-import com.github.jummes.morecompost.command.PlayerHelpCommand;
-import com.github.jummes.morecompost.command.DropPercentageCommand;
-import com.github.jummes.morecompost.command.ReloadCommand;
+import com.github.jummes.morecompost.command.*;
 import com.github.jummes.morecompost.compostable.Compostable;
 import com.github.jummes.morecompost.compostabletable.CompostableTable;
 import com.github.jummes.morecompost.composter.Composter;
 import com.github.jummes.morecompost.drop.Drop;
 import com.github.jummes.morecompost.dropdescription.DropDescription;
-import com.github.jummes.morecompost.dropdescription.ExperienceDropDescription;
-import com.github.jummes.morecompost.dropdescription.HeadDropDescription;
-import com.github.jummes.morecompost.dropdescription.ItemDropDescription;
-import com.github.jummes.morecompost.dropdescription.NoDropDescription;
 import com.github.jummes.morecompost.droptable.DropTable;
 import com.github.jummes.morecompost.listener.ComposterBreakListener;
 import com.github.jummes.morecompost.listener.ComposterDropListener;
@@ -39,8 +17,15 @@ import com.github.jummes.morecompost.manager.CompostablesManager;
 import com.github.jummes.morecompost.manager.CompostersManager;
 import com.github.jummes.morecompost.manager.DropsManager;
 import com.google.common.collect.Lists;
-
+import com.google.common.collect.Maps;
 import lombok.Getter;
+import org.bukkit.Bukkit;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.FileUtil;
+
+import java.io.File;
+import java.util.Objects;
 
 @Getter
 public class MoreCompost extends JavaPlugin {

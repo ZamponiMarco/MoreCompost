@@ -1,19 +1,18 @@
 package com.github.jummes.morecompost.command;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import org.bukkit.permissions.Permission;
-
 import com.github.jummes.libs.command.AbstractCommand;
 import com.github.jummes.libs.util.MessageUtils;
 import com.github.jummes.morecompost.core.MoreCompost;
 import com.github.jummes.morecompost.drop.Drop;
 import com.github.jummes.morecompost.droptable.DropTable;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.permissions.Permission;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DropPercentageCommand extends AbstractCommand {
 

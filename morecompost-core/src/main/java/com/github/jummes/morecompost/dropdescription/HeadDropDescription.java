@@ -1,9 +1,11 @@
 package com.github.jummes.morecompost.dropdescription;
 
-import java.util.Map;
-import java.util.Random;
-
 import com.github.jummes.libs.annotation.Enumerable;
+import com.github.jummes.libs.annotation.Serializable;
+import com.github.jummes.libs.core.Libs;
+import com.github.jummes.libs.model.math.IntRange;
+import com.github.jummes.libs.model.wrapper.ItemMetaWrapper;
+import lombok.AllArgsConstructor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -12,12 +14,8 @@ import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.github.jummes.libs.annotation.Serializable;
-import com.github.jummes.libs.core.Libs;
-import com.github.jummes.libs.model.math.IntRange;
-import com.github.jummes.libs.model.wrapper.ItemMetaWrapper;
-
-import lombok.AllArgsConstructor;
+import java.util.Map;
+import java.util.Random;
 
 @AllArgsConstructor
 @Enumerable.Child
