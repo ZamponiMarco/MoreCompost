@@ -14,7 +14,7 @@
     </properties>
     <build>
         <directory>../target</directory>
-        <finalName>${project.name}-${project.version}</finalName>
+        <finalName>morecompost-${project.version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -54,7 +54,7 @@
                         <phase>install</phase>
                         <configuration>
                             <target>
-                                <copy file="../target/${project.name}-${project.version}.jar"
+                                <copy file="../target/morecompost-${project.version}.jar"
                                       tofile="C:\Users\Marco\Desktop\test\plugins\${project.parent.artifactId}-${project.version}.jar"/>
                             </target>
                         </configuration>
